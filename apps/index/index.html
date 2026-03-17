@@ -103,7 +103,55 @@
     .page-subtitle {
       font-size: 15px;
       color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* BUSCADOR */
+    .search-wrapper {
+      position: relative;
       margin-bottom: 40px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 44px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 16px 0 42px;
+      font-size: 14px;
+      color: var(--text-primary);
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-input:focus {
+      border-color: #b8b6af;
+      box-shadow: 0 0 0 3px rgba(26,26,24,0.06);
+    }
+
+    .search-empty {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+      font-size: 14px;
+      color: var(--text-muted);
     }
 
     /* SECTION */
@@ -116,12 +164,14 @@
       margin-bottom: 14px;
     }
 
+    .section-block { margin-bottom: 48px; }
+    .section-block.hidden { display: none; }
+
     /* TOOL CARDS */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 16px;
-      margin-bottom: 48px;
     }
 
     .tool-card {
@@ -166,16 +216,8 @@
       line-height: 1.4;
     }
 
-    .status-active {
-      background: var(--green-bg);
-      color: var(--green);
-    }
-
-    .status-wip {
-      background: var(--amber-bg);
-      color: var(--amber);
-    }
-
+    .status-active { background: var(--green-bg); color: var(--green); }
+    .status-wip    { background: var(--amber-bg); color: var(--amber); }
     .status-planned {
       background: var(--bg);
       color: var(--text-muted);
@@ -213,14 +255,15 @@
       font-weight: 500;
     }
 
-    /* COMING SOON CARD */
     .tool-card.planned {
       opacity: 0.6;
       cursor: default;
       pointer-events: none;
     }
 
-    /* CHANGELOG SECTION */
+    .tool-card.hidden { display: none; }
+
+    /* CHANGELOG */
     .changelog-list {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -239,15 +282,10 @@
 
     .changelog-item:last-child { border-bottom: none; }
 
-    .changelog-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
+    .changelog-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .dot-green { background: var(--green); }
     .dot-amber { background: #EF9F27; }
+    .dot-blue  { background: var(--blue); }
 
     .changelog-date { color: var(--text-muted); min-width: 80px; font-size: 12px; }
     .changelog-tool { font-weight: 600; min-width: 60px; }
@@ -282,86 +320,124 @@
   <h1 class="page-title">Herramientas digitales</h1>
   <p class="page-subtitle">Portal de aplicaciones desarrolladas por INTERLAB para los talleres de Mobil Arquitectos.</p>
 
-  <div class="section-label">Activas</div>
-  <div class="tools-grid">
-
-    <a class="tool-card" href="https://mobil-eett.vercel.app" target="_blank">
-      <div class="tool-card-header">
-        <div class="tool-icon" style="background:#f0ede8;">📋</div>
-        <span class="status-badge status-active">En producción</span>
-      </div>
-      <div>
-        <div class="tool-name">EETT Selector</div>
-        <div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div>
-      </div>
-      <div class="tool-meta">
-        <span class="tool-taller">Todos los talleres</span>
-        <span>v1.0</span>
-      </div>
-    </a>
-
+  <!-- BUSCADOR -->
+  <div class="search-wrapper">
+    <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6.5" cy="6.5" r="4.5"/>
+      <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+    </svg>
+    <input
+      class="search-input"
+      id="search-input"
+      type="text"
+      placeholder="Buscar herramienta por nombre o taller…"
+      autocomplete="off"
+    />
   </div>
 
-  <div class="section-label">En desarrollo</div>
-  <div class="tools-grid">
-
-    <div class="tool-card planned">
-      <div class="tool-card-header">
-        <div class="tool-icon" style="background:#f0ede8;">📐</div>
-        <span class="status-badge status-planned">Planificada</span>
-      </div>
-      <div>
-        <div class="tool-name">Calculadora M²</div>
-        <div class="tool-desc">KPIs de construcción por tipología y normativa chilena.</div>
-      </div>
-      <div class="tool-meta">
-        <span class="tool-taller">Vivienda / Comercial</span>
-      </div>
-    </div>
-
-    <div class="tool-card planned">
-      <div class="tool-card-header">
-        <div class="tool-icon" style="background:#f0ede8;">🗂️</div>
-        <span class="status-badge status-planned">Planificada</span>
-      </div>
-      <div>
-        <div class="tool-name">Cubicaciones BIM</div>
-        <div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div>
-      </div>
-      <div class="tool-meta">
-        <span class="tool-taller">Salud / Infraestructura</span>
-      </div>
-    </div>
-
-    <div class="tool-card planned">
-      <div class="tool-card-header">
-        <div class="tool-icon" style="background:#f0ede8;">🗺️</div>
-        <span class="status-badge status-planned">Planificada</span>
-      </div>
-      <div>
-        <div class="tool-name">Análisis Territorial</div>
-        <div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div>
-      </div>
-      <div class="tool-meta">
-        <span class="tool-taller">Urbano</span>
-      </div>
-    </div>
-
+  <div class="search-empty" id="search-empty">
+    Sin resultados para esta búsqueda.
   </div>
 
-  <div class="section-label">Últimos cambios</div>
-  <div class="changelog-list">
-    <div class="changelog-item">
-      <div class="changelog-dot dot-green"></div>
-      <span class="changelog-date">Mar 2025</span>
-      <span class="changelog-tool">EETT</span>
-      <span class="changelog-desc">Release inicial — Actualización UI</span>
+  <!-- ACTIVAS -->
+  <div class="section-block" id="section-activas">
+    <div class="section-label">Activas</div>
+    <div class="tools-grid">
+
+      <a class="tool-card" href="https://mobil-eett.vercel.app" target="_blank"
+         data-name="eett selector especificaciones técnicas" data-taller="todos los talleres">
+        <div class="tool-card-header">
+          <div class="tool-icon" style="background:#f0ede8;">📋</div>
+          <span class="status-badge status-active">En producción</span>
+        </div>
+        <div>
+          <div class="tool-name">EETT Selector</div>
+          <div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div>
+        </div>
+        <div class="tool-meta">
+          <span class="tool-taller">Todos los talleres</span>
+          <span>v1.0</span>
+        </div>
+      </a>
+
     </div>
-    <div class="changelog-item">
-      <div class="changelog-dot dot-amber"></div>
-      <span class="changelog-date" id="today-date"></span>
-      <span class="changelog-tool">PORTAL</span>
-      <span class="changelog-desc">Creación DATALAB SUITE — portal central</span>
+  </div>
+
+  <!-- EN DESARROLLO -->
+  <div class="section-block" id="section-desarrollo">
+    <div class="section-label">En desarrollo</div>
+    <div class="tools-grid">
+
+      <div class="tool-card planned"
+           data-name="calculadora m2 metros cuadrados kpi construcción" data-taller="vivienda comercial">
+        <div class="tool-card-header">
+          <div class="tool-icon" style="background:#f0ede8;">📐</div>
+          <span class="status-badge status-planned">Planificada</span>
+        </div>
+        <div>
+          <div class="tool-name">Calculadora M²</div>
+          <div class="tool-desc">KPIs de construcción por tipología y normativa chilena.</div>
+        </div>
+        <div class="tool-meta">
+          <span class="tool-taller">Vivienda / Comercial</span>
+        </div>
+      </div>
+
+      <div class="tool-card planned"
+           data-name="cubicaciones bim metrados revit extracción" data-taller="salud infraestructura">
+        <div class="tool-card-header">
+          <div class="tool-icon" style="background:#f0ede8;">🗂️</div>
+          <span class="status-badge status-planned">Planificada</span>
+        </div>
+        <div>
+          <div class="tool-name">Cubicaciones BIM</div>
+          <div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div>
+        </div>
+        <div class="tool-meta">
+          <span class="tool-taller">Salud / Infraestructura</span>
+        </div>
+      </div>
+
+      <div class="tool-card planned"
+           data-name="análisis territorial gis isócronas localización urbano" data-taller="urbano">
+        <div class="tool-card-header">
+          <div class="tool-icon" style="background:#f0ede8;">🗺️</div>
+          <span class="status-badge status-planned">Planificada</span>
+        </div>
+        <div>
+          <div class="tool-name">Análisis Territorial</div>
+          <div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div>
+        </div>
+        <div class="tool-meta">
+          <span class="tool-taller">Urbano</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHANGELOG -->
+  <div class="section-block" id="section-changelog">
+    <div class="section-label">Últimos cambios</div>
+    <div class="changelog-list">
+      <div class="changelog-item">
+        <div class="changelog-dot dot-blue"></div>
+        <span class="changelog-date" id="today-date"></span>
+        <span class="changelog-tool">PORTAL</span>
+        <span class="changelog-desc">Barra de búsqueda agregada</span>
+      </div>
+      <div class="changelog-item">
+        <div class="changelog-dot dot-green"></div>
+        <span class="changelog-date">Mar 2025</span>
+        <span class="changelog-tool">EETT</span>
+        <span class="changelog-desc">Release inicial — Actualización UI</span>
+      </div>
+      <div class="changelog-item">
+        <div class="changelog-dot dot-amber"></div>
+        <span class="changelog-date">Mar 2026</span>
+        <span class="changelog-tool">PORTAL</span>
+        <span class="changelog-desc">Creación DATALAB SUITE — portal central</span>
+      </div>
     </div>
   </div>
 
@@ -373,11 +449,53 @@
 
 <script>
   const now = new Date();
-  const fmtLong = now.toLocaleDateString('es-CL', { year: 'numeric', month: 'long', day: 'numeric' });
+  const fmtLong  = now.toLocaleDateString('es-CL', { year: 'numeric', month: 'long', day: 'numeric' });
   const fmtShort = now.toLocaleDateString('es-CL', { year: 'numeric', month: 'short', day: 'numeric' });
-  document.getElementById('build-date').textContent = fmtLong;
+  document.getElementById('build-date').textContent  = fmtLong;
   document.getElementById('footer-build').textContent = 'Actualizado: ' + fmtLong;
-  document.getElementById('today-date').textContent = fmtShort;
+  document.getElementById('today-date').textContent  = fmtShort;
+
+  // BUSCADOR
+  const input     = document.getElementById('search-input');
+  const empty     = document.getElementById('search-empty');
+  const sections  = {
+    activas:    document.getElementById('section-activas'),
+    desarrollo: document.getElementById('section-desarrollo'),
+    changelog:  document.getElementById('section-changelog'),
+  };
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+
+    if (!q) {
+      document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden'));
+      Object.values(sections).forEach(s => s.classList.remove('hidden'));
+      empty.style.display = 'none';
+      return;
+    }
+
+    let totalVisible = 0;
+
+    document.querySelectorAll('.tool-card').forEach(card => {
+      const name   = (card.dataset.name   || '').toLowerCase();
+      const taller = (card.dataset.taller || '').toLowerCase();
+      const match  = name.includes(q) || taller.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) totalVisible++;
+    });
+
+    // Ocultar sección si todas sus cards están ocultas
+    ['activas', 'desarrollo'].forEach(id => {
+      const section = sections[id];
+      const visible = section.querySelectorAll('.tool-card:not(.hidden)').length;
+      section.classList.toggle('hidden', visible === 0);
+    });
+
+    // Ocultar changelog mientras se busca
+    sections.changelog.classList.add('hidden');
+
+    empty.style.display = totalVisible === 0 ? 'block' : 'none';
+  });
 </script>
 
 </body>
