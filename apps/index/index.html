@@ -6,26 +6,15 @@
   <title>DATALAB SUITE — Mobil Arquitectos</title>
   <style>
     :root {
-      --bg: #f8f7f4;
-      --surface: #ffffff;
-      --border: #e2e0da;
-      --text-primary: #1a1a18;
-      --text-secondary: #6b6a64;
-      --text-muted: #9c9a92;
-      --accent: #1a1a18;
-      --accent-light: #f0ede8;
-      --green: #0F6E56;
-      --green-bg: #E1F5EE;
-      --amber: #854F0B;
-      --amber-bg: #FAEEDA;
-      --blue: #185FA5;
-      --blue-bg: #E6F1FB;
-      --radius: 10px;
+      --bg: #f8f7f4; --surface: #ffffff; --border: #e2e0da;
+      --text-primary: #1a1a18; --text-secondary: #6b6a64; --text-muted: #9c9a92;
+      --accent: #1a1a18; --accent-light: #f0ede8;
+      --green: #0F6E56; --green-bg: #E1F5EE;
+      --amber: #854F0B; --amber-bg: #FAEEDA;
+      --blue: #185FA5; --blue-bg: #E6F1FB; --radius: 10px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; }
-
-    /* HEADER */
     header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
     .logo { display: flex; align-items: center; gap: 10px; }
     .logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
@@ -37,41 +26,28 @@
     .edit-toggle-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
     .edit-toggle-btn:hover { border-color: #b8b6af; }
     .edit-toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    /* MAIN */
     main { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
     .page-title { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; }
     .page-subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; }
-
-    /* BUSCADOR */
     .search-wrapper { position: relative; margin-bottom: 40px; }
     .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); pointer-events: none; }
     .search-input { width: 100%; height: 44px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0 16px 0 42px; font-size: 14px; color: var(--text-primary); font-family: inherit; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
     .search-input::placeholder { color: var(--text-muted); }
     .search-input:focus { border-color: #b8b6af; box-shadow: 0 0 0 3px rgba(26,26,24,0.06); }
     .search-empty { display: none; text-align: center; padding: 40px 0; font-size: 14px; color: var(--text-muted); }
-
-    /* SECTIONS */
     .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 14px; }
     .section-block { margin-bottom: 48px; }
     .section-block.hidden { display: none; }
     .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
-
-    /* TOOL CARD */
-    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, box-shadow 0.15s; position: relative; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, box-shadow 0.15s; position: relative; cursor: pointer; }
     .tool-card:not(.planned):hover { border-color: #b8b6af; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .tool-card.planned { opacity: 0.6; pointer-events: none; }
     .tool-card.hidden { display: none; }
     .edit-mode .tool-card.planned { pointer-events: all; opacity: 1; }
-
-    /* PORTADA */
     .card-cover { width: 100%; height: 130px; background: var(--accent-light); overflow: hidden; position: relative; flex-shrink: 0; }
-    .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .card-cover-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 32px; }
     .cover-edit-btn { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.45); align-items: center; justify-content: center; cursor: pointer; gap: 6px; color: white; font-size: 12px; font-weight: 600; }
     .edit-mode .cover-edit-btn { display: flex; }
-
-    /* CARD BODY */
     .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
     .tool-name { font-size: 15px; font-weight: 600; line-height: 1.3; }
@@ -79,23 +55,17 @@
     .status-active { background: var(--green-bg); color: var(--green); }
     .status-planned { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
     .tool-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-
-    /* TAGS */
     .tool-meta { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
     .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-light); color: var(--text-secondary); padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; }
     .tag-remove { cursor: pointer; color: var(--text-muted); font-size: 12px; line-height: 1; display: none; }
     .edit-mode .tag-remove { display: inline; }
     .tag-add-btn { display: none; align-items: center; gap: 4px; background: transparent; border: 1px dashed var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; font-family: inherit; }
     .edit-mode .tag-add-btn { display: inline-flex; }
-
-    /* EDIT OVERLAY en card (modo edición) */
     .card-edit-bar { display: none; padding: 8px 18px; background: #EEEDFE; border-top: 1px solid #CCC9F0; gap: 8px; align-items: center; }
     .edit-mode .card-edit-bar { display: flex; }
     .card-edit-bar input { flex: 1; font-size: 11px; border: 1px solid #CCC9F0; border-radius: 5px; padding: 4px 8px; font-family: inherit; background: white; color: var(--text-primary); outline: none; }
     .card-edit-bar button { font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 5px; border: none; cursor: pointer; }
     .btn-save-url { background: var(--accent); color: white; }
-
-    /* MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--surface); border-radius: 12px; padding: 28px; width: 440px; max-width: 90vw; }
@@ -107,23 +77,15 @@
     .btn-cancel { padding: 7px 16px; border-radius: 7px; border: 1px solid var(--border); background: transparent; font-size: 13px; cursor: pointer; font-family: inherit; }
     .btn-primary { padding: 7px 16px; border-radius: 7px; border: none; background: var(--accent); color: white; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .modal-preview { width: 100%; height: 120px; border-radius: 8px; object-fit: cover; margin-bottom: 12px; display: none; background: var(--accent-light); }
-
-    /* CHANGELOG */
     .changelog-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .changelog-item { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; font-size: 13px; }
     .changelog-item:last-child { border-bottom: none; }
     .changelog-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-green { background: var(--green); }
-    .dot-amber { background: #EF9F27; }
-    .dot-blue { background: var(--blue); }
+    .dot-green { background: var(--green); } .dot-amber { background: #EF9F27; } .dot-blue { background: var(--blue); }
     .changelog-date { color: var(--text-muted); min-width: 80px; font-size: 12px; }
     .changelog-tool { font-weight: 600; min-width: 60px; }
     .changelog-desc { color: var(--text-secondary); }
-
-    /* FOOTER */
     .footer-info { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; }
-
-    /* LOGIN MODAL */
     .login-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 4px; }
   </style>
 </head>
@@ -149,8 +111,7 @@
 
   <div class="search-wrapper">
     <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="6.5" cy="6.5" r="4.5"/>
-      <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+      <circle cx="6.5" cy="6.5" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
     </svg>
     <input class="search-input" id="search-input" type="text" placeholder="Buscar herramienta por nombre o taller…" autocomplete="off"/>
   </div>
@@ -161,7 +122,7 @@
     <div class="section-label">Activas</div>
     <div class="tools-grid">
 
-      <div class="tool-card" id="card-eett" data-id="eett" data-name="eett selector especificaciones técnicas" data-taller="todos los talleres" onclick="cardClick(event,'https://mobil-eett.vercel.app')">
+      <div class="tool-card" id="card-eett" data-id="eett" data-name="eett selector especificaciones técnicas bim revit" data-taller="todos los talleres" onclick="cardClick(event,'https://mobil-eett.vercel.app')">
         <div class="card-cover" id="cover-eett">
           <div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'eett')">
@@ -187,15 +148,7 @@
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- EN DESARROLLO -->
-  <div class="section-block" id="section-desarrollo">
-    <div class="section-label">En desarrollo</div>
-    <div class="tools-grid">
-
-      <div class="tool-card planned" id="card-calc" data-id="calc" data-name="calculadora m2 metros cuadrados kpi construcción" data-taller="vivienda comercial" onclick="cardClick(event,'')">
+      <div class="tool-card" id="card-calc" data-id="calc" data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel" data-taller="vivienda comercial infraestructura" onclick="cardClick(event,'https://datalab-calculadora-m2.vercel.app')">
         <div class="card-cover" id="cover-calc">
           <div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'calc')">
@@ -206,19 +159,28 @@
         <div class="card-body">
           <div class="card-top">
             <div class="tool-name">Calculadora M²</div>
-            <span class="status-badge status-planned">Planificada</span>
+            <span class="status-badge status-active">En producción</span>
           </div>
-          <div class="tool-desc">KPIs de construcción por tipología y normativa chilena.</div>
+          <div class="tool-desc">KPIs de construcción por tipología. Fine-tuning de ratios, costos y exportación CSV.</div>
           <div class="tool-meta" id="tags-calc">
             <span class="tag" data-card="calc">Vivienda / Comercial<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
+            <span class="tag" data-card="calc">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
             <button class="tag-add-btn" onclick="addTag(event,'calc')">+ tag</button>
           </div>
         </div>
         <div class="card-edit-bar">
-          <input type="text" placeholder="URL cuando esté lista…" id="url-calc" value=""/>
+          <input type="text" placeholder="URL de la herramienta…" id="url-calc" value="https://datalab-calculadora-m2.vercel.app"/>
           <button class="btn-save-url" onclick="saveUrl(event,'calc')">Guardar URL</button>
         </div>
       </div>
+
+    </div>
+  </div>
+
+  <!-- EN DESARROLLO -->
+  <div class="section-block" id="section-desarrollo">
+    <div class="section-label">En desarrollo</div>
+    <div class="tools-grid">
 
       <div class="tool-card planned" id="card-bim" data-id="bim" data-name="cubicaciones bim metrados revit extracción" data-taller="salud infraestructura" onclick="cardClick(event,'')">
         <div class="card-cover" id="cover-bim">
@@ -278,16 +240,16 @@
     <div class="section-label">Últimos cambios</div>
     <div class="changelog-list">
       <div class="changelog-item">
-        <div class="changelog-dot dot-blue"></div>
+        <div class="changelog-dot dot-green"></div>
         <span class="changelog-date" id="today-date"></span>
-        <span class="changelog-tool">PORTAL</span>
-        <span class="changelog-desc">Portadas y tags editables agregados</span>
+        <span class="changelog-tool">CALC M²</span>
+        <span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span>
       </div>
       <div class="changelog-item">
         <div class="changelog-dot dot-blue"></div>
         <span class="changelog-date">Mar 2026</span>
         <span class="changelog-tool">PORTAL</span>
-        <span class="changelog-desc">Barra de búsqueda agregada</span>
+        <span class="changelog-desc">Portadas y tags editables + modo edición con clave</span>
       </div>
       <div class="changelog-item">
         <div class="changelog-dot dot-green"></div>
@@ -304,7 +266,7 @@
   </div>
 </main>
 
-<!-- MODAL CONTRASEÑA -->
+<!-- MODALES -->
 <div class="modal-overlay" id="modal-login">
   <div class="modal">
     <h3>Modo edición</h3>
@@ -317,12 +279,10 @@
     </div>
   </div>
 </div>
-
-<!-- MODAL PORTADA -->
 <div class="modal-overlay" id="modal-cover">
   <div class="modal">
     <h3>Cambiar portada</h3>
-    <p>Pega la URL de una imagen. Recomendado: 800×400px, JPG o PNG.<br>Puedes usar imágenes de Unsplash, Google Drive (público) o cualquier URL directa.</p>
+    <p>Pega la URL de una imagen. Recomendado: 800×400px, JPG o PNG.</p>
     <img id="cover-preview" class="modal-preview" alt="preview"/>
     <input type="text" id="cover-url-input" placeholder="https://images.unsplash.com/…" oninput="previewCover(this.value)"/>
     <div class="modal-actions">
@@ -331,8 +291,6 @@
     </div>
   </div>
 </div>
-
-<!-- MODAL AGREGAR TAG -->
 <div class="modal-overlay" id="modal-tag">
   <div class="modal">
     <h3>Agregar tag</h3>
@@ -346,7 +304,6 @@
 </div>
 
 <script>
-  // ─── FECHAS ───
   const now = new Date();
   const fmtLong  = now.toLocaleDateString('es-CL', { year:'numeric', month:'long', day:'numeric' });
   const fmtShort = now.toLocaleDateString('es-CL', { year:'numeric', month:'short', day:'numeric' });
@@ -354,43 +311,26 @@
   document.getElementById('footer-build').textContent = 'Actualizado: ' + fmtLong;
   document.getElementById('today-date').textContent   = fmtShort;
 
-  // ─── ESTADO ───
-  const EDIT_KEY    = 'datalab_edit_auth';
-  const EDIT_PASS   = 'interlab2026';
-  const COVERS_KEY  = 'datalab_covers';
-  const TAGS_KEY    = 'datalab_tags';
-  const URLS_KEY    = 'datalab_urls';
+  const EDIT_KEY = 'datalab_edit_auth', EDIT_PASS = 'interlab2026';
+  const COVERS_KEY = 'datalab_covers', TAGS_KEY = 'datalab_tags', URLS_KEY = 'datalab_urls';
+  let editMode = false, pendingCardId = null;
 
-  let editMode      = false;
-  let pendingCardId = null;
-
-  // ─── PERSISTENCIA ───
   function loadState() {
-    // Portadas
     const covers = JSON.parse(localStorage.getItem(COVERS_KEY) || '{}');
     Object.entries(covers).forEach(([id, url]) => setCoverImg(id, url));
-
-    // URLs
     const urls = JSON.parse(localStorage.getItem(URLS_KEY) || '{}');
     Object.entries(urls).forEach(([id, url]) => {
-      const inp = document.getElementById('url-' + id);
-      if (inp) inp.value = url;
-      const card = document.getElementById('card-' + id);
-      if (card) card.dataset.url = url;
+      const inp = document.getElementById('url-' + id); if (inp) inp.value = url;
+      const card = document.getElementById('card-' + id); if (card) card.dataset.url = url;
     });
-
-    // Tags
     const tags = JSON.parse(localStorage.getItem(TAGS_KEY) || '{}');
     Object.entries(tags).forEach(([id, tagList]) => {
-      const container = document.getElementById('tags-' + id);
-      if (!container) return;
-      // Limpiar tags existentes (no el botón)
+      const container = document.getElementById('tags-' + id); if (!container) return;
       container.querySelectorAll('.tag').forEach(t => t.remove());
       const btn = container.querySelector('.tag-add-btn');
       tagList.forEach(text => {
         const span = document.createElement('span');
-        span.className = 'tag';
-        span.dataset.card = id;
+        span.className = 'tag'; span.dataset.card = id;
         span.innerHTML = text + '<span class="tag-remove" onclick="removeTag(event,this)">×</span>';
         container.insertBefore(span, btn);
       });
@@ -399,27 +339,18 @@
 
   function saveTags(id) {
     const container = document.getElementById('tags-' + id);
-    const tags = [...container.querySelectorAll('.tag')].map(t => {
-      return t.childNodes[0].textContent.trim();
-    });
+    const tags = [...container.querySelectorAll('.tag')].map(t => t.childNodes[0].textContent.trim());
     const all = JSON.parse(localStorage.getItem(TAGS_KEY) || '{}');
-    all[id] = tags;
-    localStorage.setItem(TAGS_KEY, JSON.stringify(all));
-    // Actualizar data-taller para el buscador
+    all[id] = tags; localStorage.setItem(TAGS_KEY, JSON.stringify(all));
     const card = document.getElementById('card-' + id);
     if (card) card.dataset.taller = tags.join(' ').toLowerCase();
   }
 
-  // ─── MODO EDICIÓN ───
   function toggleEditMode() {
     const auth = localStorage.getItem(EDIT_KEY);
     const expiry = parseInt(localStorage.getItem(EDIT_KEY + '_exp') || '0');
-    if (auth === 'true' && Date.now() < expiry) {
-      activateEdit();
-    } else {
-      openModal('modal-login');
-      setTimeout(() => document.getElementById('login-input').focus(), 100);
-    }
+    if (auth === 'true' && Date.now() < expiry) { activateEdit(); }
+    else { openModal('modal-login'); setTimeout(() => document.getElementById('login-input').focus(), 100); }
   }
 
   function activateEdit() {
@@ -435,156 +366,39 @@
     if (val === EDIT_PASS) {
       localStorage.setItem(EDIT_KEY, 'true');
       localStorage.setItem(EDIT_KEY + '_exp', Date.now() + 7 * 24 * 60 * 60 * 1000);
-      closeModal('modal-login');
-      document.getElementById('login-input').value = '';
-      activateEdit();
+      closeModal('modal-login'); document.getElementById('login-input').value = ''; activateEdit();
     } else {
       document.getElementById('login-input').style.borderColor = '#E24B4A';
       setTimeout(() => document.getElementById('login-input').style.borderColor = '', 800);
     }
   }
 
-  // ─── PORTADAS ───
-  function openCoverModal(e, id) {
-    e.preventDefault(); e.stopPropagation();
-    pendingCardId = id;
-    document.getElementById('cover-url-input').value = '';
-    document.getElementById('cover-preview').style.display = 'none';
-    openModal('modal-cover');
-    setTimeout(() => document.getElementById('cover-url-input').focus(), 100);
-  }
-
-  function previewCover(url) {
-    const img = document.getElementById('cover-preview');
-    if (url.startsWith('http')) {
-      img.src = url;
-      img.style.display = 'block';
-      img.onerror = () => img.style.display = 'none';
-    } else {
-      img.style.display = 'none';
-    }
-  }
-
-  function applyCover() {
-    const url = document.getElementById('cover-url-input').value.trim();
-    if (!url || !pendingCardId) return;
-    setCoverImg(pendingCardId, url);
-    // Guardar
-    const covers = JSON.parse(localStorage.getItem(COVERS_KEY) || '{}');
-    covers[pendingCardId] = url;
-    localStorage.setItem(COVERS_KEY, JSON.stringify(covers));
-    closeModal('modal-cover');
-  }
-
-  function setCoverImg(id, url) {
-    const cover = document.getElementById('cover-' + id);
-    const placeholder = document.getElementById('cover-placeholder-' + id);
-    if (!cover) return;
-    let img = cover.querySelector('img.cover-img');
-    if (!img) {
-      img = document.createElement('img');
-      img.className = 'cover-img';
-      cover.insertBefore(img, cover.firstChild);
-    }
-    img.src = url;
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;';
-    if (placeholder) placeholder.style.display = 'none';
-  }
-
-  // ─── TAGS ───
-  function addTag(e, id) {
-    e.preventDefault(); e.stopPropagation();
-    pendingCardId = id;
-    document.getElementById('tag-input').value = '';
-    openModal('modal-tag');
-    setTimeout(() => document.getElementById('tag-input').focus(), 100);
-  }
-
-  function applyTag() {
-    const text = document.getElementById('tag-input').value.trim();
-    if (!text || !pendingCardId) return;
-    const container = document.getElementById('tags-' + pendingCardId);
-    const btn = container.querySelector('.tag-add-btn');
-    const span = document.createElement('span');
-    span.className = 'tag';
-    span.dataset.card = pendingCardId;
-    span.innerHTML = text + '<span class="tag-remove" onclick="removeTag(event,this)">×</span>';
-    container.insertBefore(span, btn);
-    saveTags(pendingCardId);
-    closeModal('modal-tag');
-  }
-
-  function removeTag(e, el) {
-    e.preventDefault(); e.stopPropagation();
-    const tag = el.parentElement;
-    const id = tag.dataset.card;
-    tag.remove();
-    saveTags(id);
-  }
-
-  // ─── URL ───
-  function saveUrl(e, id) {
-    e.preventDefault(); e.stopPropagation();
-    const url = document.getElementById('url-' + id).value.trim();
-    const card = document.getElementById('card-' + id);
-    card.dataset.url = url;
-    const urls = JSON.parse(localStorage.getItem(URLS_KEY) || '{}');
-    urls[id] = url;
-    localStorage.setItem(URLS_KEY, JSON.stringify(urls));
-    // Feedback visual
-    const btn = e.target;
-    btn.textContent = '✓ Guardado';
-    setTimeout(() => btn.textContent = 'Guardar URL', 1500);
-  }
-
-  // ─── CLICK EN CARD ───
-  function cardClick(e, defaultUrl) {
-    if (editMode) return;
-    const card = e.currentTarget;
-    const url = card.dataset.url || defaultUrl;
-    if (url) window.open(url, '_blank');
-  }
-
-  // ─── MODALES ───
+  function openCoverModal(e, id) { e.preventDefault(); e.stopPropagation(); pendingCardId = id; document.getElementById('cover-url-input').value = ''; document.getElementById('cover-preview').style.display = 'none'; openModal('modal-cover'); setTimeout(() => document.getElementById('cover-url-input').focus(), 100); }
+  function previewCover(url) { const img = document.getElementById('cover-preview'); if (url.startsWith('http')) { img.src = url; img.style.display = 'block'; img.onerror = () => img.style.display = 'none'; } else { img.style.display = 'none'; } }
+  function applyCover() { const url = document.getElementById('cover-url-input').value.trim(); if (!url || !pendingCardId) return; setCoverImg(pendingCardId, url); const covers = JSON.parse(localStorage.getItem(COVERS_KEY) || '{}'); covers[pendingCardId] = url; localStorage.setItem(COVERS_KEY, JSON.stringify(covers)); closeModal('modal-cover'); }
+  function setCoverImg(id, url) { const cover = document.getElementById('cover-' + id); const placeholder = document.getElementById('cover-placeholder-' + id); if (!cover) return; let img = cover.querySelector('img.cover-img'); if (!img) { img = document.createElement('img'); img.className = 'cover-img'; cover.insertBefore(img, cover.firstChild); } img.src = url; img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;'; if (placeholder) placeholder.style.display = 'none'; }
+  function addTag(e, id) { e.preventDefault(); e.stopPropagation(); pendingCardId = id; document.getElementById('tag-input').value = ''; openModal('modal-tag'); setTimeout(() => document.getElementById('tag-input').focus(), 100); }
+  function applyTag() { const text = document.getElementById('tag-input').value.trim(); if (!text || !pendingCardId) return; const container = document.getElementById('tags-' + pendingCardId); const btn = container.querySelector('.tag-add-btn'); const span = document.createElement('span'); span.className = 'tag'; span.dataset.card = pendingCardId; span.innerHTML = text + '<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; container.insertBefore(span, btn); saveTags(pendingCardId); closeModal('modal-tag'); }
+  function removeTag(e, el) { e.preventDefault(); e.stopPropagation(); const tag = el.parentElement; const id = tag.dataset.card; tag.remove(); saveTags(id); }
+  function saveUrl(e, id) { e.preventDefault(); e.stopPropagation(); const url = document.getElementById('url-' + id).value.trim(); const card = document.getElementById('card-' + id); card.dataset.url = url; const urls = JSON.parse(localStorage.getItem(URLS_KEY) || '{}'); urls[id] = url; localStorage.setItem(URLS_KEY, JSON.stringify(urls)); const btn = e.target; btn.textContent = '✓ Guardado'; setTimeout(() => btn.textContent = 'Guardar URL', 1500); }
+  function cardClick(e, defaultUrl) { if (editMode) return; const card = e.currentTarget; const url = card.dataset.url || defaultUrl; if (url) window.open(url, '_blank'); }
   function openModal(id) { document.getElementById(id).classList.add('open'); }
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-  document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
-  });
+  document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }); });
 
-  // ─── BUSCADOR ───
   const searchInput = document.getElementById('search-input');
   const searchEmpty = document.getElementById('search-empty');
-  const sections = {
-    activas:    document.getElementById('section-activas'),
-    desarrollo: document.getElementById('section-desarrollo'),
-    changelog:  document.getElementById('section-changelog'),
-  };
-
+  const sections = { activas: document.getElementById('section-activas'), desarrollo: document.getElementById('section-desarrollo'), changelog: document.getElementById('section-changelog') };
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.trim().toLowerCase();
-    if (!q) {
-      document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden'));
-      Object.values(sections).forEach(s => s.classList.remove('hidden'));
-      searchEmpty.style.display = 'none';
-      return;
-    }
+    if (!q) { document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden')); Object.values(sections).forEach(s => s.classList.remove('hidden')); searchEmpty.style.display = 'none'; return; }
     let total = 0;
-    document.querySelectorAll('.tool-card').forEach(card => {
-      const match = (card.dataset.name || '').toLowerCase().includes(q) ||
-                    (card.dataset.taller || '').toLowerCase().includes(q);
-      card.classList.toggle('hidden', !match);
-      if (match) total++;
-    });
-    ['activas','desarrollo'].forEach(id => {
-      const s = sections[id];
-      s.classList.toggle('hidden', s.querySelectorAll('.tool-card:not(.hidden)').length === 0);
-    });
+    document.querySelectorAll('.tool-card').forEach(card => { const match = (card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden', !match); if (match) total++; });
+    ['activas','desarrollo'].forEach(id => { const s = sections[id]; s.classList.toggle('hidden', s.querySelectorAll('.tool-card:not(.hidden)').length === 0); });
     sections.changelog.classList.add('hidden');
     searchEmpty.style.display = total === 0 ? 'block' : 'none';
   });
 
-  // ─── INIT ───
   loadState();
 </script>
 </body>
