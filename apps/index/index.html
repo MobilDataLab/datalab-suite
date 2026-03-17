@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DATALAB SUITE — Mobil Arquitectos</title>
+  <style>
+    :root {
+      --bg: #f8f7f4;
+      --surface: #ffffff;
+      --border: #e2e0da;
+      --text-primary: #1a1a18;
+      --text-secondary: #6b6a64;
+      --text-muted: #9c9a92;
+      --accent: #1a1a18;
+      --accent-light: #f0ede8;
+      --green: #0F6E56;
+      --green-bg: #E1F5EE;
+      --amber: #854F0B;
+      --amber-bg: #FAEEDA;
+      --blue: #185FA5;
+      --blue-bg: #E6F1FB;
+      --purple: #3C3489;
+      --purple-bg: #EEEDFE;
+      --radius: 10px;
+      --radius-sm: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-label {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .logo-suite { font-weight: 600; font-size: 13px; }
+    .logo-sub { font-size: 10px; color: var(--text-muted); font-weight: 400; }
+
+    .header-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .page-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* SECTION */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* TOOL CARDS */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .tool-card:hover {
+      border-color: #b8b6af;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .tool-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+      line-height: 1.4;
+    }
+
+    .status-active {
+      background: var(--green-bg);
+      color: var(--green);
+    }
+
+    .status-wip {
+      background: var(--amber-bg);
+      color: var(--amber);
+    }
+
+    .status-planned {
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .tool-name {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .tool-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .tool-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .tool-taller {
+      background: var(--accent-light);
+      color: var(--text-secondary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    /* COMING SOON CARD */
+    .tool-card.planned {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* CHANGELOG SECTION */
+    .changelog-list {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .changelog-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .changelog-item:last-child { border-bottom: none; }
+
+    .changelog-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-green { background: var(--green); }
+    .dot-amber { background: #EF9F27; }
+
+    .changelog-date { color: var(--text-muted); min-width: 80px; font-size: 12px; }
+    .changelog-tool { font-weight: 600; min-width: 60px; }
+    .changelog-desc { color: var(--text-secondary); }
+
+    /* FOOTER */
+    .footer-info {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">DL</div>
+    <div class="logo-label">
+      <span class="logo-suite">DATALAB SUITE</span>
+      <span class="logo-sub">Mobil Arquitectos — INTERLAB</span>
+    </div>
+  </div>
+  <div class="header-meta" id="build-date"></div>
+</header>
+
+<main>
+  <h1 class="page-title">Herramientas digitales</h1>
+  <p class="page-subtitle">Portal de aplicaciones desarrolladas por INTERLAB para los talleres de Mobil Arquitectos.</p>
+
+  <div class="section-label">Activas</div>
+  <div class="tools-grid">
+
+    <a class="tool-card" href="https://mobil-eett.vercel.app" target="_blank">
+      <div class="tool-card-header">
+        <div class="tool-icon" style="background:#f0ede8;">📋</div>
+        <span class="status-badge status-active">En producción</span>
+      </div>
+      <div>
+        <div class="tool-name">EETT Selector</div>
+        <div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div>
+      </div>
+      <div class="tool-meta">
+        <span class="tool-taller">Todos los talleres</span>
+        <span>v1.0</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label">En desarrollo</div>
+  <div class="tools-grid">
+
+    <div class="tool-card planned">
+      <div class="tool-card-header">
+        <div class="tool-icon" style="background:#f0ede8;">📐</div>
+        <span class="status-badge status-planned">Planificada</span>
+      </div>
+      <div>
+        <div class="tool-name">Calculadora M²</div>
+        <div class="tool-desc">KPIs de construcción por tipología y normativa chilena.</div>
+      </div>
+      <div class="tool-meta">
+        <span class="tool-taller">Vivienda / Comercial</span>
+      </div>
+    </div>
+
+    <div class="tool-card planned">
+      <div class="tool-card-header">
+        <div class="tool-icon" style="background:#f0ede8;">🗂️</div>
+        <span class="status-badge status-planned">Planificada</span>
+      </div>
+      <div>
+        <div class="tool-name">Cubicaciones BIM</div>
+        <div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div>
+      </div>
+      <div class="tool-meta">
+        <span class="tool-taller">Salud / Infraestructura</span>
+      </div>
+    </div>
+
+    <div class="tool-card planned">
+      <div class="tool-card-header">
+        <div class="tool-icon" style="background:#f0ede8;">🗺️</div>
+        <span class="status-badge status-planned">Planificada</span>
+      </div>
+      <div>
+        <div class="tool-name">Análisis Territorial</div>
+        <div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div>
+      </div>
+      <div class="tool-meta">
+        <span class="tool-taller">Urbano</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Últimos cambios</div>
+  <div class="changelog-list">
+    <div class="changelog-item">
+      <div class="changelog-dot dot-green"></div>
+      <span class="changelog-date">Mar 2025</span>
+      <span class="changelog-tool">EETT</span>
+      <span class="changelog-desc">Release inicial — Actualización UI</span>
+    </div>
+    <div class="changelog-item">
+      <div class="changelog-dot dot-amber"></div>
+      <span class="changelog-date" id="today-date"></span>
+      <span class="changelog-tool">PORTAL</span>
+      <span class="changelog-desc">Creación DATALAB SUITE — portal central</span>
+    </div>
+  </div>
+
+  <div class="footer-info">
+    <span>INTERLAB — Mobil Arquitectos</span>
+    <span id="footer-build"></span>
+  </div>
+</main>
+
+<script>
+  const now = new Date();
+  const fmtLong = now.toLocaleDateString('es-CL', { year: 'numeric', month: 'long', day: 'numeric' });
+  const fmtShort = now.toLocaleDateString('es-CL', { year: 'numeric', month: 'short', day: 'numeric' });
+  document.getElementById('build-date').textContent = fmtLong;
+  document.getElementById('footer-build').textContent = 'Actualizado: ' + fmtLong;
+  document.getElementById('today-date').textContent = fmtShort;
+</script>
+
+</body>
+</html>
