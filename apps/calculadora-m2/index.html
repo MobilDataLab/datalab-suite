@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora M² — DATALAB SUITE</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f7f4; color: #1a1a18; min-height: 100vh; }
+    #root { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    const TIPOLOGIAS = {
+      'Vivienda': {
+        M2_SOBRE_COTA0_LOSA: 0.68, M2_UTILES_SOBRE_LOSA: 0.77, M2_TERRAZAS: 0.15, M2_LOGGIAS: 0.02,
+        M2_BAJO_COTA0_LOSA: 0.32, M2_UTILES_BAJO_LOSA: 0.85, M2_BAJO_COTA0_EST: 0.75,
+        M2_TERRENO: 0.40, ML_PER_TOTAL: 0.50, N_PISOS: 10,
+        USO_MIXTO_VIV: 1.00, USO_MIXTO_OF: 0.00,
+        COST_CONSTRUCCION: 18, COST_TERRENO: 0.20, COST_INVERSION: 0.70, VENTA_TOTAL: 55,
+        N_PERSONAS_CON: 1.5, N_PERSONAS_DIS: 1.5, N_PERSONAS_OBRA: 1.5,
+        MESES_CONCURSO: 1, MESES_DISENO: 8, MESES_OBRA: 18, MONTO_CONTRATO: 0.532
+      },
+      'Oficina': {
+        M2_SOBRE_COTA0_LOSA: 0.85, M2_UTILES_SOBRE_LOSA: 0.80, M2_TERRAZAS: 0.05, M2_LOGGIAS: 0.01,
+        M2_BAJO_COTA0_LOSA: 0.15, M2_UTILES_BAJO_LOSA: 0.90, M2_BAJO_COTA0_EST: 0.80,
+        M2_TERRENO: 0.30, ML_PER_TOTAL: 0.40, N_PISOS: 15,
+        USO_MIXTO_VIV: 0.00, USO_MIXTO_OF: 1.00,
+        COST_CONSTRUCCION: 22, COST_TERRENO: 0.25, COST_INVERSION: 0.65, VENTA_TOTAL: 65,
+        N_PERSONAS_CON: 1.2, N_PERSONAS_DIS: 2.0, N_PERSONAS_OBRA: 1.8,
+        MESES_CONCURSO: 2, MESES_DISENO: 10, MESES_OBRA: 20, MONTO_CONTRATO: 0.60
+      },
+      'Hotel': {
+        M2_SOBRE_COTA0_LOSA: 0.75, M2_UTILES_SOBRE_LOSA: 0.70, M2_TERRAZAS: 0.08, M2_LOGGIAS: 0.03,
+        M2_BAJO_COTA0_LOSA: 0.25, M2_UTILES_BAJO_LOSA: 0.75, M2_BAJO_COTA0_EST: 0.70,
+        M2_TERRENO: 0.35, ML_PER_TOTAL: 0.45, N_PISOS: 12,
+        USO_MIXTO_VIV: 0.00, USO_MIXTO_OF: 0.00,
+        COST_CONSTRUCCION: 25, COST_TERRENO: 0.22, COST_INVERSION: 0.68, VENTA_TOTAL: 70,
+        N_PERSONAS_CON: 1.8, N_PERSONAS_DIS: 2.2, N_PERSONAS_OBRA: 2.0,
+        MESES_CONCURSO: 2, MESES_DISENO: 12, MESES_OBRA: 24, MONTO_CONTRATO: 0.65
+      },
+      'Uso Mixto': {
+        M2_SOBRE_COTA0_LOSA: 0.80, M2_UTILES_SOBRE_LOSA: 0.78, M2_TERRAZAS: 0.10, M2_LOGGIAS: 0.02,
+        M2_BAJO_COTA0_LOSA: 0.28, M2_UTILES_BAJO_LOSA: 0.82, M2_BAJO_COTA0_EST: 0.78,
+        M2_TERRENO: 0.38, ML_PER_TOTAL: 0.48, N_PISOS: 14,
+        USO_MIXTO_VIV: 0.60, USO_MIXTO_OF: 0.25,
+        COST_CONSTRUCCION: 20, COST_TERRENO: 0.22, COST_INVERSION: 0.68, VENTA_TOTAL: 60,
+        N_PERSONAS_CON: 1.6, N_PERSONAS_DIS: 1.8, N_PERSONAS_OBRA: 1.6,
+        MESES_CONCURSO: 2, MESES_DISENO: 10, MESES_OBRA: 22, MONTO_CONTRATO: 0.55
+      },
+      'Educación': {
+        M2_SOBRE_COTA0_LOSA: 0.90, M2_UTILES_SOBRE_LOSA: 0.82, M2_TERRAZAS: 0.03, M2_LOGGIAS: 0.01,
+        M2_BAJO_COTA0_LOSA: 0.10, M2_UTILES_BAJO_LOSA: 0.88, M2_BAJO_COTA0_EST: 0.85,
+        M2_TERRENO: 0.60, ML_PER_TOTAL: 0.55, N_PISOS: 4,
+        USO_MIXTO_VIV: 0.00, USO_MIXTO_OF: 0.00,
+        COST_CONSTRUCCION: 16, COST_TERRENO: 0.15, COST_INVERSION: 0.60, VENTA_TOTAL: 0,
+        N_PERSONAS_CON: 1.0, N_PERSONAS_DIS: 1.8, N_PERSONAS_OBRA: 1.5,
+        MESES_CONCURSO: 3, MESES_DISENO: 12, MESES_OBRA: 20, MONTO_CONTRATO: 0.48
+      }
+    };
+
+    const KPI_GROUPS = [
+      { title: 'Superficies Sobre Cota 0', color: '#1D9E75', keys: [
+        { key: 'M2_SOBRE_COTA0_LOSA', label: '% M² Sobre Cota 0 / Losa Total', fmt: 'pct' },
+        { key: 'M2_UTILES_SOBRE_LOSA', label: '% M² Útiles / Sobre Cota 0', fmt: 'pct' },
+        { key: 'M2_TERRAZAS', label: '% Terrazas / M² Útiles Sobre', fmt: 'pct' },
+        { key: 'M2_LOGGIAS', label: '% Logias / M² Útiles Sobre', fmt: 'pct' },
+      ]},
+      { title: 'Superficies Bajo Cota 0', color: '#185FA5', keys: [
+        { key: 'M2_BAJO_COTA0_LOSA', label: '% M² Bajo Cota 0 / Losa Total', fmt: 'pct', auto: true },
+        { key: 'M2_UTILES_BAJO_LOSA', label: '% M² Útiles / Bajo Cota 0', fmt: 'pct' },
+        { key: 'M2_BAJO_COTA0_EST', label: '% M² Estacionamientos / Bajo Cota 0', fmt: 'pct' },
+      ]},
+      { title: 'Uso Mixto', color: '#854F0B', keys: [
+        { key: 'USO_MIXTO_VIV', label: '% Vivienda', fmt: 'pct' },
+        { key: 'USO_MIXTO_OF', label: '% Oficina', fmt: 'pct' },
+        { key: 'USO_MIXTO_COM', label: '% Comercio (auto)', fmt: 'pct', auto: true },
+      ]},
+      { title: 'Terreno y Geometría', color: '#3C3489', keys: [
+        { key: 'M2_TERRENO', label: 'Ratio M² Terreno / M² Útiles Sobre', fmt: 'dec' },
+        { key: 'ML_PER_TOTAL', label: 'Ratio ML Perímetro / M² Útiles', fmt: 'dec' },
+        { key: 'N_PISOS', label: 'Número de Pisos', fmt: 'int' },
+      ]},
+      { title: 'Costos y Ventas (UF)', color: '#0F6E56', keys: [
+        { key: 'COST_CONSTRUCCION', label: 'UF Construcción / M² Total', fmt: 'dec' },
+        { key: 'COST_TERRENO', label: '% Terreno / Venta', fmt: 'pct' },
+        { key: 'COST_INVERSION', label: '% Inversión / (Const + Terreno)', fmt: 'pct' },
+        { key: 'VENTA_TOTAL', label: 'UF Venta / M² Venta', fmt: 'dec' },
+      ]},
+      { title: 'Equipo y Plazos', color: '#853466', keys: [
+        { key: 'N_PERSONAS_CON', label: 'HH Concurso / M² Total', fmt: 'dec' },
+        { key: 'N_PERSONAS_DIS', label: 'HH Diseño / M² Total', fmt: 'dec' },
+        { key: 'N_PERSONAS_OBRA', label: 'HH Obra / M² Total', fmt: 'dec' },
+        { key: 'MESES_CONCURSO', label: 'Meses Concurso', fmt: 'int' },
+        { key: 'MESES_DISENO', label: 'Meses Diseño', fmt: 'int' },
+        { key: 'MESES_OBRA', label: 'Meses Obra', fmt: 'int' },
+        { key: 'MONTO_CONTRATO', label: 'UF Contrato / M² Total', fmt: 'dec' },
+      ]},
+    ];
+
+    function calcular(m2Losa, kpis) {
+      const k = kpis;
+      const m2Sobre = Math.round(m2Losa * k.M2_SOBRE_COTA0_LOSA);
+      const m2Bajo  = Math.round(m2Losa * (1 - k.M2_SOBRE_COTA0_LOSA));
+      const m2UtilesSobre  = Math.round(m2Sobre * k.M2_UTILES_SOBRE_LOSA);
+      const m2ComunesSobre = m2Sobre - m2UtilesSobre;
+      const m2Terrazas = Math.round(m2UtilesSobre * k.M2_TERRAZAS);
+      const m2Loggias  = Math.round(m2UtilesSobre * k.M2_LOGGIAS);
+      const m2UtilesBajo  = Math.round(m2Bajo * k.M2_UTILES_BAJO_LOSA);
+      const m2ComunesBajo = m2Bajo - m2UtilesBajo;
+      const m2Est = Math.round(m2Bajo * k.M2_BAJO_COTA0_EST);
+      const usoMixCom = Math.max(0, 1 - k.USO_MIXTO_VIV - k.USO_MIXTO_OF);
+      const m2UtilesViv = Math.round(m2UtilesSobre * k.USO_MIXTO_VIV);
+      const m2UtilesOf  = Math.round(m2UtilesSobre * k.USO_MIXTO_OF);
+      const m2UtilesCom = m2UtilesSobre - m2UtilesViv - m2UtilesOf;
+      const m2Venta = m2UtilesSobre + m2Terrazas + m2Loggias;
+      const m2Terreno  = Math.round(m2UtilesSobre * k.M2_TERRENO);
+      const mlPerim    = Math.round(m2UtilesSobre * k.ML_PER_TOTAL);
+      const costConst  = Math.round(m2Losa * k.COST_CONSTRUCCION);
+      const costTerr   = Math.round(costConst * k.COST_TERRENO);
+      const costInv    = Math.round((costConst + costTerr) * k.COST_INVERSION);
+      const ventaTot   = Math.round(m2Venta * k.VENTA_TOTAL);
+      const hhCon  = Math.round(m2Losa * k.N_PERSONAS_CON);
+      const hhDis  = Math.round(m2Losa * k.N_PERSONAS_DIS);
+      const hhObra = Math.round(m2Losa * k.N_PERSONAS_OBRA);
+      const hhTot  = hhCon + hhDis + hhObra;
+      const mesTot = k.MESES_CONCURSO + k.MESES_DISENO + k.MESES_OBRA;
+      const montoContrato = Math.round(m2Losa * k.MONTO_CONTRATO);
+      const pctComunesBajoRef = m2UtilesBajo > 0 ? (m2ComunesBajo / m2UtilesBajo) * 100 : 0;
+      return {
+        m2Losa, m2Sobre, m2Bajo, m2UtilesSobre, m2ComunesSobre,
+        m2Terrazas, m2Loggias, m2UtilesBajo, m2ComunesBajo, m2Est,
+        usoMixCom, m2UtilesViv, m2UtilesOf, m2UtilesCom,
+        m2Venta, m2Terreno, mlPerim,
+        costConst, costTerr, costInv, ventaTot,
+        hhCon, hhDis, hhObra, hhTot,
+        mesTot, montoContrato, pctComunesBajoRef
+      };
+    }
+
+    function fmt(v, type) {
+      if (type === 'pct') return (v * 100).toFixed(1) + '%';
+      if (type === 'int') return Math.round(v);
+      return parseFloat(v).toFixed(3);
+    }
+
+    function fmtM2(v) { return Math.round(v).toLocaleString('es-CL') + ' m²'; }
+    function fmtUF(v) { return 'UF ' + Math.round(v).toLocaleString('es-CL'); }
+
+    function App() {
+      const [tipologia, setTipologia] = useState('Vivienda');
+      const [m2Losa, setM2Losa] = useState(10000);
+      const [kpis, setKpis] = useState({ ...TIPOLOGIAS['Vivienda'] });
+      const [editGroup, setEditGroup] = useState(null);
+
+      const c = useMemo(() => calcular(m2Losa, {
+        ...kpis,
+        M2_BAJO_COTA0_LOSA: 1 - kpis.M2_SOBRE_COTA0_LOSA,
+        USO_MIXTO_COM: Math.max(0, 1 - kpis.USO_MIXTO_VIV - kpis.USO_MIXTO_OF)
+      }), [m2Losa, kpis]);
+
+      function handleTipologia(t) {
+        setTipologia(t);
+        setKpis({ ...TIPOLOGIAS[t] });
+      }
+
+      function updateKpi(key, value) {
+        setKpis(prev => ({ ...prev, [key]: parseFloat(value) || 0 }));
+      }
+
+      function exportCSV() {
+        const headers = [
+          'Tipología','M² Losa Total','M² Sobre Cota 0','M² Bajo Cota 0',
+          'M² Útiles Sobre','M² Comunes Sobre','M² Terrazas','M² Logias',
+          'M² Útiles Bajo','M² Comunes Bajo','M² Estacionamientos',
+          'M² Útiles Vivienda','M² Útiles Oficina','M² Útiles Comercio',
+          'M² Venta','M² Terreno','ML Perímetro',
+          'UF Costo Construcción','UF Costo Terreno','UF Costo Inversión','UF Venta Total',
+          'HH Concurso','HH Diseño','HH Obra','HH Total',
+          'Meses Concurso','Meses Diseño','Meses Obra','Meses Total',
+          'UF Monto Contrato'
+        ];
+        const values = [
+          tipologia, c.m2Losa, c.m2Sobre, c.m2Bajo,
+          c.m2UtilesSobre, c.m2ComunesSobre, c.m2Terrazas, c.m2Loggias,
+          c.m2UtilesBajo, c.m2ComunesBajo, c.m2Est,
+          c.m2UtilesViv, c.m2UtilesOf, c.m2UtilesCom,
+          c.m2Venta, c.m2Terreno, c.mlPerim,
+          c.costConst, c.costTerr, c.costInv, c.ventaTot,
+          c.hhCon, c.hhDis, c.hhObra, c.hhTot,
+          kpis.MESES_CONCURSO, kpis.MESES_DISENO, kpis.MESES_OBRA, c.mesTot,
+          c.montoContrato
+        ];
+        const rows = [headers, values];
+        const csv = rows.map(r => r.join(',')).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+        a.download = `calc_m2_${tipologia}_${Date.now()}.csv`;
+        a.click();
+      }
+
+      const isAlert = c.pctComunesBajoRef > 20;
+
+      return (
+        <div style={{background:'#f8f7f4',minHeight:'100vh',padding:'0 0 60px'}}>
+
+          {/* HEADER */}
+          <div style={{background:'#1a1a18',padding:'0 40px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:10}}>
+            <div style={{display:'flex',alignItems:'center',gap:10}}>
+              <a href="/" style={{color:'#9c9a92',fontSize:12,textDecoration:'none',marginRight:8}}>← DATALAB SUITE</a>
+              <span style={{color:'#444',marginRight:8}}>|</span>
+              <span style={{color:'white',fontWeight:600,fontSize:13}}>Calculadora M²</span>
+            </div>
+            <button onClick={exportCSV} style={{background:'#1D9E75',color:'white',border:'none',borderRadius:7,padding:'6px 16px',fontSize:12,fontWeight:600,cursor:'pointer'}}>↓ Exportar CSV</button>
+          </div>
+
+          <div style={{maxWidth:1100,margin:'0 auto',padding:'40px 24px 0'}}>
+
+            {/* INPUT PRINCIPAL */}
+            <div style={{background:'white',border:'1px solid #e2e0da',borderRadius:12,padding:'24px 28px',marginBottom:24,display:'flex',gap:32,alignItems:'flex-end',flexWrap:'wrap'}}>
+              <div style={{flex:'1',minWidth:200}}>
+                <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:6}}>Tipología</div>
+                <select value={tipologia} onChange={e=>handleTipologia(e.target.value)}
+                  style={{width:'100%',height:44,border:'1px solid #e2e0da',borderRadius:8,padding:'0 12px',fontSize:14,background:'white',color:'#1a1a18',fontFamily:'inherit'}}>
+                  {Object.keys(TIPOLOGIAS).map(t => <option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div style={{flex:'2',minWidth:240}}>
+                <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:6}}>M² Construidos Losa Total</div>
+                <input type="number" value={m2Losa} onChange={e=>setM2Losa(parseFloat(e.target.value)||0)}
+                  style={{width:'100%',height:44,border:'2px solid #1a1a18',borderRadius:8,padding:'0 16px',fontSize:20,fontWeight:600,color:'#1a1a18',fontFamily:'inherit'}} />
+              </div>
+              <div style={{flex:'1',minWidth:160,background:'#E1F5EE',borderRadius:8,padding:'12px 16px'}}>
+                <div style={{fontSize:10,color:'#0F6E56',fontWeight:600,marginBottom:2}}>M² VENTA</div>
+                <div style={{fontSize:22,fontWeight:700,color:'#0F6E56'}}>{fmtM2(c.m2Venta)}</div>
+              </div>
+              <div style={{flex:'1',minWidth:160,background:'#E6F1FB',borderRadius:8,padding:'12px 16px'}}>
+                <div style={{fontSize:10,color:'#185FA5',fontWeight:600,marginBottom:2}}>MONTO CONTRATO</div>
+                <div style={{fontSize:22,fontWeight:700,color:'#185FA5'}}>{fmtUF(c.montoContrato)}</div>
+              </div>
+            </div>
+
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20,marginBottom:24}}>
+
+              {/* RESULTADOS */}
+              <div style={{background:'white',border:'1px solid #e2e0da',borderRadius:12,padding:'20px 24px'}}>
+                <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:16}}>Superficies</div>
+                <table style={{width:'100%',borderCollapse:'collapse',fontSize:13}}>
+                  <tbody>
+                    {[
+                      ['M² Losa Total', fmtM2(c.m2Losa), '#1a1a18', true],
+                      ['M² Sobre Cota 0', fmtM2(c.m2Sobre), '#1D9E75'],
+                      ['  └ M² Útiles Sobre', fmtM2(c.m2UtilesSobre), '#0F6E56'],
+                      ['  └ M² Comunes Sobre', fmtM2(c.m2ComunesSobre), '#6b6a64'],
+                      ['  └ M² Terrazas', fmtM2(c.m2Terrazas), '#6b6a64'],
+                      ['M² Bajo Cota 0', fmtM2(c.m2Bajo), '#185FA5'],
+                      ['  └ M² Útiles Bajo', fmtM2(c.m2UtilesBajo), '#0C447C'],
+                      ['  └ M² Comunes Bajo', fmtM2(c.m2ComunesBajo), isAlert ? '#A32D2D' : '#6b6a64'],
+                      ['  └ M² Estacionamientos', fmtM2(c.m2Est), '#6b6a64'],
+                    ].map(([label, value, color, bold]) => (
+                      <tr key={label} style={{borderBottom:'1px solid #f0ede8'}}>
+                        <td style={{padding:'6px 0',color:'#6b6a64',fontSize:12}}>{label}</td>
+                        <td style={{textAlign:'right',fontWeight: bold ? 700 : 500,color,fontSize:13,padding:'6px 0'}}>{value}</td>
+                      </tr>
+                    ))}
+                    {isAlert && (
+                      <tr><td colSpan={2} style={{padding:'6px 0',fontSize:11,color:'#A32D2D',fontWeight:600}}>⚠ M² Comunes Bajo = {c.pctComunesBajoRef.toFixed(1)}% de Útiles (recom. ≤20%)</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* FINANCIERO */}
+              <div style={{display:'flex',flexDirection:'column',gap:16}}>
+                <div style={{background:'white',border:'1px solid #e2e0da',borderRadius:12,padding:'20px 24px'}}>
+                  <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:12}}>Financiero (UF)</div>
+                  {[
+                    ['Costo Construcción', fmtUF(c.costConst), '#1a1a18'],
+                    ['Costo Terreno', fmtUF(c.costTerr), '#6b6a64'],
+                    ['Costo Inversión', fmtUF(c.costInv), '#6b6a64'],
+                    ['Venta Total', fmtUF(c.ventaTot), '#1D9E75'],
+                  ].map(([label, value, color]) => (
+                    <div key={label} style={{display:'flex',justifyContent:'space-between',padding:'5px 0',borderBottom:'1px solid #f0ede8',fontSize:13}}>
+                      <span style={{color:'#6b6a64',fontSize:12}}>{label}</span>
+                      <span style={{fontWeight:600,color}}>{value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{background:'white',border:'1px solid #e2e0da',borderRadius:12,padding:'20px 24px'}}>
+                  <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:12}}>Equipo y Plazos</div>
+                  {[
+                    ['HH Concurso', c.hhCon + ' hh'],
+                    ['HH Diseño', c.hhDis + ' hh'],
+                    ['HH Obra', c.hhObra + ' hh'],
+                    ['HH Total', c.hhTot + ' hh'],
+                    ['Plazo Total', c.mesTot + ' meses'],
+                  ].map(([label, value]) => (
+                    <div key={label} style={{display:'flex',justifyContent:'space-between',padding:'5px 0',borderBottom:'1px solid #f0ede8',fontSize:13}}>
+                      <span style={{color:'#6b6a64',fontSize:12}}>{label}</span>
+                      <span style={{fontWeight:600}}>{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* KPIs EDITABLES */}
+            <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#9c9a92',marginBottom:14}}>KPIs — Ajuste fino</div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(320px,1fr))',gap:16}}>
+              {KPI_GROUPS.map(group => (
+                <div key={group.title} style={{background:'white',border:'1px solid #e2e0da',borderRadius:12,overflow:'hidden'}}>
+                  <div style={{background:group.color,padding:'10px 16px'}}>
+                    <span style={{color:'white',fontWeight:600,fontSize:13}}>{group.title}</span>
+                  </div>
+                  <div style={{padding:'12px 16px'}}>
+                    {group.keys.map(item => {
+                      const isAuto = item.auto;
+                      const val = item.key === 'USO_MIXTO_COM'
+                        ? Math.max(0, 1 - kpis.USO_MIXTO_VIV - kpis.USO_MIXTO_OF)
+                        : item.key === 'M2_BAJO_COTA0_LOSA'
+                        ? 1 - kpis.M2_SOBRE_COTA0_LOSA
+                        : kpis[item.key];
+                      return (
+                        <div key={item.key} style={{marginBottom:10}}>
+                          <div style={{fontSize:11,color:'#6b6a64',marginBottom:3}}>{item.label}</div>
+                          <input
+                            type="number" step="0.01" disabled={isAuto}
+                            value={val}
+                            onChange={e => updateKpi(item.key, e.target.value)}
+                            style={{
+                              width:'100%',height:34,border:'1px solid',
+                              borderColor: isAuto ? '#e2e0da' : '#FAEEDA',
+                              borderRadius:6,padding:'0 10px',fontSize:13,
+                              background: isAuto ? '#f8f7f4' : '#FFFBF2',
+                              color: isAuto ? '#9c9a92' : '#1a1a18',
+                              fontFamily:'inherit',fontWeight: isAuto ? 400 : 600
+                            }}
+                          />
+                          {isAuto && <div style={{fontSize:10,color:'#9c9a92',marginTop:2}}>Auto-calculado</div>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
