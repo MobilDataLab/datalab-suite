@@ -1,0 +1,25 @@
+name: Backup Snapshot
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  backup:
+    name: Backup Snapshot
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create backup branch
+        run: |
+          DATE=$(date +'%Y-%m-%d')
+          BRANCH="backup/${DATE}-$(echo ${{ github.sha }} | cut -c1-7)"
+          git config user.name "DATALAB Bot"
+          git config user.email "mobilarquitectos.data@gmail.com"
+          git checkout -b "$BRANCH"
+          git push origin "$BRANCH"
+          echo "Backup creado en rama: $BRANCH"
