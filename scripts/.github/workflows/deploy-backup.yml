@@ -8,6 +8,8 @@ jobs:
   backup:
     name: Backup Snapshot
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -17,9 +19,10 @@ jobs:
       - name: Create backup branch
         run: |
           DATE=$(date +'%Y-%m-%d')
-          BRANCH="backup/${DATE}-$(echo ${{ github.sha }} | cut -c1-7)"
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          BRANCH="backup/${DATE}-${SHORT_SHA}"
           git config user.name "DATALAB Bot"
           git config user.email "mobilarquitectos.data@gmail.com"
           git checkout -b "$BRANCH"
           git push origin "$BRANCH"
-          echo "Backup creado en rama: $BRANCH"
+          echo "Backup creado: $BRANCH"
