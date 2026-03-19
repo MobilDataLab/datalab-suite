@@ -16,7 +16,6 @@
       --warm-light: #F2F0EC;
       --blue:       #006BFF;
       --blue-dim:   rgba(0,107,255,0.08);
-      --blue-mid:   rgba(0,107,255,0.18);
       --blue-light: #E6F0FF;
       --success:    #1D9E75;
       --fd: 'Arial Narrow','Helvetica Neue Condensed',Arial,sans-serif;
@@ -26,7 +25,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:var(--fb);font-size:13px;background:var(--white);color:var(--black);min-height:100vh;line-height:1.6}
 
-    /* ── HEADER ── */
+    /* HEADER */
     header{background:var(--white);border-bottom:1px solid var(--g200);padding:0 48px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
     .logo{display:flex;align-items:center;gap:12px}
     .logo-hex{width:26px;height:26px;flex-shrink:0}
@@ -42,19 +41,19 @@
     .btn-edit:hover{border-color:var(--black);color:var(--black)}
     .btn-edit.active{background:var(--black);color:var(--white);border-color:var(--black)}
 
-    /* ── HERO ANIMADO ── */
-    .hero{position:relative;height:280px;background:var(--black);overflow:hidden;border-bottom:1px solid var(--g200)}
+    /* HERO */
+    .hero{position:relative;height:380px;background:#050810;overflow:hidden;border-bottom:1px solid var(--g200);cursor:none}
     #hero-canvas{position:absolute;inset:0;width:100%;height:100%}
-    .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:36px 48px}
-    .hero-eyebrow{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--blue);margin-bottom:10px}
-    .hero-title{font-family:var(--fd);font-size:clamp(36px,5vw,56px);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--white);line-height:1.0;margin-bottom:12px}
-    .hero-sub{font-size:12px;color:rgba(255,255,255,0.55);max-width:440px;line-height:1.8;letter-spacing:.02em}
-    .hero-badge{position:absolute;top:28px;right:48px;display:flex;align-items:center;gap:6px}
-    .hero-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-    .hero-badge-text{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,0.4)}
+    .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 52px;pointer-events:none}
+    .hero-eyebrow{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--blue);margin-bottom:12px}
+    .hero-title{font-family:var(--fd);font-size:clamp(40px,5.5vw,64px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);line-height:.95;margin-bottom:14px}
+    .hero-sub{font-size:12px;color:rgba(255,255,255,0.45);max-width:400px;line-height:1.9;letter-spacing:.03em}
+    .hero-badge{position:absolute;top:28px;right:52px;display:flex;align-items:center;gap:7px;z-index:2}
+    .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .hero-badge-text{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,0.3)}
 
-    /* ── TOOLBAR ── */
+    /* TOOLBAR */
     .toolbar{display:flex;align-items:center;gap:16px;padding:14px 48px;border-bottom:1px solid var(--g200);background:var(--white);position:sticky;top:52px;z-index:90}
     .search-wrapper{position:relative;flex:1;max-width:360px}
     .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--g400);pointer-events:none}
@@ -63,58 +62,40 @@
     .search-input:focus{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 2px var(--blue-dim)}
     .toolbar-count{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid);white-space:nowrap}
 
-    /* ── MAIN ── */
+    /* MAIN */
     main{max-width:1040px;margin:0 auto;padding:0 48px 96px}
     .search-empty{display:none;text-align:center;padding:64px 0;font-family:var(--fd);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400)}
 
-    /* ── SECTIONS ── */
+    /* SECTIONS */
     .section-block{margin-bottom:0}
     .section-block.hidden{display:none}
     .section-header{display:flex;align-items:center;gap:14px;padding:28px 0 16px;border-bottom:1px solid var(--g200);margin-bottom:24px}
     .section-label{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--black)}
     .section-count{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400)}
 
-    /* ── GRID ── */
+    /* GRID */
     .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--g200);border:1px solid var(--g200);margin-bottom:1px}
 
-    /* ── TOOL CARD ── */
-    .tool-card{
-      background:var(--white);
-      display:flex;flex-direction:column;
-      cursor:pointer;
-      position:relative;
-      transition:background var(--t), border-color var(--t);
-      border:1.5px solid transparent;
-      margin:-1px; /* compensa el gap del grid */
-    }
-
-    /* HOVER — acento azul */
-    .tool-card:not(.planned):hover{
-      background:var(--blue-dim);
-      border-color:var(--blue);
-      z-index:1;
-    }
-
-    .tool-card:not(.planned):hover .tool-name{ color:var(--blue); }
-    .tool-card:not(.planned):hover .card-cover-placeholder{ background:linear-gradient(135deg, rgba(0,107,255,.12) 0%, rgba(0,107,255,.04) 100%); }
-    .tool-card:not(.planned):hover .cover-arrow{ opacity:1; transform:translate(2px,-2px); }
-    .tool-card:not(.planned):hover .status-badge.status-active{ background:var(--blue); }
-
+    /* TOOL CARD */
+    .tool-card{background:var(--white);display:flex;flex-direction:column;cursor:pointer;position:relative;transition:background var(--t),border-color var(--t);border:1.5px solid transparent;margin:-1px}
+    .tool-card:not(.planned):hover{background:var(--blue-dim);border-color:var(--blue);z-index:1}
+    .tool-card:not(.planned):hover .tool-name{color:var(--blue)}
+    .tool-card:not(.planned):hover .card-cover-placeholder{background:linear-gradient(135deg,rgba(0,107,255,.1) 0%,rgba(0,107,255,.03) 100%)}
+    .tool-card:not(.planned):hover .cover-arrow{opacity:1;transform:translate(2px,-2px)}
+    .tool-card:not(.planned):hover .status-badge.status-active{background:var(--blue)}
     .tool-card.planned{opacity:.45;pointer-events:none}
     .tool-card.hidden{display:none}
     .edit-mode .tool-card.planned{pointer-events:all;opacity:1}
 
-    /* ── COVER ── */
+    /* COVER */
     .card-cover{width:100%;aspect-ratio:16/7;overflow:hidden;position:relative;flex-shrink:0;background:var(--g100)}
     .card-cover-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;opacity:.2;transition:background var(--t)}
     .cover-img-el{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
     .cover-edit-btn{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;cursor:pointer;gap:6px;color:var(--white);font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
     .edit-mode .cover-edit-btn{display:flex}
+    .cover-arrow{position:absolute;top:10px;right:12px;color:var(--blue);opacity:0;transition:opacity var(--t),transform var(--t);font-size:15px;font-weight:700}
 
-    /* Flecha de acceso en cover al hover */
-    .cover-arrow{position:absolute;top:10px;right:12px;color:var(--blue);opacity:0;transition:opacity var(--t), transform var(--t);font-size:16px;font-weight:700}
-
-    /* ── CARD BODY ── */
+    /* CARD BODY */
     .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:7px;flex:1}
     .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
     .tool-name{font-family:var(--fd);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--black);line-height:1.15;transition:color var(--t)}
@@ -129,30 +110,30 @@
     .tag-add-btn{display:none;align-items:center;gap:3px;background:transparent;border:none;border-bottom:1px dashed var(--g400);color:var(--g400);padding:2px 0;margin-right:8px;font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
     .edit-mode .tag-add-btn{display:inline-flex}
 
-    /* ── EDIT BAR ── */
+    /* EDIT BAR */
     .card-edit-bar{display:none;padding:8px 16px;background:var(--g100);border-top:1px solid var(--g200);gap:8px;align-items:center}
     .edit-mode .card-edit-bar{display:flex}
     .card-edit-bar input{flex:1;font-size:11px;border:1px solid var(--g200);border-radius:2px;padding:4px 8px;font-family:var(--fb);background:var(--white);color:var(--black);outline:none}
     .card-edit-bar button{font-family:var(--fd);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 12px;border-radius:2px;border:none;background:var(--black);color:var(--white);cursor:pointer}
 
-    /* ── CHANGELOG ── */
+    /* CHANGELOG */
     .section-changelog-wrap{padding-top:28px}
     .changelog-list{border:1px solid var(--g200)}
     .changelog-item{padding:10px 20px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:18px;font-size:12px}
     .changelog-item:last-child{border-bottom:none}
     .changelog-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-    .dot-blue{background:var(--blue)} .dot-green{background:var(--success)} .dot-black{background:var(--black)}
+    .dot-blue{background:var(--blue)}.dot-green{background:var(--success)}.dot-black{background:var(--black)}
     .changelog-date{font-family:var(--fd);color:var(--g400);min-width:64px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
     .changelog-tool{font-family:var(--fd);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--black);min-width:72px}
     .changelog-desc{color:var(--warm-dark)}
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     .page-footer{margin-top:64px;padding:18px 0;border-top:1px solid var(--g200);display:flex;justify-content:space-between;align-items:center}
     .footer-brand{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--warm-mid)}
     .footer-link{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid);text-decoration:none;transition:color var(--t)}
     .footer-link:hover{color:var(--black)}
 
-    /* ── MODALES ── */
+    /* MODALES */
     .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.72);z-index:200;align-items:center;justify-content:center}
     .modal-overlay.open{display:flex}
     .modal{background:var(--white);padding:32px;width:420px;max-width:90vw;border-top:2px solid var(--black)}
@@ -194,8 +175,8 @@
   </div>
 </header>
 
-<!-- HERO ANIMADO -->
-<div class="hero">
+<!-- HERO -->
+<div class="hero" id="hero-container">
   <canvas id="hero-canvas"></canvas>
   <div class="hero-badge">
     <div class="hero-dot"></div>
@@ -229,67 +210,16 @@
       <span class="section-count" id="count-activas"></span>
     </div>
     <div class="tools-grid">
-
-      <div class="tool-card" id="card-eett" data-id="eett"
-           data-name="eett selector especificaciones técnicas bim revit"
-           data-taller="todos los talleres"
-           onclick="cardClick(event,'https://mobil-eett.vercel.app')">
-        <div class="card-cover" id="cover-eett">
-          <div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div>
-          <span class="cover-arrow">↗</span>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'eett')">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">EETT Selector</div>
-            <span class="status-badge status-active">Activa</span>
-          </div>
-          <div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div>
-          <div class="tool-meta" id="tags-eett">
-            <span class="tag" data-card="eett">Todos los talleres<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <span class="tag" data-card="eett">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'eett')">+ Tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL…" id="url-eett" value="https://mobil-eett.vercel.app"/>
-          <button onclick="saveUrl(event,'eett')">Guardar</button>
-        </div>
+      <div class="tool-card" id="card-eett" data-id="eett" data-name="eett selector especificaciones técnicas bim revit" data-taller="todos los talleres" onclick="cardClick(event,'https://mobil-eett.vercel.app')">
+        <div class="card-cover" id="cover-eett"><div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'eett')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">EETT Selector</div><span class="status-badge status-active">Activa</span></div><div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div><div class="tool-meta" id="tags-eett"><span class="tag" data-card="eett">Todos los talleres<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><span class="tag" data-card="eett">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'eett')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-eett" value="https://mobil-eett.vercel.app"/><button onclick="saveUrl(event,'eett')">Guardar</button></div>
       </div>
-
-      <div class="tool-card" id="card-calc" data-id="calc"
-           data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel"
-           data-taller="vivienda comercial infraestructura"
-           onclick="cardClick(event,'https://calculadora-m2-two.vercel.app')">
-        <div class="card-cover" id="cover-calc">
-          <div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div>
-          <span class="cover-arrow">↗</span>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'calc')">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Calculadora M²</div>
-            <span class="status-badge status-active">Activa</span>
-          </div>
-          <div class="tool-desc">KPIs de construcción por tipología. Fine-tuning de ratios, costos y exportación CSV.</div>
-          <div class="tool-meta" id="tags-calc">
-            <span class="tag" data-card="calc">Vivienda / Comercial<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <span class="tag" data-card="calc">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'calc')">+ Tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/>
-          <button onclick="saveUrl(event,'calc')">Guardar</button>
-        </div>
+      <div class="tool-card" id="card-calc" data-id="calc" data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel" data-taller="vivienda comercial infraestructura" onclick="cardClick(event,'https://calculadora-m2-two.vercel.app')">
+        <div class="card-cover" id="cover-calc"><div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'calc')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Calculadora M²</div><span class="status-badge status-active">Activa</span></div><div class="tool-desc">KPIs de construcción por tipología. Fine-tuning de ratios, costos y exportación CSV.</div><div class="tool-meta" id="tags-calc"><span class="tag" data-card="calc">Vivienda / Comercial<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><span class="tag" data-card="calc">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'calc')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/><button onclick="saveUrl(event,'calc')">Guardar</button></div>
       </div>
-
     </div>
   </div>
 
@@ -300,92 +230,26 @@
       <span class="section-count" id="count-desarrollo"></span>
     </div>
     <div class="tools-grid">
-
-      <div class="tool-card planned" id="card-bim" data-id="bim"
-           data-name="cubicaciones bim metrados revit extracción"
-           data-taller="salud infraestructura"
-           onclick="cardClick(event,'')">
-        <div class="card-cover" id="cover-bim">
-          <div class="card-cover-placeholder" id="cover-placeholder-bim">🗂️</div>
-          <span class="cover-arrow">↗</span>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'bim')">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Cubicaciones BIM</div>
-            <span class="status-badge status-planned">Planificada</span>
-          </div>
-          <div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div>
-          <div class="tool-meta" id="tags-bim">
-            <span class="tag" data-card="bim">Salud / Infraestructura<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'bim')">+ Tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL…" id="url-bim" value=""/>
-          <button onclick="saveUrl(event,'bim')">Guardar</button>
-        </div>
+      <div class="tool-card planned" id="card-bim" data-id="bim" data-name="cubicaciones bim metrados revit extracción" data-taller="salud infraestructura" onclick="cardClick(event,'')">
+        <div class="card-cover" id="cover-bim"><div class="card-cover-placeholder" id="cover-placeholder-bim">🗂️</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'bim')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Cubicaciones BIM</div><span class="status-badge status-planned">Planificada</span></div><div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div><div class="tool-meta" id="tags-bim"><span class="tag" data-card="bim">Salud / Infraestructura<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'bim')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-bim" value=""/><button onclick="saveUrl(event,'bim')">Guardar</button></div>
       </div>
-
-      <div class="tool-card planned" id="card-gis" data-id="gis"
-           data-name="análisis territorial gis isócronas localización urbano"
-           data-taller="urbano"
-           onclick="cardClick(event,'')">
-        <div class="card-cover" id="cover-gis">
-          <div class="card-cover-placeholder" id="cover-placeholder-gis">🗺️</div>
-          <span class="cover-arrow">↗</span>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'gis')">
-            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Análisis Territorial</div>
-            <span class="status-badge status-planned">Planificada</span>
-          </div>
-          <div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div>
-          <div class="tool-meta" id="tags-gis">
-            <span class="tag" data-card="gis">Urbano<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'gis')">+ Tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL…" id="url-gis" value=""/>
-          <button onclick="saveUrl(event,'gis')">Guardar</button>
-        </div>
+      <div class="tool-card planned" id="card-gis" data-id="gis" data-name="análisis territorial gis isócronas localización urbano" data-taller="urbano" onclick="cardClick(event,'')">
+        <div class="card-cover" id="cover-gis"><div class="card-cover-placeholder" id="cover-placeholder-gis">🗺️</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'gis')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Análisis Territorial</div><span class="status-badge status-planned">Planificada</span></div><div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div><div class="tool-meta" id="tags-gis"><span class="tag" data-card="gis">Urbano<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'gis')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-gis" value=""/><button onclick="saveUrl(event,'gis')">Guardar</button></div>
       </div>
-
     </div>
   </div>
 
   <!-- CHANGELOG -->
   <div class="section-changelog-wrap section-block" id="section-changelog">
-    <div class="section-header">
-      <span class="section-label">Últimos cambios</span>
-    </div>
+    <div class="section-header"><span class="section-label">Últimos cambios</span></div>
     <div class="changelog-list">
-      <div class="changelog-item">
-        <div class="changelog-dot dot-blue"></div>
-        <span class="changelog-date" id="today-date"></span>
-        <span class="changelog-tool">PORTAL</span>
-        <span class="changelog-desc">Hero animado · hover azul · identidad Laboratorio de Data</span>
-      </div>
-      <div class="changelog-item">
-        <div class="changelog-dot dot-green"></div>
-        <span class="changelog-date">Mar 2026</span>
-        <span class="changelog-tool">CALC M²</span>
-        <span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span>
-      </div>
-      <div class="changelog-item">
-        <div class="changelog-dot dot-green"></div>
-        <span class="changelog-date">Mar 2025</span>
-        <span class="changelog-tool">EETT</span>
-        <span class="changelog-desc">Release inicial — Actualización UI</span>
-      </div>
+      <div class="changelog-item"><div class="changelog-dot dot-blue"></div><span class="changelog-date" id="today-date"></span><span class="changelog-tool">PORTAL</span><span class="changelog-desc">Hero hexágono reactivo al mouse · identidad Laboratorio de Data</span></div>
+      <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2026</span><span class="changelog-tool">CALC M²</span><span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span></div>
+      <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2025</span><span class="changelog-tool">EETT</span><span class="changelog-desc">Release inicial — Actualización UI</span></div>
     </div>
   </div>
 
@@ -396,138 +260,192 @@
 </main>
 
 <!-- MODALES -->
-<div class="modal-overlay" id="modal-login">
-  <div class="modal">
-    <div class="modal-eyebrow">Laboratorio de Data · Acceso restringido</div>
-    <h3>Modo edición</h3>
-    <p>Ingresa la clave del Laboratorio de Data para editar portadas y tags.</p>
-    <input type="password" id="login-input" placeholder="Clave de acceso…" onkeydown="if(event.key==='Enter')checkLogin()"/>
-    <p class="login-note">Sesión activa por 7 días en este navegador.</p>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-login')">Cancelar</button>
-      <button class="btn-primary" onclick="checkLogin()">Ingresar</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-cover">
-  <div class="modal">
-    <div class="modal-eyebrow">Editar portada</div>
-    <h3>Imagen de portada</h3>
-    <p>Pega la URL de una imagen de obra o render. Proporción 16:7 recomendada.</p>
-    <img id="cover-preview" class="modal-preview" alt="preview"/>
-    <input type="text" id="cover-url-input" placeholder="https://…" oninput="previewCover(this.value)"/>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-cover')">Cancelar</button>
-      <button class="btn-primary" onclick="applyCover()">Aplicar</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-tag">
-  <div class="modal">
-    <div class="modal-eyebrow">Editar tags</div>
-    <h3>Agregar tag</h3>
-    <p>Escribe el nombre del tag para esta herramienta.</p>
-    <input type="text" id="tag-input" placeholder="Ej: Infraestructura, v2.0, BIM…" onkeydown="if(event.key==='Enter')applyTag()"/>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-tag')">Cancelar</button>
-      <button class="btn-primary" onclick="applyTag()">Agregar</button>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-login"><div class="modal"><div class="modal-eyebrow">Laboratorio de Data · Acceso restringido</div><h3>Modo edición</h3><p>Ingresa la clave del Laboratorio de Data para editar portadas y tags.</p><input type="password" id="login-input" placeholder="Clave de acceso…" onkeydown="if(event.key==='Enter')checkLogin()"/><p class="login-note">Sesión activa por 7 días en este navegador.</p><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-login')">Cancelar</button><button class="btn-primary" onclick="checkLogin()">Ingresar</button></div></div></div>
+<div class="modal-overlay" id="modal-cover"><div class="modal"><div class="modal-eyebrow">Editar portada</div><h3>Imagen de portada</h3><p>Pega la URL de una imagen de obra o render. Proporción 16:7 recomendada.</p><img id="cover-preview" class="modal-preview" alt="preview"/><input type="text" id="cover-url-input" placeholder="https://…" oninput="previewCover(this.value)"/><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-cover')">Cancelar</button><button class="btn-primary" onclick="applyCover()">Aplicar</button></div></div></div>
+<div class="modal-overlay" id="modal-tag"><div class="modal"><div class="modal-eyebrow">Editar tags</div><h3>Agregar tag</h3><p>Escribe el nombre del tag para esta herramienta.</p><input type="text" id="tag-input" placeholder="Ej: Infraestructura, v2.0, BIM…" onkeydown="if(event.key==='Enter')applyTag()"/><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-tag')">Cancelar</button><button class="btn-primary" onclick="applyTag()">Agregar</button></div></div></div>
 
 <script>
-/* ── HERO CANVAS — red de nodos tecnológica minimalista ── */
+/* ════════════════════════════════════════════
+   HERO — Hexágono Mobil que rota y se dispersa
+   ════════════════════════════════════════════ */
 (function(){
-  const canvas = document.getElementById('hero-canvas');
-  const ctx = canvas.getContext('2d');
-  const BLUE = '0,107,255';
-  let W, H, nodes, raf;
+  const canvas  = document.getElementById('hero-canvas');
+  const hero    = document.getElementById('hero-container');
+  const ctx     = canvas.getContext('2d');
 
-  function resize(){
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
+  /* ── Paleta ── */
+  const C_BLUE      = [0, 107, 255];
+  const C_BLUE_DIM  = [0,  60, 140];
+  const C_WHITE     = [255,255,255];
+  const DISPERSE_R  = 120;   /* radio de influencia del cursor */
+  const DISPERSE_F  = 180;   /* fuerza de dispersión */
+  const RETURN_SPD  = 0.055; /* velocidad de retorno (lerp) */
+  const DAMP        = 0.82;  /* amortiguamiento de velocidad */
 
-  function init(){
-    const count = Math.floor(W / 60);
-    nodes = Array.from({length: count}, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - .5) * .4,
-      vy: (Math.random() - .5) * .4,
-      r: Math.random() * 1.5 + .5,
-    }));
-  }
+  let W, H, cx, cy, RAF;
+  let mouse = { x: -9999, y: -9999, inside: false };
+  let rotation = 0;
+  let particles = [];
 
-  function draw(){
-    ctx.clearRect(0, 0, W, H);
+  /* ── Genera los puntos del hexágono en múltiples capas ── */
+  function buildHex(){
+    particles = [];
+    const SIZE   = Math.min(W, H) * 0.32;   /* radio del hexágono */
+    const LAYERS = 6;
 
-    // Líneas entre nodos cercanos
-    for(let i=0; i<nodes.length; i++){
-      for(let j=i+1; j<nodes.length; j++){
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const maxDist = 140;
-        if(dist < maxDist){
-          const alpha = (1 - dist/maxDist) * 0.18;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(${BLUE},${alpha})`;
-          ctx.lineWidth = .5;
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
-        }
+    for(let layer = 0; layer <= LAYERS; layer++){
+      const r = SIZE * (layer / LAYERS);
+      const sides = layer === 0 ? 1 : 6 * layer;
+      for(let i = 0; i < sides; i++){
+        const angle  = (i / sides) * Math.PI * 2;
+        /* Solo puntos en los 6 lados del hexágono — forma hexagonal */
+        const hx = hexX(r, i, sides, layer);
+        const hy = hexY(r, i, sides, layer);
+
+        const alpha = 0.15 + (layer / LAYERS) * 0.75;
+        const size  = layer === LAYERS ? 1.8 : 0.9 + (layer / LAYERS) * 1.0;
+
+        particles.push({
+          ox: cx + hx,  oy: cy + hy,   /* origen (posición en figura) */
+          x:  cx + hx,  y:  cy + hy,   /* posición actual */
+          vx: 0, vy: 0,                 /* velocidad */
+          size, alpha,
+          layer,
+          angleOffset: angle,
+        });
       }
     }
-
-    // Nodos
-    nodes.forEach(n => {
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(${BLUE},0.5)`;
-      ctx.fill();
-
-      // Mover
-      n.x += n.vx; n.y += n.vy;
-      if(n.x < 0 || n.x > W) n.vx *= -1;
-      if(n.y < 0 || n.y > H) n.vy *= -1;
-    });
-
-    raf = requestAnimationFrame(draw);
   }
 
-  resize(); init(); draw();
-  window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); init(); draw(); });
+  /* Distribución de puntos en forma hexagonal por capa */
+  function hexX(r, i, total, layer){
+    if(layer === 0) return 0;
+    /* Distribuir puntos a lo largo de los 6 lados */
+    const side    = Math.floor(i / layer);       /* 0-5 = qué lado */
+    const pos     = (i % layer) / layer;         /* 0-1 posición en el lado */
+    const a1      = (side / 6) * Math.PI * 2 - Math.PI/6;
+    const a2      = ((side+1) / 6) * Math.PI * 2 - Math.PI/6;
+    const x1      = r * Math.cos(a1);
+    const x2      = r * Math.cos(a2);
+    return x1 + (x2 - x1) * pos;
+  }
+
+  function hexY(r, i, total, layer){
+    if(layer === 0) return 0;
+    const side    = Math.floor(i / layer);
+    const pos     = (i % layer) / layer;
+    const a1      = (side / 6) * Math.PI * 2 - Math.PI/6;
+    const a2      = ((side+1) / 6) * Math.PI * 2 - Math.PI/6;
+    const y1      = r * Math.sin(a1);
+    const y2      = r * Math.sin(a2);
+    return y1 + (y2 - y1) * pos;
+  }
+
+  /* ── Resize ── */
+  function resize(){
+    W  = canvas.width  = hero.offsetWidth;
+    H  = canvas.height = hero.offsetHeight;
+    cx = W * 0.72;   /* hexágono en el lado derecho */
+    cy = H * 0.50;
+    buildHex();
+  }
+
+  /* ── Loop principal ── */
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    rotation += 0.003;
+
+    particles.forEach(p => {
+      /* Origen rotado */
+      const dx0 = p.ox - cx;
+      const dy0 = p.oy - cy;
+      const cos = Math.cos(rotation * (1 - p.layer * 0.05));
+      const sin = Math.sin(rotation * (1 - p.layer * 0.05));
+      const tx  = cx + dx0 * cos - dy0 * sin;
+      const ty  = cy + dx0 * sin + dy0 * cos;
+
+      /* Dispersión por mouse */
+      const mdx = p.x - mouse.x;
+      const mdy = p.y - mouse.y;
+      const md  = Math.sqrt(mdx*mdx + mdy*mdy);
+
+      if(mouse.inside && md < DISPERSE_R){
+        const force = (1 - md / DISPERSE_R) * DISPERSE_F;
+        p.vx += (mdx / md) * force * 0.06;
+        p.vy += (mdy / md) * force * 0.06;
+      }
+
+      /* Retorno hacia posición rotada */
+      p.vx += (tx - p.x) * RETURN_SPD;
+      p.vy += (ty - p.y) * RETURN_SPD;
+      p.vx *= DAMP;
+      p.vy *= DAMP;
+      p.x  += p.vx;
+      p.y  += p.vy;
+
+      /* Distancia al origen rotado — determina color */
+      const dist  = Math.sqrt((p.x-tx)*(p.x-tx) + (p.y-ty)*(p.y-ty));
+      const disp  = Math.min(1, dist / 60);
+
+      /* Interpola color: azul → blanco al dispersarse */
+      const r = Math.round(C_BLUE[0] + (C_WHITE[0]-C_BLUE[0]) * disp * 0.6);
+      const g = Math.round(C_BLUE[1] + (C_WHITE[1]-C_BLUE[1]) * disp * 0.6);
+      const b = Math.round(C_BLUE[2] + (C_WHITE[2]-C_BLUE[2]) * disp * 0.6);
+      const a = p.alpha * (0.5 + disp * 0.5);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size + disp * 1.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+      ctx.fill();
+    });
+
+    /* Contorno del hexágono — referencia sutil */
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
+    ctx.beginPath();
+    for(let i=0; i<6; i++){
+      const a = (i/6) * Math.PI*2 - Math.PI/6;
+      const R = Math.min(W,H) * 0.32;
+      const m = i===0 ? 'moveTo' : 'lineTo';
+      ctx[m](R*Math.cos(a), R*Math.sin(a));
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(0,107,255,0.10)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+    ctx.restore();
+
+    RAF = requestAnimationFrame(draw);
+  }
+
+  /* ── Eventos mouse ── */
+  hero.addEventListener('mousemove', e => {
+    const r   = hero.getBoundingClientRect();
+    mouse.x   = e.clientX - r.left;
+    mouse.y   = e.clientY - r.top;
+    mouse.inside = true;
+  });
+  hero.addEventListener('mouseleave', () => { mouse.inside = false; mouse.x=-9999; mouse.y=-9999; });
+
+  /* ── Init ── */
+  resize();
+  draw();
+  window.addEventListener('resize', () => { cancelAnimationFrame(RAF); resize(); draw(); });
 })();
 
-/* ── APP ── */
-const now = new Date();
-document.getElementById('today-date').textContent = now.toLocaleDateString('es-CL',{year:'numeric',month:'short',day:'numeric'});
+/* ════════════════════════════════════════════
+   APP
+   ════════════════════════════════════════════ */
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-CL',{year:'numeric',month:'short',day:'numeric'});
 
 const EDIT_KEY='datalab_edit_auth', EDIT_PASS='interlab2026';
 const COVERS_KEY='datalab_covers', TAGS_KEY='datalab_tags', URLS_KEY='datalab_urls';
 let editMode=false, pendingCardId=null;
 
-function updateCounts(){
-  const a=document.querySelectorAll('#section-activas .tool-card:not(.hidden)').length;
-  const d=document.querySelectorAll('#section-desarrollo .tool-card:not(.hidden)').length;
-  const t=document.querySelectorAll('.tool-card:not(.hidden)').length;
-  document.getElementById('count-activas').textContent=a+' herramienta'+(a!==1?'s':'');
-  document.getElementById('count-desarrollo').textContent=d+' herramienta'+(d!==1?'s':'');
-  document.getElementById('toolbar-count').textContent=t+' herramienta'+(t!==1?'s':'');
-}
+function updateCounts(){ const a=document.querySelectorAll('#section-activas .tool-card:not(.hidden)').length; const d=document.querySelectorAll('#section-desarrollo .tool-card:not(.hidden)').length; const t=document.querySelectorAll('.tool-card:not(.hidden)').length; document.getElementById('count-activas').textContent=a+' herramienta'+(a!==1?'s':''); document.getElementById('count-desarrollo').textContent=d+' herramienta'+(d!==1?'s':''); document.getElementById('toolbar-count').textContent=t+' herramienta'+(t!==1?'s':''); }
 
-function loadState(){
-  const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}');
-  Object.entries(covers).forEach(([id,url])=>setCoverImg(id,url));
-  const urls=JSON.parse(localStorage.getItem(URLS_KEY)||'{}');
-  Object.entries(urls).forEach(([id,url])=>{ const i=document.getElementById('url-'+id); if(i)i.value=url; const c=document.getElementById('card-'+id); if(c)c.dataset.url=url; });
-  const tags=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}');
-  Object.entries(tags).forEach(([id,list])=>{ const c=document.getElementById('tags-'+id); if(!c)return; c.querySelectorAll('.tag').forEach(t=>t.remove()); const btn=c.querySelector('.tag-add-btn'); list.forEach(text=>{ const s=document.createElement('span'); s.className='tag'; s.dataset.card=id; s.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; c.insertBefore(s,btn); }); });
-  updateCounts();
-}
-
+function loadState(){ const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}'); Object.entries(covers).forEach(([id,url])=>setCoverImg(id,url)); const urls=JSON.parse(localStorage.getItem(URLS_KEY)||'{}'); Object.entries(urls).forEach(([id,url])=>{ const i=document.getElementById('url-'+id); if(i)i.value=url; const c=document.getElementById('card-'+id); if(c)c.dataset.url=url; }); const tags=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); Object.entries(tags).forEach(([id,list])=>{ const c=document.getElementById('tags-'+id); if(!c)return; c.querySelectorAll('.tag').forEach(t=>t.remove()); const btn=c.querySelector('.tag-add-btn'); list.forEach(text=>{ const s=document.createElement('span'); s.className='tag'; s.dataset.card=id; s.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; c.insertBefore(s,btn); }); }); updateCounts(); }
 function saveTags(id){ const c=document.getElementById('tags-'+id); const t=[...c.querySelectorAll('.tag')].map(t=>t.childNodes[0].textContent.trim()); const a=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); a[id]=t; localStorage.setItem(TAGS_KEY,JSON.stringify(a)); const card=document.getElementById('card-'+id); if(card)card.dataset.taller=t.join(' ').toLowerCase(); }
 function toggleEditMode(){ const auth=localStorage.getItem(EDIT_KEY); const exp=parseInt(localStorage.getItem(EDIT_KEY+'_exp')||'0'); if(auth==='true'&&Date.now()<exp){ activateEdit(); } else{ openModal('modal-login'); setTimeout(()=>document.getElementById('login-input').focus(),100); } }
 function activateEdit(){ editMode=!editMode; document.body.classList.toggle('edit-mode',editMode); const btn=document.getElementById('edit-toggle-btn'); btn.textContent=editMode?'✓ Salir':'✏ Editar'; btn.classList.toggle('active',editMode); }
@@ -548,16 +466,7 @@ document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click
 const searchInput=document.getElementById('search-input');
 const searchEmpty=document.getElementById('search-empty');
 const sections={activas:document.getElementById('section-activas'),desarrollo:document.getElementById('section-desarrollo'),changelog:document.getElementById('section-changelog')};
-searchInput.addEventListener('input',()=>{
-  const q=searchInput.value.trim().toLowerCase();
-  if(!q){ document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden')); Object.values(sections).forEach(s=>s.classList.remove('hidden')); searchEmpty.style.display='none'; updateCounts(); return; }
-  let total=0;
-  document.querySelectorAll('.tool-card').forEach(card=>{ const m=(card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden',!m); if(m)total++; });
-  ['activas','desarrollo'].forEach(id=>{ const s=sections[id]; s.classList.toggle('hidden',s.querySelectorAll('.tool-card:not(.hidden)').length===0); });
-  sections.changelog.classList.add('hidden');
-  searchEmpty.style.display=total===0?'block':'none';
-  updateCounts();
-});
+searchInput.addEventListener('input',()=>{ const q=searchInput.value.trim().toLowerCase(); if(!q){ document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden')); Object.values(sections).forEach(s=>s.classList.remove('hidden')); searchEmpty.style.display='none'; updateCounts(); return; } let total=0; document.querySelectorAll('.tool-card').forEach(card=>{ const m=(card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden',!m); if(m)total++; }); ['activas','desarrollo'].forEach(id=>{ const s=sections[id]; s.classList.toggle('hidden',s.querySelectorAll('.tool-card:not(.hidden)').length===0); }); sections.changelog.classList.add('hidden'); searchEmpty.style.display=total===0?'block':'none'; updateCounts(); });
 
 loadState();
 </script>
