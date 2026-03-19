@@ -5,50 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DATALAB SUITE — Mobil Arquitectos</title>
   <style>
-    /* ── TOKENS MOBIL ARQUITECTOS ── */
+    /* ── SISTEMA DE DISEÑO MOBIL ARQUITECTOS ──
+       Web: mobilarquitectos.cl — blanco/negro, tipografía condensada caps
+       Institucional: Mobil Blue #006BFF — acento mínimo, no estructural  */
     :root {
-      --blue:         #006BFF;
-      --blue-dark:    #0050CC;
+      --black:        #0A0A0A;
+      --white:        #FFFFFF;
+      --gray-100:     #F5F5F5;
+      --gray-200:     #EBEBEB;
+      --gray-400:     #BDBDBD;
+      --gray-600:     #757575;
+      --warm-dark:    #5D554B;   /* Mobil Dark */
+      --warm-mid:     #A4A3A4;   /* Mid Gray */
+      --warm-light:   #F2F0EC;   /* Stone suave */
+      --blue:         #006BFF;   /* Mobil Blue — solo acentos */
       --blue-light:   #E6F0FF;
-      --dark:         #5D554B;
-      --dark-10:      rgba(93,85,75,0.07);
-      --gray-mid:     #A4A3A4;
-      --gray-light:   #F2F2F2;
-      --stone:        #CFCAC3;
-      --bg:           #F5F4F1;
-      --surface:      #FFFFFF;
-      --border:       #E2E0DA;
-      --border-mid:   #C8C6BF;
       --success:      #1D9E75;
       --success-bg:   #E1F5EE;
-      --warning:      #FBAE40;
-      --warning-bg:   #FFF4E0;
       --font-display: 'Arial Narrow', 'Helvetica Neue Condensed', Arial, sans-serif;
       --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-      --radius:       8px;
-      --radius-lg:    12px;
-      --max-w:        960px;
-      --header-h:     56px;
-      --transition:   0.15s ease;
+      --max-w:        1040px;
+      --t:            0.15s ease;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: var(--font-body);
-      font-size: 14px;
-      background: var(--bg);
-      color: #1a1a18;
+      font-size: 13px;
+      background: var(--white);
+      color: var(--black);
       min-height: 100vh;
       line-height: 1.6;
     }
 
     /* ── HEADER ── */
     header {
-      background: var(--surface);
-      border-bottom: 2px solid var(--blue);
-      padding: 0 40px;
-      height: var(--header-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 48px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -60,193 +56,246 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      background: var(--blue);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Hexágono Mobil — forma del logo oficial */
+    .logo-hex {
+      width: 28px;
+      height: 28px;
       flex-shrink: 0;
     }
 
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-    }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
 
-    .logo-suite {
+    .logo-name {
       font-family: var(--font-display);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #1a1a18;
+      letter-spacing: 0.12em;
+      color: var(--black);
     }
 
     .logo-sub {
-      font-size: 10px;
-      color: var(--gray-mid);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .header-date { font-size: 11px; color: var(--gray-mid); }
-
-    .btn-edit {
       font-family: var(--font-display);
-      font-size: 10px;
-      font-weight: 700;
+      font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 5px 14px;
-      border-radius: var(--radius);
-      border: 1.5px solid var(--border-mid);
-      background: transparent;
-      color: var(--dark);
-      cursor: pointer;
-      transition: var(--transition);
+      letter-spacing: 0.1em;
+      color: var(--warm-mid);
     }
 
-    .btn-edit:hover { border-color: var(--blue); color: var(--blue); }
-    .btn-edit.active { background: var(--blue); color: white; border-color: var(--blue); }
-
-    /* ── MAIN ── */
-    main {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 48px 24px 96px;
+    /* Separador vertical */
+    .header-sep {
+      width: 1px;
+      height: 18px;
+      background: var(--gray-200);
     }
 
-    /* ── PAGE HEADER ── */
-    .page-header {
-      margin-bottom: 40px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
     }
 
-    .page-eyebrow {
+    .nav-link {
       font-family: var(--font-display);
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--blue);
-      margin-bottom: 8px;
+      color: var(--warm-mid);
+      text-decoration: none;
+      transition: color var(--t);
     }
 
-    .page-title {
+    .nav-link:hover, .nav-link.active { color: var(--black); }
+
+    .header-right { display: flex; align-items: center; gap: 12px; }
+
+    .btn-edit {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 14px;
+      border: 1px solid var(--gray-400);
+      border-radius: 2px;
+      background: transparent;
+      color: var(--warm-dark);
+      cursor: pointer;
+      transition: var(--t);
+    }
+
+    .btn-edit:hover { border-color: var(--black); color: var(--black); }
+    .btn-edit.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+    /* ── HERO BAND ── */
+    .hero-band {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 40px 48px 36px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 48px);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #1a1a18;
-      line-height: 1.1;
-      margin-bottom: 6px;
+      color: var(--black);
+      line-height: 1.0;
+      margin-bottom: 12px;
     }
 
-    .page-subtitle {
+    .hero-sub {
       font-size: 13px;
-      color: var(--dark);
-      max-width: 560px;
+      color: var(--warm-dark);
+      max-width: 480px;
+      line-height: 1.7;
     }
 
-    /* ── BUSCADOR ── */
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--gray-200);
+      background: var(--white);
+      position: sticky;
+      top: 52px;
+      z-index: 90;
+    }
+
     .search-wrapper {
       position: relative;
-      margin-bottom: 40px;
+      flex: 1;
+      max-width: 380px;
     }
 
     .search-icon {
       position: absolute;
-      left: 14px;
+      left: 12px;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      color: var(--gray-mid);
+      width: 14px;
+      height: 14px;
+      color: var(--gray-400);
       pointer-events: none;
     }
 
     .search-input {
       width: 100%;
-      height: 44px;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0 16px 0 42px;
-      font-size: 13px;
+      height: 36px;
+      background: var(--gray-100);
+      border: 1px solid transparent;
+      border-radius: 2px;
+      padding: 0 12px 0 36px;
+      font-size: 12px;
       font-family: var(--font-body);
-      color: #1a1a18;
+      color: var(--black);
       outline: none;
-      transition: var(--transition);
+      transition: var(--t);
     }
 
-    .search-input::placeholder { color: var(--gray-mid); }
-    .search-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
-    .search-empty { display: none; text-align: center; padding: 48px 0; font-size: 13px; color: var(--gray-mid); }
+    .search-input::placeholder { color: var(--gray-400); }
+    .search-input:focus { border-color: var(--black); background: var(--white); }
+
+    .toolbar-count {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--warm-mid);
+      white-space: nowrap;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 48px 96px;
+    }
+
+    .search-empty {
+      display: none;
+      text-align: center;
+      padding: 64px 0;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+    }
 
     /* ── SECTION ── */
-    .section-block { margin-bottom: 48px; }
+    .section-block { margin-bottom: 0; }
     .section-block.hidden { display: none; }
 
     .section-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 16px;
+      padding: 28px 0 16px;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 24px;
     }
 
     .section-label {
       font-family: var(--font-display);
-      font-size: 10px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--black);
+    }
+
+    .section-count {
+      font-family: var(--font-display);
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--gray-mid);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
+      color: var(--gray-400);
     }
 
     /* ── GRID ── */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--gray-200);
+      border: 1px solid var(--gray-200);
+      margin-bottom: 1px;
     }
 
     /* ── TOOL CARD ── */
     .tool-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
+      background: var(--white);
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      transition: background var(--t);
       position: relative;
     }
 
-    .tool-card:not(.planned):hover {
-      border-color: var(--blue);
-      box-shadow: 0 4px 16px rgba(0,107,255,0.10);
-      transform: translateY(-1px);
-    }
+    .tool-card:not(.planned):hover { background: var(--gray-100); }
 
     .tool-card.planned {
-      opacity: 0.55;
+      opacity: 0.45;
       pointer-events: none;
     }
 
@@ -256,12 +305,11 @@
     /* ── COVER ── */
     .card-cover {
       width: 100%;
-      height: 120px;
-      background: var(--dark-10);
+      aspect-ratio: 16/7;
+      background: var(--warm-light);
       overflow: hidden;
       position: relative;
       flex-shrink: 0;
-      border-bottom: 1px solid var(--border);
     }
 
     .card-cover-placeholder {
@@ -270,32 +318,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
-      opacity: 0.5;
+      font-size: 24px;
+      opacity: 0.25;
+      background: linear-gradient(135deg, var(--gray-200) 0%, var(--warm-light) 100%);
+    }
+
+    .cover-img-el {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      inset: 0;
     }
 
     .cover-edit-btn {
       display: none;
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       align-items: center;
       justify-content: center;
       cursor: pointer;
       gap: 6px;
-      color: white;
+      color: var(--white);
       font-family: var(--font-display);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
     }
 
     .edit-mode .cover-edit-btn { display: flex; }
 
     /* ── CARD BODY ── */
     .card-body {
-      padding: 16px 18px 18px;
+      padding: 18px 20px 20px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -311,77 +369,61 @@
 
     .tool-name {
       font-family: var(--font-display);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #1a1a18;
-      line-height: 1.2;
+      letter-spacing: 0.05em;
+      color: var(--black);
+      line-height: 1.15;
     }
 
     .status-badge {
       font-family: var(--font-display);
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       padding: 3px 8px;
-      border-radius: 3px;
+      border-radius: 1px;
       flex-shrink: 0;
       white-space: nowrap;
     }
 
-    .status-active {
-      background: var(--blue);
-      color: white;
-    }
-
-    .status-planned {
-      background: var(--gray-light);
-      color: var(--gray-mid);
-      border: 1px solid var(--border);
-    }
+    .status-active { background: var(--black); color: var(--white); }
+    .status-planned { background: transparent; color: var(--gray-400); border: 1px solid var(--gray-200); }
 
     .tool-desc {
       font-size: 12px;
-      color: var(--dark);
-      line-height: 1.5;
+      color: var(--warm-dark);
+      line-height: 1.6;
     }
 
     /* ── TAGS ── */
     .tool-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-      margin-top: 2px;
+      gap: 4px;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-200);
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      background: var(--blue-light);
-      color: var(--blue-dark);
-      padding: 2px 8px;
-      border-radius: 3px;
+      background: transparent;
+      color: var(--warm-dark);
+      padding: 2px 0;
       font-family: var(--font-display);
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--gray-400);
+      margin-right: 8px;
     }
 
-    .tag-remove {
-      cursor: pointer;
-      font-size: 12px;
-      line-height: 1;
-      display: none;
-      color: var(--blue);
-      opacity: 0.6;
-    }
-
+    .tag-remove { cursor: pointer; font-size: 11px; line-height: 1; display: none; color: var(--gray-400); }
     .edit-mode .tag-remove { display: inline; }
 
     .tag-add-btn {
@@ -389,15 +431,16 @@
       align-items: center;
       gap: 3px;
       background: transparent;
-      border: 1px dashed var(--border-mid);
-      color: var(--gray-mid);
-      padding: 2px 8px;
-      border-radius: 3px;
+      border: none;
+      border-bottom: 1px dashed var(--gray-400);
+      color: var(--gray-400);
+      padding: 2px 0;
+      margin-right: 8px;
       font-family: var(--font-display);
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       cursor: pointer;
     }
 
@@ -407,8 +450,8 @@
     .card-edit-bar {
       display: none;
       padding: 8px 16px;
-      background: var(--blue-light);
-      border-top: 1px solid #C0D4FF;
+      background: var(--gray-100);
+      border-top: 1px solid var(--gray-200);
       gap: 8px;
       align-items: center;
     }
@@ -418,35 +461,112 @@
     .card-edit-bar input {
       flex: 1;
       font-size: 11px;
-      border: 1px solid #C0D4FF;
-      border-radius: 5px;
+      border: 1px solid var(--gray-200);
+      border-radius: 2px;
       padding: 4px 8px;
       font-family: var(--font-body);
-      background: white;
-      color: #1a1a18;
+      background: var(--white);
+      color: var(--black);
       outline: none;
     }
 
     .card-edit-bar button {
       font-family: var(--font-display);
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 2px;
+      border: none;
+      background: var(--black);
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    /* ── CHANGELOG ── */
+    .section-changelog-wrap { padding-top: 28px; }
+
+    .changelog-list {
+      border: 1px solid var(--gray-200);
+    }
+
+    .changelog-item {
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 12px;
+    }
+
+    .changelog-item:last-child { border-bottom: none; }
+
+    .changelog-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .dot-blue    { background: var(--blue); }
+    .dot-green   { background: var(--success); }
+    .dot-black   { background: var(--black); }
+
+    .changelog-date {
+      font-family: var(--font-display);
+      color: var(--gray-400);
+      min-width: 64px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .changelog-tool {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      min-width: 72px;
+    }
+
+    .changelog-desc { color: var(--warm-dark); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      margin-top: 64px;
+      padding: 20px 0;
+      border-top: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 4px 12px;
-      border-radius: 4px;
-      border: none;
-      background: var(--blue);
-      color: white;
-      cursor: pointer;
+      letter-spacing: 0.12em;
+      color: var(--warm-mid);
     }
+
+    .footer-link {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--warm-mid);
+      text-decoration: none;
+      transition: color var(--t);
+    }
+
+    .footer-link:hover { color: var(--black); }
 
     /* ── MODALES ── */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(93,85,75,0.5);
+      background: rgba(10,10,10,0.7);
       z-index: 200;
       align-items: center;
       justify-content: center;
@@ -455,162 +575,107 @@
     .modal-overlay.open { display: flex; }
 
     .modal {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      width: 440px;
+      background: var(--white);
+      padding: 32px;
+      width: 420px;
       max-width: 90vw;
-      border-top: 3px solid var(--blue);
+      border-top: 2px solid var(--black);
     }
 
     .modal-eyebrow {
       font-family: var(--font-display);
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--blue);
-      margin-bottom: 4px;
+      letter-spacing: 0.16em;
+      color: var(--warm-mid);
+      margin-bottom: 6px;
     }
 
     .modal h3 {
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #1a1a18;
+      letter-spacing: 0.05em;
+      color: var(--black);
       margin-bottom: 8px;
     }
 
     .modal p {
       font-size: 12px;
-      color: var(--dark);
-      margin-bottom: 16px;
-      line-height: 1.6;
+      color: var(--warm-dark);
+      margin-bottom: 18px;
+      line-height: 1.7;
     }
 
     .modal input {
       width: 100%;
       height: 40px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      border-radius: 0;
       padding: 0 12px;
       font-size: 13px;
       font-family: var(--font-body);
       outline: none;
       margin-bottom: 12px;
-      color: #1a1a18;
+      color: var(--black);
+      background: var(--gray-100);
+      transition: var(--t);
     }
 
-    .modal input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+    .modal input:focus { border-color: var(--black); background: var(--white); }
 
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
 
     .btn-cancel {
-      padding: 7px 16px;
-      border-radius: var(--radius);
-      border: 1.5px solid var(--border-mid);
+      padding: 8px 18px;
+      border: 1px solid var(--gray-400);
       background: transparent;
       font-family: var(--font-display);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       cursor: pointer;
-      color: var(--dark);
+      color: var(--warm-dark);
+      transition: var(--t);
     }
+
+    .btn-cancel:hover { border-color: var(--black); color: var(--black); }
 
     .btn-primary {
-      padding: 7px 16px;
-      border-radius: var(--radius);
+      padding: 8px 18px;
       border: none;
-      background: var(--blue);
-      color: white;
+      background: var(--black);
+      color: var(--white);
       font-family: var(--font-display);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       cursor: pointer;
+      transition: var(--t);
     }
 
-    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-primary:hover { background: var(--warm-dark); }
 
     .modal-preview {
       width: 100%;
-      height: 120px;
-      border-radius: var(--radius);
+      aspect-ratio: 16/7;
       object-fit: cover;
       margin-bottom: 12px;
       display: none;
-      background: var(--gray-light);
+      background: var(--gray-100);
     }
 
     .login-note {
       font-size: 10px;
-      color: var(--gray-mid);
+      color: var(--gray-400);
       text-align: center;
-      margin-top: 2px;
+      margin-top: 4px;
       margin-bottom: 0;
     }
-
-    /* ── CHANGELOG ── */
-    .changelog-list {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    .changelog-item {
-      padding: 12px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 12px;
-    }
-
-    .changelog-item:last-child { border-bottom: none; }
-
-    .changelog-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .dot-blue    { background: var(--blue); }
-    .dot-green   { background: var(--success); }
-    .dot-amber   { background: var(--warning); }
-
-    .changelog-date { color: var(--gray-mid); min-width: 70px; font-size: 11px; }
-    .changelog-tool {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--blue);
-      min-width: 64px;
-    }
-    .changelog-desc { color: var(--dark); }
-
-    /* ── FOOTER ── */
-    .page-footer {
-      margin-top: 64px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-brand {
-      font-family: var(--font-display);
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--gray-mid);
-    }
-
-    .footer-date { font-size: 11px; color: var(--gray-mid); }
 
   </style>
 </head>
@@ -618,47 +683,63 @@
 
 <header>
   <div class="logo">
-    <div class="logo-mark"></div>
+    <!-- Hexágono Mobil Arquitectos -->
+    <svg class="logo-hex" viewBox="0 0 28 28" fill="none">
+      <polygon points="14,2 25,8 25,20 14,26 3,20 3,8" fill="#0A0A0A"/>
+      <polygon points="14,6 21.5,10 21.5,18 14,22 6.5,18 6.5,10" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
+    </svg>
     <div class="logo-text">
-      <span class="logo-suite">Datalab Suite</span>
+      <span class="logo-name">Datalab Suite</span>
       <span class="logo-sub">Mobil Arquitectos · INTERLAB</span>
     </div>
   </div>
   <div class="header-right">
-    <span class="header-date" id="build-date"></span>
+    <nav class="header-nav">
+      <a href="#" class="nav-link active">Herramientas</a>
+      <a href="https://www.mobilarquitectos.cl" target="_blank" class="nav-link">mobilarquitectos.cl ↗</a>
+    </nav>
+    <div class="header-sep"></div>
     <button class="btn-edit" id="edit-toggle-btn" onclick="toggleEditMode()">✏ Editar</button>
   </div>
 </header>
 
-<main>
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-eyebrow">INTERLAB · Herramientas digitales</div>
+  <h1 class="hero-title">Herramientas<br>digitales</h1>
+  <p class="hero-sub">Aplicaciones desarrolladas por INTERLAB para los talleres de Mobil Arquitectos. Data · Sustentabilidad · Constructibilidad.</p>
+</div>
 
-  <div class="page-header">
-    <div class="page-eyebrow">INTERLAB · Herramientas digitales</div>
-    <h1 class="page-title">Herramientas digitales</h1>
-    <p class="page-subtitle">Aplicaciones desarrolladas por INTERLAB para los talleres de Mobil Arquitectos.</p>
-  </div>
-
+<!-- TOOLBAR -->
+<div class="toolbar">
   <div class="search-wrapper">
     <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="6.5" cy="6.5" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
     </svg>
     <input class="search-input" id="search-input" type="text" placeholder="Buscar por nombre o taller…" autocomplete="off"/>
   </div>
+  <span class="toolbar-count" id="toolbar-count"></span>
+</div>
+
+<main>
   <div class="search-empty" id="search-empty">Sin resultados para esta búsqueda.</div>
 
   <!-- ACTIVAS -->
   <div class="section-block" id="section-activas">
     <div class="section-header">
       <span class="section-label">Activas</span>
-      <div class="section-line"></div>
+      <span class="section-count" id="count-activas"></span>
     </div>
     <div class="tools-grid">
 
-      <div class="tool-card" id="card-eett" data-id="eett" data-name="eett selector especificaciones técnicas bim revit" data-taller="todos los talleres" onclick="cardClick(event,'https://mobil-eett.vercel.app')">
+      <div class="tool-card" id="card-eett" data-id="eett"
+           data-name="eett selector especificaciones técnicas bim revit"
+           data-taller="todos los talleres"
+           onclick="cardClick(event,'https://mobil-eett.vercel.app')">
         <div class="card-cover" id="cover-eett">
           <div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'eett')">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
             Cambiar portada
           </div>
         </div>
@@ -675,16 +756,19 @@
           </div>
         </div>
         <div class="card-edit-bar">
-          <input type="text" placeholder="URL de la herramienta…" id="url-eett" value="https://mobil-eett.vercel.app"/>
+          <input type="text" placeholder="URL…" id="url-eett" value="https://mobil-eett.vercel.app"/>
           <button onclick="saveUrl(event,'eett')">Guardar</button>
         </div>
       </div>
 
-      <div class="tool-card" id="card-calc" data-id="calc" data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel" data-taller="vivienda comercial infraestructura" onclick="cardClick(event,'https://calculadora-m2-two.vercel.app')">
+      <div class="tool-card" id="card-calc" data-id="calc"
+           data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel"
+           data-taller="vivienda comercial infraestructura"
+           onclick="cardClick(event,'https://calculadora-m2-two.vercel.app')">
         <div class="card-cover" id="cover-calc">
           <div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'calc')">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
             Cambiar portada
           </div>
         </div>
@@ -701,7 +785,7 @@
           </div>
         </div>
         <div class="card-edit-bar">
-          <input type="text" placeholder="URL de la herramienta…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/>
+          <input type="text" placeholder="URL…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/>
           <button onclick="saveUrl(event,'calc')">Guardar</button>
         </div>
       </div>
@@ -713,15 +797,18 @@
   <div class="section-block" id="section-desarrollo">
     <div class="section-header">
       <span class="section-label">En desarrollo</span>
-      <div class="section-line"></div>
+      <span class="section-count" id="count-desarrollo"></span>
     </div>
     <div class="tools-grid">
 
-      <div class="tool-card planned" id="card-bim" data-id="bim" data-name="cubicaciones bim metrados revit extracción" data-taller="salud infraestructura" onclick="cardClick(event,'')">
+      <div class="tool-card planned" id="card-bim" data-id="bim"
+           data-name="cubicaciones bim metrados revit extracción"
+           data-taller="salud infraestructura"
+           onclick="cardClick(event,'')">
         <div class="card-cover" id="cover-bim">
           <div class="card-cover-placeholder" id="cover-placeholder-bim">🗂️</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'bim')">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
             Cambiar portada
           </div>
         </div>
@@ -737,16 +824,19 @@
           </div>
         </div>
         <div class="card-edit-bar">
-          <input type="text" placeholder="URL cuando esté lista…" id="url-bim" value=""/>
+          <input type="text" placeholder="URL…" id="url-bim" value=""/>
           <button onclick="saveUrl(event,'bim')">Guardar</button>
         </div>
       </div>
 
-      <div class="tool-card planned" id="card-gis" data-id="gis" data-name="análisis territorial gis isócronas localización urbano" data-taller="urbano" onclick="cardClick(event,'')">
+      <div class="tool-card planned" id="card-gis" data-id="gis"
+           data-name="análisis territorial gis isócronas localización urbano"
+           data-taller="urbano"
+           onclick="cardClick(event,'')">
         <div class="card-cover" id="cover-gis">
           <div class="card-cover-placeholder" id="cover-placeholder-gis">🗺️</div>
           <div class="cover-edit-btn" onclick="openCoverModal(event,'gis')">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>
             Cambiar portada
           </div>
         </div>
@@ -762,7 +852,7 @@
           </div>
         </div>
         <div class="card-edit-bar">
-          <input type="text" placeholder="URL cuando esté lista…" id="url-gis" value=""/>
+          <input type="text" placeholder="URL…" id="url-gis" value=""/>
           <button onclick="saveUrl(event,'gis')">Guardar</button>
         </div>
       </div>
@@ -771,17 +861,16 @@
   </div>
 
   <!-- CHANGELOG -->
-  <div class="section-block" id="section-changelog">
+  <div class="section-changelog-wrap section-block" id="section-changelog">
     <div class="section-header">
       <span class="section-label">Últimos cambios</span>
-      <div class="section-line"></div>
     </div>
     <div class="changelog-list">
       <div class="changelog-item">
-        <div class="changelog-dot dot-blue"></div>
+        <div class="changelog-dot dot-black"></div>
         <span class="changelog-date" id="today-date"></span>
         <span class="changelog-tool">PORTAL</span>
-        <span class="changelog-desc">Sistema de diseño Mobil Arquitectos aplicado</span>
+        <span class="changelog-desc">Rediseño con identidad web Mobil Arquitectos</span>
       </div>
       <div class="changelog-item">
         <div class="changelog-dot dot-green"></div>
@@ -800,9 +889,8 @@
 
   <div class="page-footer">
     <span class="footer-brand">INTERLAB · Mobil Arquitectos</span>
-    <span class="footer-date" id="footer-build"></span>
+    <a href="https://www.mobilarquitectos.cl" target="_blank" class="footer-link">mobilarquitectos.cl ↗</a>
   </div>
-
 </main>
 
 <!-- MODALES -->
@@ -824,9 +912,9 @@
   <div class="modal">
     <div class="modal-eyebrow">Editar portada</div>
     <h3>Imagen de portada</h3>
-    <p>Pega la URL de una imagen (800×400px recomendado). Puedes usar Unsplash u otras imágenes públicas.</p>
+    <p>Pega la URL de una imagen de obra o render de proyecto. Proporción 16:7 recomendada.</p>
     <img id="cover-preview" class="modal-preview" alt="preview"/>
-    <input type="text" id="cover-url-input" placeholder="https://images.unsplash.com/…" oninput="previewCover(this.value)"/>
+    <input type="text" id="cover-url-input" placeholder="https://…" oninput="previewCover(this.value)"/>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('modal-cover')">Cancelar</button>
       <button class="btn-primary" onclick="applyCover()">Aplicar</button>
@@ -849,15 +937,22 @@
 
 <script>
   const now = new Date();
-  const fmtLong  = now.toLocaleDateString('es-CL', { year:'numeric', month:'long', day:'numeric' });
   const fmtShort = now.toLocaleDateString('es-CL', { year:'numeric', month:'short', day:'numeric' });
-  document.getElementById('build-date').textContent   = fmtLong;
-  document.getElementById('footer-build').textContent = 'Actualizado: ' + fmtLong;
-  document.getElementById('today-date').textContent   = fmtShort;
+  document.getElementById('today-date').textContent = fmtShort;
 
   const EDIT_KEY='datalab_edit_auth', EDIT_PASS='interlab2026';
   const COVERS_KEY='datalab_covers', TAGS_KEY='datalab_tags', URLS_KEY='datalab_urls';
   let editMode=false, pendingCardId=null;
+
+  // Contadores
+  function updateCounts() {
+    const activas = document.querySelectorAll('#section-activas .tool-card:not(.hidden)').length;
+    const desarrollo = document.querySelectorAll('#section-desarrollo .tool-card:not(.hidden)').length;
+    const total = document.querySelectorAll('.tool-card:not(.hidden)').length;
+    document.getElementById('count-activas').textContent = activas + ' herramienta' + (activas!==1?'s':'');
+    document.getElementById('count-desarrollo').textContent = desarrollo + ' herramienta' + (desarrollo!==1?'s':'');
+    document.getElementById('toolbar-count').textContent = total + ' herramienta' + (total!==1?'s':'');
+  }
 
   function loadState() {
     const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}');
@@ -866,34 +961,43 @@
     Object.entries(urls).forEach(([id,url])=>{ const inp=document.getElementById('url-'+id); if(inp)inp.value=url; const card=document.getElementById('card-'+id); if(card)card.dataset.url=url; });
     const tags=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}');
     Object.entries(tags).forEach(([id,tagList])=>{ const container=document.getElementById('tags-'+id); if(!container)return; container.querySelectorAll('.tag').forEach(t=>t.remove()); const btn=container.querySelector('.tag-add-btn'); tagList.forEach(text=>{ const span=document.createElement('span'); span.className='tag'; span.dataset.card=id; span.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; container.insertBefore(span,btn); }); });
+    updateCounts();
   }
 
-  function saveTags(id) { const container=document.getElementById('tags-'+id); const tags=[...container.querySelectorAll('.tag')].map(t=>t.childNodes[0].textContent.trim()); const all=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); all[id]=tags; localStorage.setItem(TAGS_KEY,JSON.stringify(all)); const card=document.getElementById('card-'+id); if(card)card.dataset.taller=tags.join(' ').toLowerCase(); }
+  function saveTags(id) { const c=document.getElementById('tags-'+id); const t=[...c.querySelectorAll('.tag')].map(t=>t.childNodes[0].textContent.trim()); const a=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); a[id]=t; localStorage.setItem(TAGS_KEY,JSON.stringify(a)); const card=document.getElementById('card-'+id); if(card)card.dataset.taller=t.join(' ').toLowerCase(); }
 
-  function toggleEditMode() { const auth=localStorage.getItem(EDIT_KEY); const expiry=parseInt(localStorage.getItem(EDIT_KEY+'_exp')||'0'); if(auth==='true'&&Date.now()<expiry){ activateEdit(); } else{ openModal('modal-login'); setTimeout(()=>document.getElementById('login-input').focus(),100); } }
-
+  function toggleEditMode() { const auth=localStorage.getItem(EDIT_KEY); const exp=parseInt(localStorage.getItem(EDIT_KEY+'_exp')||'0'); if(auth==='true'&&Date.now()<exp){ activateEdit(); } else{ openModal('modal-login'); setTimeout(()=>document.getElementById('login-input').focus(),100); } }
   function activateEdit() { editMode=!editMode; document.body.classList.toggle('edit-mode',editMode); const btn=document.getElementById('edit-toggle-btn'); btn.textContent=editMode?'✓ Salir':'✏ Editar'; btn.classList.toggle('active',editMode); }
-
-  function checkLogin() { const val=document.getElementById('login-input').value; if(val===EDIT_PASS){ localStorage.setItem(EDIT_KEY,'true'); localStorage.setItem(EDIT_KEY+'_exp',Date.now()+7*24*60*60*1000); closeModal('modal-login'); document.getElementById('login-input').value=''; activateEdit(); } else{ document.getElementById('login-input').style.borderColor='#D93025'; setTimeout(()=>document.getElementById('login-input').style.borderColor='',800); } }
+  function checkLogin() { const v=document.getElementById('login-input').value; if(v===EDIT_PASS){ localStorage.setItem(EDIT_KEY,'true'); localStorage.setItem(EDIT_KEY+'_exp',Date.now()+7*24*60*60*1000); closeModal('modal-login'); document.getElementById('login-input').value=''; activateEdit(); } else{ document.getElementById('login-input').style.borderColor='#E53935'; setTimeout(()=>document.getElementById('login-input').style.borderColor='',800); } }
 
   function openCoverModal(e,id){ e.preventDefault(); e.stopPropagation(); pendingCardId=id; document.getElementById('cover-url-input').value=''; document.getElementById('cover-preview').style.display='none'; openModal('modal-cover'); setTimeout(()=>document.getElementById('cover-url-input').focus(),100); }
-  function previewCover(url){ const img=document.getElementById('cover-preview'); if(url.startsWith('http')){ img.src=url; img.style.display='block'; img.onerror=()=>img.style.display='none'; } else{ img.style.display='none'; } }
-  function applyCover(){ const url=document.getElementById('cover-url-input').value.trim(); if(!url||!pendingCardId)return; setCoverImg(pendingCardId,url); const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}'); covers[pendingCardId]=url; localStorage.setItem(COVERS_KEY,JSON.stringify(covers)); closeModal('modal-cover'); }
-  function setCoverImg(id,url){ const cover=document.getElementById('cover-'+id); const placeholder=document.getElementById('cover-placeholder-'+id); if(!cover)return; let img=cover.querySelector('img.cover-img'); if(!img){ img=document.createElement('img'); img.className='cover-img'; cover.insertBefore(img,cover.firstChild); } img.src=url; img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;'; if(placeholder)placeholder.style.display='none'; }
+  function previewCover(url){ const img=document.getElementById('cover-preview'); if(url.startsWith('http')){ img.src=url; img.style.display='block'; img.onerror=()=>img.style.display='none'; } else img.style.display='none'; }
+  function applyCover(){ const url=document.getElementById('cover-url-input').value.trim(); if(!url||!pendingCardId)return; setCoverImg(pendingCardId,url); const c=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}'); c[pendingCardId]=url; localStorage.setItem(COVERS_KEY,JSON.stringify(c)); closeModal('modal-cover'); }
+  function setCoverImg(id,url){ const cover=document.getElementById('cover-'+id); const ph=document.getElementById('cover-placeholder-'+id); if(!cover)return; let img=cover.querySelector('img.cover-img-el'); if(!img){ img=document.createElement('img'); img.className='cover-img-el'; cover.insertBefore(img,cover.firstChild); } img.src=url; if(ph)ph.style.display='none'; }
 
   function addTag(e,id){ e.preventDefault(); e.stopPropagation(); pendingCardId=id; document.getElementById('tag-input').value=''; openModal('modal-tag'); setTimeout(()=>document.getElementById('tag-input').focus(),100); }
-  function applyTag(){ const text=document.getElementById('tag-input').value.trim(); if(!text||!pendingCardId)return; const container=document.getElementById('tags-'+pendingCardId); const btn=container.querySelector('.tag-add-btn'); const span=document.createElement('span'); span.className='tag'; span.dataset.card=pendingCardId; span.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; container.insertBefore(span,btn); saveTags(pendingCardId); closeModal('modal-tag'); }
-  function removeTag(e,el){ e.preventDefault(); e.stopPropagation(); const tag=el.parentElement; const id=tag.dataset.card; tag.remove(); saveTags(id); }
-  function saveUrl(e,id){ e.preventDefault(); e.stopPropagation(); const url=document.getElementById('url-'+id).value.trim(); const card=document.getElementById('card-'+id); card.dataset.url=url; const urls=JSON.parse(localStorage.getItem(URLS_KEY)||'{}'); urls[id]=url; localStorage.setItem(URLS_KEY,JSON.stringify(urls)); const btn=e.target; btn.textContent='✓'; setTimeout(()=>btn.textContent='Guardar',1500); }
-  function cardClick(e,defaultUrl){ if(editMode)return; const card=e.currentTarget; const url=card.dataset.url||defaultUrl; if(url)window.open(url,'_blank'); }
+  function applyTag(){ const t=document.getElementById('tag-input').value.trim(); if(!t||!pendingCardId)return; const c=document.getElementById('tags-'+pendingCardId); const btn=c.querySelector('.tag-add-btn'); const s=document.createElement('span'); s.className='tag'; s.dataset.card=pendingCardId; s.innerHTML=t+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; c.insertBefore(s,btn); saveTags(pendingCardId); closeModal('modal-tag'); }
+  function removeTag(e,el){ e.preventDefault(); e.stopPropagation(); const t=el.parentElement; const id=t.dataset.card; t.remove(); saveTags(id); }
+  function saveUrl(e,id){ e.preventDefault(); e.stopPropagation(); const url=document.getElementById('url-'+id).value.trim(); const card=document.getElementById('card-'+id); card.dataset.url=url; const u=JSON.parse(localStorage.getItem(URLS_KEY)||'{}'); u[id]=url; localStorage.setItem(URLS_KEY,JSON.stringify(u)); const btn=e.target; btn.textContent='✓'; setTimeout(()=>btn.textContent='Guardar',1500); }
+  function cardClick(e,def){ if(editMode)return; const url=e.currentTarget.dataset.url||def; if(url)window.open(url,'_blank'); }
   function openModal(id){ document.getElementById(id).classList.add('open'); }
   function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-  document.querySelectorAll('.modal-overlay').forEach(m=>{ m.addEventListener('click',e=>{ if(e.target===m)closeModal(m.id); }); });
+  document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m)closeModal(m.id); }));
 
   const searchInput=document.getElementById('search-input');
   const searchEmpty=document.getElementById('search-empty');
   const sections={ activas:document.getElementById('section-activas'), desarrollo:document.getElementById('section-desarrollo'), changelog:document.getElementById('section-changelog') };
-  searchInput.addEventListener('input',()=>{ const q=searchInput.value.trim().toLowerCase(); if(!q){ document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden')); Object.values(sections).forEach(s=>s.classList.remove('hidden')); searchEmpty.style.display='none'; return; } let total=0; document.querySelectorAll('.tool-card').forEach(card=>{ const match=(card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden',!match); if(match)total++; }); ['activas','desarrollo'].forEach(id=>{ const s=sections[id]; s.classList.toggle('hidden',s.querySelectorAll('.tool-card:not(.hidden)').length===0); }); sections.changelog.classList.add('hidden'); searchEmpty.style.display=total===0?'block':'none'; });
+
+  searchInput.addEventListener('input',()=>{
+    const q=searchInput.value.trim().toLowerCase();
+    if(!q){ document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden')); Object.values(sections).forEach(s=>s.classList.remove('hidden')); searchEmpty.style.display='none'; updateCounts(); return; }
+    let total=0;
+    document.querySelectorAll('.tool-card').forEach(card=>{ const m=(card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden',!m); if(m)total++; });
+    ['activas','desarrollo'].forEach(id=>{ const s=sections[id]; s.classList.toggle('hidden',s.querySelectorAll('.tool-card:not(.hidden)').length===0); });
+    sections.changelog.classList.add('hidden');
+    searchEmpty.style.display=total===0?'block':'none';
+    updateCounts();
+  });
 
   loadState();
 </script>
