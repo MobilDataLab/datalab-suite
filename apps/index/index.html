@@ -42,7 +42,7 @@
     .btn-edit.active{background:var(--black);color:var(--white);border-color:var(--black)}
 
     /* HERO */
-    .hero{position:relative;height:380px;background:#050810;overflow:hidden;border-bottom:1px solid var(--g200);cursor:none}
+    .hero{position:relative;height:380px;background:#050810;overflow:hidden;border-bottom:1px solid var(--g200)}
     #hero-canvas{position:absolute;inset:0;width:100%;height:100%}
     .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 52px;pointer-events:none}
     .hero-eyebrow{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--blue);margin-bottom:12px}
@@ -247,7 +247,7 @@
   <div class="section-changelog-wrap section-block" id="section-changelog">
     <div class="section-header"><span class="section-label">Últimos cambios</span></div>
     <div class="changelog-list">
-      <div class="changelog-item"><div class="changelog-dot dot-blue"></div><span class="changelog-date" id="today-date"></span><span class="changelog-tool">PORTAL</span><span class="changelog-desc">Hero hexágono reactivo al mouse · identidad Laboratorio de Data</span></div>
+      <div class="changelog-item"><div class="changelog-dot dot-blue"></div><span class="changelog-date" id="today-date"></span><span class="changelog-tool">PORTAL</span><span class="changelog-desc">Hero hexágono +/- · dispersión sutil reactiva al cursor</span></div>
       <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2026</span><span class="changelog-tool">CALC M²</span><span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span></div>
       <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2025</span><span class="changelog-tool">EETT</span><span class="changelog-desc">Release inicial — Actualización UI</span></div>
     </div>
@@ -265,168 +265,159 @@
 <div class="modal-overlay" id="modal-tag"><div class="modal"><div class="modal-eyebrow">Editar tags</div><h3>Agregar tag</h3><p>Escribe el nombre del tag para esta herramienta.</p><input type="text" id="tag-input" placeholder="Ej: Infraestructura, v2.0, BIM…" onkeydown="if(event.key==='Enter')applyTag()"/><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-tag')">Cancelar</button><button class="btn-primary" onclick="applyTag()">Agregar</button></div></div></div>
 
 <script>
-/* ════════════════════════════════════════════
-   HERO — Hexágono Mobil que rota y se dispersa
-   ════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   HERO — Hexágono Mobil con glifos +/- y dispersión sutil
+   ═══════════════════════════════════════════════════════ */
 (function(){
-  const canvas  = document.getElementById('hero-canvas');
-  const hero    = document.getElementById('hero-container');
-  const ctx     = canvas.getContext('2d');
+  const canvas = document.getElementById('hero-canvas');
+  const hero   = document.getElementById('hero-container');
+  const ctx    = canvas.getContext('2d');
 
-  /* ── Paleta ── */
-  const C_BLUE      = [0, 107, 255];
-  const C_BLUE_DIM  = [0,  60, 140];
-  const C_WHITE     = [255,255,255];
-  const DISPERSE_R  = 120;   /* radio de influencia del cursor */
-  const DISPERSE_F  = 180;   /* fuerza de dispersión */
-  const RETURN_SPD  = 0.055; /* velocidad de retorno (lerp) */
-  const DAMP        = 0.82;  /* amortiguamiento de velocidad */
+  /* ── Parámetros ── */
+  const GRID_STEP   = 18;     /* espaciado entre glifos */
+  const HEX_SCALE   = 0.30;   /* fracción del alto del hero */
+  const ROT_SPEED   = 0.0018; /* velocidad de rotación */
+  const DISPERSE_R  = 90;     /* radio de influencia del cursor */
+  const DISPERSE_F  = 28;     /* fuerza de dispersión — sutil */
+  const RETURN_LERP = 0.06;   /* velocidad de retorno */
+  const DAMP        = 0.78;   /* amortiguamiento */
+
+  /* Probabilidad de ser "+" vs "-" por partícula (asignado al inicio) */
 
   let W, H, cx, cy, RAF;
-  let mouse = { x: -9999, y: -9999, inside: false };
+  let mouse  = { x:-9999, y:-9999 };
   let rotation = 0;
   let particles = [];
 
-  /* ── Genera los puntos del hexágono en múltiples capas ── */
-  function buildHex(){
+  /* ── Genera los vértices del hexágono regular ── */
+  function hexVerts(r){
+    const pts = [];
+    for(let i=0; i<6; i++){
+      const a = (i/6)*Math.PI*2 - Math.PI/6;
+      pts.push([r*Math.cos(a), r*Math.sin(a)]);
+    }
+    return pts;
+  }
+
+  /* ── Punto dentro de hexágono (para filtrar glifos) ── */
+  function inHex(px, py, r){
+    /* Normaliza coordenadas al espacio del hexágono */
+    const q = (2/3) * px / r;
+    const s = (-1/3) * px / r + (Math.sqrt(3)/3) * py / r;
+    const t_ = -q - s;
+    const rq = Math.round(q), rs = Math.round(s), rt = Math.round(t_);
+    const dq = Math.abs(rq-q), ds = Math.abs(rs-s), dt = Math.abs(rt-t_);
+    if(dq > ds && dq > dt) return Math.abs(rq) <= 1 && Math.hypot(px,py) <= r * 1.02;
+    return Math.hypot(px, py) <= r * 1.02;
+  }
+
+  /* ── Construye partículas en grid filtrado por forma hexagonal ── */
+  function buildParticles(){
     particles = [];
-    const SIZE   = Math.min(W, H) * 0.32;   /* radio del hexágono */
-    const LAYERS = 6;
+    const R = H * HEX_SCALE;
 
-    for(let layer = 0; layer <= LAYERS; layer++){
-      const r = SIZE * (layer / LAYERS);
-      const sides = layer === 0 ? 1 : 6 * layer;
-      for(let i = 0; i < sides; i++){
-        const angle  = (i / sides) * Math.PI * 2;
-        /* Solo puntos en los 6 lados del hexágono — forma hexagonal */
-        const hx = hexX(r, i, sides, layer);
-        const hy = hexY(r, i, sides, layer);
+    /* Bounding box del hexágono */
+    const cols = Math.ceil((R * 2.1) / GRID_STEP);
+    const rows = Math.ceil((R * 2.1) / GRID_STEP);
 
-        const alpha = 0.15 + (layer / LAYERS) * 0.75;
-        const size  = layer === LAYERS ? 1.8 : 0.9 + (layer / LAYERS) * 1.0;
+    for(let row = -rows; row <= rows; row++){
+      for(let col = -cols; col <= cols; col++){
+        const lx = col * GRID_STEP;
+        const ly = row * GRID_STEP;
+
+        if(!inHex(lx, ly, R)) continue;
+
+        /* Alpha según distancia al borde — más brillante en el contorno */
+        const dist = Math.hypot(lx, ly);
+        const rim  = Math.max(0, 1 - dist / R);
+        const alpha = 0.12 + rim * 0.55;
+
+        /* Asignar glifo: + en posiciones pares, - en impares */
+        const isPlus = (Math.abs(row) + Math.abs(col)) % 3 !== 0;
 
         particles.push({
-          ox: cx + hx,  oy: cy + hy,   /* origen (posición en figura) */
-          x:  cx + hx,  y:  cy + hy,   /* posición actual */
-          vx: 0, vy: 0,                 /* velocidad */
-          size, alpha,
-          layer,
-          angleOffset: angle,
+          /* posición local (sin rotar) */
+          lx, ly,
+          /* posición actual en pantalla */
+          x: cx + lx, y: cy + ly,
+          /* velocidad de dispersión */
+          vx: 0, vy: 0,
+          alpha,
+          isPlus,
+          /* tamaño base del glifo */
+          fontSize: 7 + rim * 4,
         });
       }
     }
-  }
-
-  /* Distribución de puntos en forma hexagonal por capa */
-  function hexX(r, i, total, layer){
-    if(layer === 0) return 0;
-    /* Distribuir puntos a lo largo de los 6 lados */
-    const side    = Math.floor(i / layer);       /* 0-5 = qué lado */
-    const pos     = (i % layer) / layer;         /* 0-1 posición en el lado */
-    const a1      = (side / 6) * Math.PI * 2 - Math.PI/6;
-    const a2      = ((side+1) / 6) * Math.PI * 2 - Math.PI/6;
-    const x1      = r * Math.cos(a1);
-    const x2      = r * Math.cos(a2);
-    return x1 + (x2 - x1) * pos;
-  }
-
-  function hexY(r, i, total, layer){
-    if(layer === 0) return 0;
-    const side    = Math.floor(i / layer);
-    const pos     = (i % layer) / layer;
-    const a1      = (side / 6) * Math.PI * 2 - Math.PI/6;
-    const a2      = ((side+1) / 6) * Math.PI * 2 - Math.PI/6;
-    const y1      = r * Math.sin(a1);
-    const y2      = r * Math.sin(a2);
-    return y1 + (y2 - y1) * pos;
   }
 
   /* ── Resize ── */
   function resize(){
     W  = canvas.width  = hero.offsetWidth;
     H  = canvas.height = hero.offsetHeight;
-    cx = W * 0.72;   /* hexágono en el lado derecho */
+    cx = W * 0.70;
     cy = H * 0.50;
-    buildHex();
+    buildParticles();
+  }
+
+  /* ── Dibuja un glifo (+/-) centrado en (x,y) ── */
+  function drawGlyph(p, alpha){
+    const fs = p.fontSize;
+    ctx.font = `${fs}px 'Courier New', monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = `rgba(0,107,255,${alpha.toFixed(3)})`;
+    ctx.fillText(p.isPlus ? '+' : '-', p.x, p.y);
   }
 
   /* ── Loop principal ── */
   function draw(){
     ctx.clearRect(0, 0, W, H);
-    rotation += 0.003;
+    rotation += ROT_SPEED;
+
+    const cosR = Math.cos(rotation);
+    const sinR = Math.sin(rotation);
 
     particles.forEach(p => {
-      /* Origen rotado */
-      const dx0 = p.ox - cx;
-      const dy0 = p.oy - cy;
-      const cos = Math.cos(rotation * (1 - p.layer * 0.05));
-      const sin = Math.sin(rotation * (1 - p.layer * 0.05));
-      const tx  = cx + dx0 * cos - dy0 * sin;
-      const ty  = cy + dx0 * sin + dy0 * cos;
+      /* Destino rotado */
+      const tx = cx + p.lx * cosR - p.ly * sinR;
+      const ty = cy + p.lx * sinR + p.ly * cosR;
 
-      /* Dispersión por mouse */
+      /* Fuerza de dispersión hacia cursor — sutil */
       const mdx = p.x - mouse.x;
       const mdy = p.y - mouse.y;
-      const md  = Math.sqrt(mdx*mdx + mdy*mdy);
-
-      if(mouse.inside && md < DISPERSE_R){
-        const force = (1 - md / DISPERSE_R) * DISPERSE_F;
-        p.vx += (mdx / md) * force * 0.06;
-        p.vy += (mdy / md) * force * 0.06;
+      const md  = Math.sqrt(mdx*mdx + mdy*mdy) || 1;
+      if(md < DISPERSE_R){
+        const strength = (1 - md/DISPERSE_R) * DISPERSE_F;
+        p.vx += (mdx/md) * strength * 0.04;
+        p.vy += (mdy/md) * strength * 0.04;
       }
 
-      /* Retorno hacia posición rotada */
-      p.vx += (tx - p.x) * RETURN_SPD;
-      p.vy += (ty - p.y) * RETURN_SPD;
+      /* Spring hacia destino rotado */
+      p.vx += (tx - p.x) * RETURN_LERP;
+      p.vy += (ty - p.y) * RETURN_LERP;
       p.vx *= DAMP;
       p.vy *= DAMP;
       p.x  += p.vx;
       p.y  += p.vy;
 
-      /* Distancia al origen rotado — determina color */
-      const dist  = Math.sqrt((p.x-tx)*(p.x-tx) + (p.y-ty)*(p.y-ty));
-      const disp  = Math.min(1, dist / 60);
+      /* Alpha — baja levemente al dispersarse */
+      const disp = Math.min(1, Math.hypot(p.x-tx, p.y-ty) / 30);
+      const a    = p.alpha * (1 - disp * 0.35);
 
-      /* Interpola color: azul → blanco al dispersarse */
-      const r = Math.round(C_BLUE[0] + (C_WHITE[0]-C_BLUE[0]) * disp * 0.6);
-      const g = Math.round(C_BLUE[1] + (C_WHITE[1]-C_BLUE[1]) * disp * 0.6);
-      const b = Math.round(C_BLUE[2] + (C_WHITE[2]-C_BLUE[2]) * disp * 0.6);
-      const a = p.alpha * (0.5 + disp * 0.5);
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size + disp * 1.5, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
-      ctx.fill();
+      drawGlyph(p, a);
     });
-
-    /* Contorno del hexágono — referencia sutil */
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(rotation);
-    ctx.beginPath();
-    for(let i=0; i<6; i++){
-      const a = (i/6) * Math.PI*2 - Math.PI/6;
-      const R = Math.min(W,H) * 0.32;
-      const m = i===0 ? 'moveTo' : 'lineTo';
-      ctx[m](R*Math.cos(a), R*Math.sin(a));
-    }
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(0,107,255,0.10)';
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
-    ctx.restore();
 
     RAF = requestAnimationFrame(draw);
   }
 
-  /* ── Eventos mouse ── */
+  /* ── Mouse ── */
   hero.addEventListener('mousemove', e => {
-    const r   = hero.getBoundingClientRect();
-    mouse.x   = e.clientX - r.left;
-    mouse.y   = e.clientY - r.top;
-    mouse.inside = true;
+    const r  = hero.getBoundingClientRect();
+    mouse.x  = e.clientX - r.left;
+    mouse.y  = e.clientY - r.top;
   });
-  hero.addEventListener('mouseleave', () => { mouse.inside = false; mouse.x=-9999; mouse.y=-9999; });
+  hero.addEventListener('mouseleave', () => { mouse.x=-9999; mouse.y=-9999; });
 
   /* ── Init ── */
   resize();
@@ -434,9 +425,9 @@
   window.addEventListener('resize', () => { cancelAnimationFrame(RAF); resize(); draw(); });
 })();
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════
    APP
-   ════════════════════════════════════════════ */
+   ═══════════════════════════ */
 document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-CL',{year:'numeric',month:'short',day:'numeric'});
 
 const EDIT_KEY='datalab_edit_auth', EDIT_PASS='interlab2026';
@@ -444,7 +435,6 @@ const COVERS_KEY='datalab_covers', TAGS_KEY='datalab_tags', URLS_KEY='datalab_ur
 let editMode=false, pendingCardId=null;
 
 function updateCounts(){ const a=document.querySelectorAll('#section-activas .tool-card:not(.hidden)').length; const d=document.querySelectorAll('#section-desarrollo .tool-card:not(.hidden)').length; const t=document.querySelectorAll('.tool-card:not(.hidden)').length; document.getElementById('count-activas').textContent=a+' herramienta'+(a!==1?'s':''); document.getElementById('count-desarrollo').textContent=d+' herramienta'+(d!==1?'s':''); document.getElementById('toolbar-count').textContent=t+' herramienta'+(t!==1?'s':''); }
-
 function loadState(){ const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}'); Object.entries(covers).forEach(([id,url])=>setCoverImg(id,url)); const urls=JSON.parse(localStorage.getItem(URLS_KEY)||'{}'); Object.entries(urls).forEach(([id,url])=>{ const i=document.getElementById('url-'+id); if(i)i.value=url; const c=document.getElementById('card-'+id); if(c)c.dataset.url=url; }); const tags=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); Object.entries(tags).forEach(([id,list])=>{ const c=document.getElementById('tags-'+id); if(!c)return; c.querySelectorAll('.tag').forEach(t=>t.remove()); const btn=c.querySelector('.tag-add-btn'); list.forEach(text=>{ const s=document.createElement('span'); s.className='tag'; s.dataset.card=id; s.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; c.insertBefore(s,btn); }); }); updateCounts(); }
 function saveTags(id){ const c=document.getElementById('tags-'+id); const t=[...c.querySelectorAll('.tag')].map(t=>t.childNodes[0].textContent.trim()); const a=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}'); a[id]=t; localStorage.setItem(TAGS_KEY,JSON.stringify(a)); const card=document.getElementById('card-'+id); if(card)card.dataset.taller=t.join(' ').toLowerCase(); }
 function toggleEditMode(){ const auth=localStorage.getItem(EDIT_KEY); const exp=parseInt(localStorage.getItem(EDIT_KEY+'_exp')||'0'); if(auth==='true'&&Date.now()<exp){ activateEdit(); } else{ openModal('modal-login'); setTimeout(()=>document.getElementById('login-input').focus(),100); } }
