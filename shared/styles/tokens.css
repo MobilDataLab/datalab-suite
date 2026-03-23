@@ -1,0 +1,71 @@
+/* ============================================================
+   DATALAB SUITE — Design Tokens
+   Fuente: Identidad oficial Mobil Arquitectos (SKILL v2, Mar 2026)
+   Web: mobilarquitectos.cl — blanco/negro, tipografía condensada caps
+   Mobil Blue #006BFF — acento, no estructural en web
+   Editar aquí → se propaga a todas las apps del suite
+   ============================================================ */
+
+:root {
+
+  /* ── COLORES BASE ── */
+  --color-black:       #0A0A0A;
+  --color-white:       #FFFFFF;
+  --color-bg:          #FFFFFF;   /* fondo principal — blanco puro (web) */
+  --color-surface:     #FFFFFF;
+  --color-border:      #EBEBEB;
+  --color-border-mid:  #BDBDBD;
+
+  /* ── MOBIL BLUE — solo acentos ── */
+  --color-blue:        #006BFF;
+  --color-blue-dark:   #0050CC;
+  --color-blue-dim:    rgba(0,107,255,0.08);
+  --color-blue-light:  #E6F0FF;
+
+  /* ── MOBIL DARK / WARM ── */
+  --color-dark:        #5D554B;   /* Mobil Dark */
+  --color-warm-mid:    #A4A3A4;   /* Mid Gray */
+  --color-warm-light:  #F2F0EC;   /* Stone suave */
+
+  /* ── GRISES FUNCIONALES ── */
+  --color-gray-100:    #F5F5F5;
+  --color-gray-200:    #EBEBEB;
+  --color-gray-400:    #BDBDBD;
+  --color-gray-600:    #757575;
+
+  /* ── SEMÁNTICOS ── */
+  --color-success:     #1D9E75;
+  --color-success-bg:  #E1F5EE;
+  --color-warning:     #FBAE40;
+  --color-danger:      #D93025;
+
+  /* ── TIPOGRAFÍA ── */
+  --font-display:  'Arial Narrow','Helvetica Neue Condensed',Arial,sans-serif;
+  --font-body:     -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  --font-mono:     'Courier New',Consolas,monospace;
+
+  /* ── ESPACIADO ── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+
+  /* ── TRANSICIONES ── */
+  --t-fast: 0.12s ease;
+  --t-base: 0.18s ease;
+
+  /* ── LAYOUT ── */
+  --max-width:    1040px;
+  --header-height: 52px;
+}
+
+/* ── RESET BASE ── */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-body);font-size:13px;color:var(--color-black);background:var(--color-bg);line-height:1.6}
+a{color:var(--color-blue);text-decoration:none}
+a:hover{color:var(--color-blue-dark)}
+
+/* ── UTILIDADES ── */
+.text-display{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.08em}
+.text-muted{color:var(--color-warm-mid)}
+.text-blue{color:var(--color-blue)}
+.bg-black{background:var(--color-black);color:var(--color-white)}
+.bg-blue{background:var(--color-blue);color:var(--color-white)}

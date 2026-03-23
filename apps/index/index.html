@@ -6,400 +6,306 @@
   <title>DATALAB SUITE — Mobil Arquitectos</title>
   <style>
     :root {
-      --bg: #f8f7f4; --surface: #ffffff; --border: #e2e0da;
-      --text-primary: #1a1a18; --text-secondary: #6b6a64; --text-muted: #9c9a92;
-      --accent: #1a1a18; --accent-light: #f0ede8;
-      --green: #0F6E56; --green-bg: #E1F5EE;
-      --amber: #854F0B; --amber-bg: #FAEEDA;
-      --blue: #185FA5; --blue-bg: #E6F1FB; --radius: 10px;
+      --black:      #0A0A0A;
+      --white:      #FFFFFF;
+      --g100:       #F5F5F5;
+      --g200:       #EBEBEB;
+      --g400:       #BDBDBD;
+      --warm-dark:  #5D554B;
+      --warm-mid:   #A4A3A4;
+      --warm-light: #F2F0EC;
+      --blue:       #006BFF;
+      --blue-dim:   rgba(0,107,255,0.08);
+      --blue-light: #E6F0FF;
+      --success:    #1D9E75;
+      --fd: 'Arial Narrow','Helvetica Neue Condensed',Arial,sans-serif;
+      --fb: -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+      --t: 0.18s ease;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; }
-    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 40px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .logo { display: flex; align-items: center; gap: 10px; }
-    .logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
-    .logo-label { display: flex; flex-direction: column; line-height: 1.2; }
-    .logo-suite { font-weight: 600; font-size: 13px; }
-    .logo-sub { font-size: 10px; color: var(--text-muted); }
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .header-meta { font-size: 12px; color: var(--text-muted); }
-    .edit-toggle-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.15s; }
-    .edit-toggle-btn:hover { border-color: #b8b6af; }
-    .edit-toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-    main { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
-    .page-title { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; }
-    .page-subtitle { font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; }
-    .search-wrapper { position: relative; margin-bottom: 40px; }
-    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); pointer-events: none; }
-    .search-input { width: 100%; height: 44px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0 16px 0 42px; font-size: 14px; color: var(--text-primary); font-family: inherit; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
-    .search-input::placeholder { color: var(--text-muted); }
-    .search-input:focus { border-color: #b8b6af; box-shadow: 0 0 0 3px rgba(26,26,24,0.06); }
-    .search-empty { display: none; text-align: center; padding: 40px 0; font-size: 14px; color: var(--text-muted); }
-    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 14px; }
-    .section-block { margin-bottom: 48px; }
-    .section-block.hidden { display: none; }
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
-    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, box-shadow 0.15s; position: relative; cursor: pointer; }
-    .tool-card:not(.planned):hover { border-color: #b8b6af; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .tool-card.planned { opacity: 0.6; pointer-events: none; }
-    .tool-card.hidden { display: none; }
-    .edit-mode .tool-card.planned { pointer-events: all; opacity: 1; }
-    .card-cover { width: 100%; height: 130px; background: var(--accent-light); overflow: hidden; position: relative; flex-shrink: 0; }
-    .card-cover-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 32px; }
-    .cover-edit-btn { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.45); align-items: center; justify-content: center; cursor: pointer; gap: 6px; color: white; font-size: 12px; font-weight: 600; }
-    .edit-mode .cover-edit-btn { display: flex; }
-    .card-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .tool-name { font-size: 15px; font-weight: 600; line-height: 1.3; }
-    .status-badge { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; line-height: 1.4; flex-shrink: 0; }
-    .status-active { background: var(--green-bg); color: var(--green); }
-    .status-planned { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
-    .tool-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-    .tool-meta { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
-    .tag { display: inline-flex; align-items: center; gap: 4px; background: var(--accent-light); color: var(--text-secondary); padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; }
-    .tag-remove { cursor: pointer; color: var(--text-muted); font-size: 12px; line-height: 1; display: none; }
-    .edit-mode .tag-remove { display: inline; }
-    .tag-add-btn { display: none; align-items: center; gap: 4px; background: transparent; border: 1px dashed var(--border); color: var(--text-muted); padding: 2px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; font-family: inherit; }
-    .edit-mode .tag-add-btn { display: inline-flex; }
-    .card-edit-bar { display: none; padding: 8px 18px; background: #EEEDFE; border-top: 1px solid #CCC9F0; gap: 8px; align-items: center; }
-    .edit-mode .card-edit-bar { display: flex; }
-    .card-edit-bar input { flex: 1; font-size: 11px; border: 1px solid #CCC9F0; border-radius: 5px; padding: 4px 8px; font-family: inherit; background: white; color: var(--text-primary); outline: none; }
-    .card-edit-bar button { font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 5px; border: none; cursor: pointer; }
-    .btn-save-url { background: var(--accent); color: white; }
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
-    .modal-overlay.open { display: flex; }
-    .modal { background: var(--surface); border-radius: 12px; padding: 28px; width: 440px; max-width: 90vw; }
-    .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-    .modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
-    .modal input { width: 100%; height: 40px; border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 12px; }
-    .modal input:focus { border-color: #b8b6af; }
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
-    .btn-cancel { padding: 7px 16px; border-radius: 7px; border: 1px solid var(--border); background: transparent; font-size: 13px; cursor: pointer; font-family: inherit; }
-    .btn-primary { padding: 7px 16px; border-radius: 7px; border: none; background: var(--accent); color: white; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
-    .modal-preview { width: 100%; height: 120px; border-radius: 8px; object-fit: cover; margin-bottom: 12px; display: none; background: var(--accent-light); }
-    .changelog-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .changelog-item { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; font-size: 13px; }
-    .changelog-item:last-child { border-bottom: none; }
-    .changelog-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-green { background: var(--green); } .dot-amber { background: #EF9F27; } .dot-blue { background: var(--blue); }
-    .changelog-date { color: var(--text-muted); min-width: 80px; font-size: 12px; }
-    .changelog-tool { font-weight: 600; min-width: 60px; }
-    .changelog-desc { color: var(--text-secondary); }
-    .footer-info { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); display: flex; justify-content: space-between; }
-    .login-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 4px; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--fb);font-size:13px;background:var(--white);color:var(--black);min-height:100vh;line-height:1.6}
+
+    /* HEADER */
+    header{background:var(--white);border-bottom:1px solid var(--g200);padding:0 48px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo-hex{width:26px;height:26px;flex-shrink:0}
+    .logo-text{display:flex;flex-direction:column;line-height:1.2}
+    .logo-name{font-family:var(--fd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--black)}
+    .logo-sub{font-family:var(--fd);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid)}
+    .header-sep{width:1px;height:16px;background:var(--g200)}
+    .header-nav{display:flex;align-items:center;gap:24px}
+    .nav-link{font-family:var(--fd);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid);text-decoration:none;transition:color var(--t)}
+    .nav-link:hover,.nav-link.active{color:var(--black)}
+    .header-right{display:flex;align-items:center;gap:12px}
+    .btn-edit{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:5px 14px;border:1px solid var(--g400);border-radius:2px;background:transparent;color:var(--warm-dark);cursor:pointer;transition:var(--t)}
+    .btn-edit:hover{border-color:var(--black);color:var(--black)}
+    .btn-edit.active{background:var(--black);color:var(--white);border-color:var(--black)}
+
+    /* HERO */
+    .hero{position:relative;height:380px;background:#050810;overflow:hidden;border-bottom:1px solid var(--g200)}
+    #hero-canvas{position:absolute;inset:0;width:100%;height:100%}
+    .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 52px;pointer-events:none}
+    .hero-eyebrow{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--blue);margin-bottom:12px}
+    .hero-title{font-family:var(--fd);font-size:clamp(40px,5.5vw,64px);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--white);line-height:.95;margin-bottom:14px}
+    .hero-sub{font-size:12px;color:rgba(255,255,255,0.45);max-width:400px;line-height:1.9;letter-spacing:.03em}
+    .hero-badge{position:absolute;top:28px;right:52px;display:flex;align-items:center;gap:7px;z-index:2}
+    .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);animation:pulse 2.4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    .hero-badge-text{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,0.3)}
+
+    /* TOOLBAR */
+    .toolbar{display:flex;align-items:center;gap:16px;padding:14px 48px;border-bottom:1px solid var(--g200);background:var(--white);position:sticky;top:52px;z-index:90}
+    .search-wrapper{position:relative;flex:1;max-width:360px}
+    .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--g400);pointer-events:none}
+    .search-input{width:100%;height:34px;background:var(--g100);border:1px solid transparent;border-radius:2px;padding:0 12px 0 34px;font-size:12px;font-family:var(--fb);color:var(--black);outline:none;transition:var(--t)}
+    .search-input::placeholder{color:var(--g400)}
+    .search-input:focus{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 2px var(--blue-dim)}
+    .toolbar-count{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid);white-space:nowrap}
+
+    /* MAIN */
+    main{max-width:1040px;margin:0 auto;padding:0 48px 96px}
+    .search-empty{display:none;text-align:center;padding:64px 0;font-family:var(--fd);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400)}
+
+    /* SECTIONS */
+    .section-block{margin-bottom:0}
+    .section-block.hidden{display:none}
+    .section-header{display:flex;align-items:center;gap:14px;padding:28px 0 16px;border-bottom:1px solid var(--g200);margin-bottom:24px}
+    .section-label{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--black)}
+    .section-count{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400)}
+
+    /* GRID */
+    .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--g200);border:1px solid var(--g200);margin-bottom:1px}
+
+    /* TOOL CARD */
+    .tool-card{background:var(--white);display:flex;flex-direction:column;cursor:pointer;position:relative;transition:background var(--t),border-color var(--t);border:1.5px solid transparent;margin:-1px}
+    .tool-card:not(.planned):hover{background:var(--blue-dim);border-color:var(--blue);z-index:1}
+    .tool-card:not(.planned):hover .tool-name{color:var(--blue)}
+    .tool-card:not(.planned):hover .card-cover-placeholder{background:linear-gradient(135deg,rgba(0,107,255,.1) 0%,rgba(0,107,255,.03) 100%)}
+    .tool-card:not(.planned):hover .cover-arrow{opacity:1;transform:translate(2px,-2px)}
+    .tool-card:not(.planned):hover .status-badge.status-active{background:var(--blue)}
+    .tool-card.planned{opacity:.45;pointer-events:none}
+    .tool-card.hidden{display:none}
+    .edit-mode .tool-card.planned{pointer-events:all;opacity:1}
+
+    /* COVER */
+    .card-cover{width:100%;aspect-ratio:16/7;overflow:hidden;position:relative;flex-shrink:0;background:var(--g100)}
+    .card-cover-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;opacity:.2;transition:background var(--t)}
+    .cover-img-el{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
+    .cover-edit-btn{display:none;position:absolute;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;cursor:pointer;gap:6px;color:var(--white);font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+    .edit-mode .cover-edit-btn{display:flex}
+    .cover-arrow{position:absolute;top:10px;right:12px;color:var(--blue);opacity:0;transition:opacity var(--t),transform var(--t);font-size:15px;font-weight:700}
+
+    /* CARD BODY */
+    .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:7px;flex:1}
+    .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+    .tool-name{font-family:var(--fd);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--black);line-height:1.15;transition:color var(--t)}
+    .status-badge{font-family:var(--fd);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 8px;border-radius:1px;flex-shrink:0;white-space:nowrap;transition:background var(--t)}
+    .status-active{background:var(--black);color:var(--white)}
+    .status-planned{background:transparent;color:var(--g400);border:1px solid var(--g200)}
+    .tool-desc{font-size:12px;color:var(--warm-dark);line-height:1.6}
+    .tool-meta{display:flex;flex-wrap:wrap;gap:4px;padding-top:10px;border-top:1px solid var(--g200)}
+    .tag{display:inline-flex;align-items:center;gap:3px;background:transparent;color:var(--warm-dark);padding:2px 0;font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--g400);margin-right:8px}
+    .tag-remove{cursor:pointer;font-size:11px;line-height:1;display:none;color:var(--g400)}
+    .edit-mode .tag-remove{display:inline}
+    .tag-add-btn{display:none;align-items:center;gap:3px;background:transparent;border:none;border-bottom:1px dashed var(--g400);color:var(--g400);padding:2px 0;margin-right:8px;font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
+    .edit-mode .tag-add-btn{display:inline-flex}
+
+    /* EDIT BAR */
+    .card-edit-bar{display:none;padding:8px 16px;background:var(--g100);border-top:1px solid var(--g200);gap:8px;align-items:center}
+    .edit-mode .card-edit-bar{display:flex}
+    .card-edit-bar input{flex:1;font-size:11px;border:1px solid var(--g200);border-radius:2px;padding:4px 8px;font-family:var(--fb);background:var(--white);color:var(--black);outline:none}
+    .card-edit-bar button{font-family:var(--fd);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 12px;border-radius:2px;border:none;background:var(--black);color:var(--white);cursor:pointer}
+
+    /* CHANGELOG */
+    .section-changelog-wrap{padding-top:28px}
+    .changelog-list{border:1px solid var(--g200)}
+    .changelog-item{padding:10px 20px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:18px;font-size:12px}
+    .changelog-item:last-child{border-bottom:none}
+    .changelog-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+    .dot-blue{background:var(--blue)}.dot-green{background:var(--success)}.dot-black{background:var(--black)}
+    .changelog-date{font-family:var(--fd);color:var(--g400);min-width:64px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+    .changelog-tool{font-family:var(--fd);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--black);min-width:72px}
+    .changelog-desc{color:var(--warm-dark)}
+
+    /* FOOTER */
+    .page-footer{margin-top:64px;padding:18px 0;border-top:1px solid var(--g200);display:flex;justify-content:space-between;align-items:center}
+    .footer-brand{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--warm-mid)}
+    .footer-link{font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--warm-mid);text-decoration:none;transition:color var(--t)}
+    .footer-link:hover{color:var(--black)}
+
+    /* MODALES */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,.72);z-index:200;align-items:center;justify-content:center}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--white);padding:32px;width:420px;max-width:90vw;border-top:2px solid var(--black)}
+    .modal-eyebrow{font-family:var(--fd);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--warm-mid);margin-bottom:5px}
+    .modal h3{font-family:var(--fd);font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--black);margin-bottom:8px}
+    .modal p{font-size:12px;color:var(--warm-dark);margin-bottom:18px;line-height:1.7}
+    .modal input{width:100%;height:40px;border:1px solid var(--g200);padding:0 12px;font-size:13px;font-family:var(--fb);outline:none;margin-bottom:12px;color:var(--black);background:var(--g100);transition:var(--t)}
+    .modal input:focus{border-color:var(--black);background:var(--white)}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end}
+    .btn-cancel{padding:8px 18px;border:1px solid var(--g400);background:transparent;font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;color:var(--warm-dark);transition:var(--t)}
+    .btn-cancel:hover{border-color:var(--black);color:var(--black)}
+    .btn-primary{padding:8px 18px;border:none;background:var(--black);color:var(--white);font-family:var(--fd);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:var(--t)}
+    .btn-primary:hover{background:var(--warm-dark)}
+    .modal-preview{width:100%;aspect-ratio:16/7;object-fit:cover;margin-bottom:12px;display:none;background:var(--g100)}
+    .login-note{font-size:10px;color:var(--g400);text-align:center;margin-top:4px;margin-bottom:0}
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">
-    <div class="logo-mark">DL</div>
-    <div class="logo-label">
-      <span class="logo-suite">DATALAB SUITE</span>
-      <span class="logo-sub">Mobil Arquitectos — INTERLAB</span>
+    <svg class="logo-hex" viewBox="0 0 26 26" fill="none">
+      <polygon points="13,1 24,7 24,19 13,25 2,19 2,7" fill="#0A0A0A"/>
+      <polygon points="13,5 20,9 20,17 13,21 6,17 6,9" fill="none" stroke="#FFFFFF" stroke-width="0.7"/>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-name">Datalab Suite</span>
+      <span class="logo-sub">Mobil Arquitectos · Laboratorio de Data</span>
     </div>
   </div>
   <div class="header-right">
-    <div class="header-meta" id="build-date"></div>
-    <button class="edit-toggle-btn" id="edit-toggle-btn" onclick="toggleEditMode()">✏ Editar</button>
+    <nav class="header-nav">
+      <a href="#" class="nav-link active">Herramientas</a>
+      <a href="https://www.mobilarquitectos.cl" target="_blank" class="nav-link">mobilarquitectos.cl ↗</a>
+    </nav>
+    <div class="header-sep"></div>
+    <button class="btn-edit" id="edit-toggle-btn" onclick="toggleEditMode()">✏ Editar</button>
   </div>
 </header>
 
-<main>
-  <h1 class="page-title">Herramientas digitales</h1>
-  <p class="page-subtitle">Portal de aplicaciones desarrolladas por INTERLAB para los talleres de Mobil Arquitectos.</p>
+<!-- HERO -->
+<div class="hero" id="hero-container">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">
+    <div class="hero-dot"></div>
+    <span class="hero-badge-text">Laboratorio de Data · Activo</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Laboratorio de Data · Mobil Arquitectos</div>
+    <h1 class="hero-title">Herramientas<br>digitales</h1>
+    <p class="hero-sub">Aplicaciones desarrolladas por el Laboratorio de Data para los talleres de Mobil Arquitectos. Data · Sustentabilidad · Constructibilidad.</p>
+  </div>
+</div>
 
+<!-- TOOLBAR -->
+<div class="toolbar">
   <div class="search-wrapper">
     <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="6.5" cy="6.5" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
     </svg>
-    <input class="search-input" id="search-input" type="text" placeholder="Buscar herramienta por nombre o taller…" autocomplete="off"/>
+    <input class="search-input" id="search-input" type="text" placeholder="Buscar por nombre o taller…" autocomplete="off"/>
   </div>
+  <span class="toolbar-count" id="toolbar-count"></span>
+</div>
+
+<main>
   <div class="search-empty" id="search-empty">Sin resultados para esta búsqueda.</div>
 
   <!-- ACTIVAS -->
   <div class="section-block" id="section-activas">
-    <div class="section-label">Activas</div>
+    <div class="section-header">
+      <span class="section-label">Activas</span>
+      <span class="section-count" id="count-activas"></span>
+    </div>
     <div class="tools-grid">
-
       <div class="tool-card" id="card-eett" data-id="eett" data-name="eett selector especificaciones técnicas bim revit" data-taller="todos los talleres" onclick="cardClick(event,'https://mobil-eett.vercel.app')">
-        <div class="card-cover" id="cover-eett">
-          <div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'eett')">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">EETT Selector</div>
-            <span class="status-badge status-active">En producción</span>
-          </div>
-          <div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div>
-          <div class="tool-meta" id="tags-eett">
-            <span class="tag" data-card="eett">Todos los talleres<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <span class="tag" data-card="eett">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'eett')">+ tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL de la herramienta…" id="url-eett" value="https://mobil-eett.vercel.app"/>
-          <button class="btn-save-url" onclick="saveUrl(event,'eett')">Guardar URL</button>
-        </div>
+        <div class="card-cover" id="cover-eett"><div class="card-cover-placeholder" id="cover-placeholder-eett">📋</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'eett')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">EETT Selector</div><span class="status-badge status-active">Activa</span></div><div class="tool-desc">Selector de Especificaciones Técnicas por partida. Integración Revit / BIM.</div><div class="tool-meta" id="tags-eett"><span class="tag" data-card="eett">Todos los talleres<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><span class="tag" data-card="eett">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'eett')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-eett" value="https://mobil-eett.vercel.app"/><button onclick="saveUrl(event,'eett')">Guardar</button></div>
       </div>
-
       <div class="tool-card" id="card-calc" data-id="calc" data-name="calculadora m2 metros cuadrados kpi construcción tipología vivienda oficina hotel" data-taller="vivienda comercial infraestructura" onclick="cardClick(event,'https://calculadora-m2-two.vercel.app')">
-        <div class="card-cover" id="cover-calc">
-          <div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'calc')">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Calculadora M²</div>
-            <span class="status-badge status-active">En producción</span>
-          </div>
-          <div class="tool-desc">KPIs de construcción por tipología. Fine-tuning de ratios, costos y exportación CSV.</div>
-          <div class="tool-meta" id="tags-calc">
-            <span class="tag" data-card="calc">Vivienda / Comercial<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <span class="tag" data-card="calc">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'calc')">+ tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL de la herramienta…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/>
-          <button class="btn-save-url" onclick="saveUrl(event,'calc')">Guardar URL</button>
-        </div>
+        <div class="card-cover" id="cover-calc"><div class="card-cover-placeholder" id="cover-placeholder-calc">📐</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'calc')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Calculadora M²</div><span class="status-badge status-active">Activa</span></div><div class="tool-desc">KPIs de construcción por tipología. Fine-tuning de ratios, costos y exportación CSV.</div><div class="tool-meta" id="tags-calc"><span class="tag" data-card="calc">Vivienda / Comercial<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><span class="tag" data-card="calc">v1.0<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'calc')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-calc" value="https://calculadora-m2-two.vercel.app"/><button onclick="saveUrl(event,'calc')">Guardar</button></div>
       </div>
-
     </div>
   </div>
 
   <!-- EN DESARROLLO -->
   <div class="section-block" id="section-desarrollo">
-    <div class="section-label">En desarrollo</div>
+    <div class="section-header">
+      <span class="section-label">En desarrollo</span>
+      <span class="section-count" id="count-desarrollo"></span>
+    </div>
     <div class="tools-grid">
-
       <div class="tool-card planned" id="card-bim" data-id="bim" data-name="cubicaciones bim metrados revit extracción" data-taller="salud infraestructura" onclick="cardClick(event,'')">
-        <div class="card-cover" id="cover-bim">
-          <div class="card-cover-placeholder" id="cover-placeholder-bim">🗂️</div>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'bim')">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Cubicaciones BIM</div>
-            <span class="status-badge status-planned">Planificada</span>
-          </div>
-          <div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div>
-          <div class="tool-meta" id="tags-bim">
-            <span class="tag" data-card="bim">Salud / Infraestructura<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'bim')">+ tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL cuando esté lista…" id="url-bim" value=""/>
-          <button class="btn-save-url" onclick="saveUrl(event,'bim')">Guardar URL</button>
-        </div>
+        <div class="card-cover" id="cover-bim"><div class="card-cover-placeholder" id="cover-placeholder-bim">🗂️</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'bim')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Cubicaciones BIM</div><span class="status-badge status-planned">Planificada</span></div><div class="tool-desc">Extracción y validación de metrados desde modelos Revit.</div><div class="tool-meta" id="tags-bim"><span class="tag" data-card="bim">Salud / Infraestructura<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'bim')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-bim" value=""/><button onclick="saveUrl(event,'bim')">Guardar</button></div>
       </div>
-
       <div class="tool-card planned" id="card-gis" data-id="gis" data-name="análisis territorial gis isócronas localización urbano" data-taller="urbano" onclick="cardClick(event,'')">
-        <div class="card-cover" id="cover-gis">
-          <div class="card-cover-placeholder" id="cover-placeholder-gis">🗺️</div>
-          <div class="cover-edit-btn" onclick="openCoverModal(event,'gis')">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 11l2-2 2 2 4-4"/></svg>
-            Cambiar portada
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-top">
-            <div class="tool-name">Análisis Territorial</div>
-            <span class="status-badge status-planned">Planificada</span>
-          </div>
-          <div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div>
-          <div class="tool-meta" id="tags-gis">
-            <span class="tag" data-card="gis">Urbano<span class="tag-remove" onclick="removeTag(event,this)">×</span></span>
-            <button class="tag-add-btn" onclick="addTag(event,'gis')">+ tag</button>
-          </div>
-        </div>
-        <div class="card-edit-bar">
-          <input type="text" placeholder="URL cuando esté lista…" id="url-gis" value=""/>
-          <button class="btn-save-url" onclick="saveUrl(event,'gis')">Guardar URL</button>
-        </div>
+        <div class="card-cover" id="cover-gis"><div class="card-cover-placeholder" id="cover-placeholder-gis">🗺️</div><span class="cover-arrow">↗</span><div class="cover-edit-btn" onclick="openCoverModal(event,'gis')"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 11l2-2 2 2 4-4"/></svg>Cambiar portada</div></div>
+        <div class="card-body"><div class="card-top"><div class="tool-name">Análisis Territorial</div><span class="status-badge status-planned">Planificada</span></div><div class="tool-desc">Visualización GIS e isócronas para estudios de localización.</div><div class="tool-meta" id="tags-gis"><span class="tag" data-card="gis">Urbano<span class="tag-remove" onclick="removeTag(event,this)">×</span></span><button class="tag-add-btn" onclick="addTag(event,'gis')">+ Tag</button></div></div>
+        <div class="card-edit-bar"><input type="text" placeholder="URL…" id="url-gis" value=""/><button onclick="saveUrl(event,'gis')">Guardar</button></div>
       </div>
-
     </div>
   </div>
 
   <!-- CHANGELOG -->
-  <div class="section-block" id="section-changelog">
-    <div class="section-label">Últimos cambios</div>
+  <div class="section-changelog-wrap section-block" id="section-changelog">
+    <div class="section-header"><span class="section-label">Últimos cambios</span></div>
     <div class="changelog-list">
-      <div class="changelog-item">
-        <div class="changelog-dot dot-green"></div>
-        <span class="changelog-date" id="today-date"></span>
-        <span class="changelog-tool">CALC M²</span>
-        <span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span>
-      </div>
-      <div class="changelog-item">
-        <div class="changelog-dot dot-blue"></div>
-        <span class="changelog-date">Mar 2026</span>
-        <span class="changelog-tool">PORTAL</span>
-        <span class="changelog-desc">Portadas y tags editables + modo edición con clave</span>
-      </div>
-      <div class="changelog-item">
-        <div class="changelog-dot dot-green"></div>
-        <span class="changelog-date">Mar 2025</span>
-        <span class="changelog-tool">EETT</span>
-        <span class="changelog-desc">Release inicial — Actualización UI</span>
-      </div>
+      <div class="changelog-item"><div class="changelog-dot dot-blue"></div><span class="changelog-date" id="today-date"></span><span class="changelog-tool">PORTAL</span><span class="changelog-desc">Hero hexágono +/- · dispersión sutil reactiva al cursor</span></div>
+      <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2026</span><span class="changelog-tool">CALC M²</span><span class="changelog-desc">Calculadora M² publicada — 5 tipologías, KPIs editables, export CSV</span></div>
+      <div class="changelog-item"><div class="changelog-dot dot-green"></div><span class="changelog-date">Mar 2025</span><span class="changelog-tool">EETT</span><span class="changelog-desc">Release inicial — Actualización UI</span></div>
     </div>
   </div>
 
-  <div class="footer-info">
-    <span>INTERLAB — Mobil Arquitectos</span>
-    <span id="footer-build"></span>
+  <div class="page-footer">
+    <span class="footer-brand">Laboratorio de Data · Mobil Arquitectos</span>
+    <a href="https://www.mobilarquitectos.cl" target="_blank" class="footer-link">mobilarquitectos.cl ↗</a>
   </div>
 </main>
 
 <!-- MODALES -->
-<div class="modal-overlay" id="modal-login">
-  <div class="modal">
-    <h3>Modo edición</h3>
-    <p>Ingresa la clave de INTERLAB para editar portadas y tags.</p>
-    <input type="password" id="login-input" placeholder="Clave de acceso…" onkeydown="if(event.key==='Enter')checkLogin()"/>
-    <p class="login-note">La sesión se mantiene en este navegador por 7 días.</p>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-login')">Cancelar</button>
-      <button class="btn-primary" onclick="checkLogin()">Ingresar</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-cover">
-  <div class="modal">
-    <h3>Cambiar portada</h3>
-    <p>Pega la URL de una imagen. Recomendado: 800×400px, JPG o PNG.</p>
-    <img id="cover-preview" class="modal-preview" alt="preview"/>
-    <input type="text" id="cover-url-input" placeholder="https://images.unsplash.com/…" oninput="previewCover(this.value)"/>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-cover')">Cancelar</button>
-      <button class="btn-primary" onclick="applyCover()">Aplicar</button>
-    </div>
-  </div>
-</div>
-<div class="modal-overlay" id="modal-tag">
-  <div class="modal">
-    <h3>Agregar tag</h3>
-    <p>Escribe el nombre del tag a agregar.</p>
-    <input type="text" id="tag-input" placeholder="Ej: Infraestructura, v2.0, BIM…" onkeydown="if(event.key==='Enter')applyTag()"/>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('modal-tag')">Cancelar</button>
-      <button class="btn-primary" onclick="applyTag()">Agregar</button>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="modal-login"><div class="modal"><div class="modal-eyebrow">Laboratorio de Data · Acceso restringido</div><h3>Modo edición</h3><p>Ingresa la clave del Laboratorio de Data para editar portadas y tags.</p><input type="password" id="login-input" placeholder="Clave de acceso…" onkeydown="if(event.key==='Enter')checkLogin()"/><p class="login-note">Sesión activa por 7 días en este navegador.</p><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-login')">Cancelar</button><button class="btn-primary" onclick="checkLogin()">Ingresar</button></div></div></div>
+<div class="modal-overlay" id="modal-cover"><div class="modal"><div class="modal-eyebrow">Editar portada</div><h3>Imagen de portada</h3><p>Pega la URL de una imagen de obra o render. Proporción 16:7 recomendada.</p><img id="cover-preview" class="modal-preview" alt="preview"/><input type="text" id="cover-url-input" placeholder="https://…" oninput="previewCover(this.value)"/><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-cover')">Cancelar</button><button class="btn-primary" onclick="applyCover()">Aplicar</button></div></div></div>
+<div class="modal-overlay" id="modal-tag"><div class="modal"><div class="modal-eyebrow">Editar tags</div><h3>Agregar tag</h3><p>Escribe el nombre del tag para esta herramienta.</p><input type="text" id="tag-input" placeholder="Ej: Infraestructura, v2.0, BIM…" onkeydown="if(event.key==='Enter')applyTag()"/><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-tag')">Cancelar</button><button class="btn-primary" onclick="applyTag()">Agregar</button></div></div></div>
 
 <script>
-  const now = new Date();
-  const fmtLong  = now.toLocaleDateString('es-CL', { year:'numeric', month:'long', day:'numeric' });
-  const fmtShort = now.toLocaleDateString('es-CL', { year:'numeric', month:'short', day:'numeric' });
-  document.getElementById('build-date').textContent   = fmtLong;
-  document.getElementById('footer-build').textContent = 'Actualizado: ' + fmtLong;
-  document.getElementById('today-date').textContent   = fmtShort;
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const hero   = document.getElementById('hero-container');
+  const ctx    = canvas.getContext('2d');
+  const GRID_STEP=18,HEX_SCALE=0.30,ROT_SPEED=0.0018,DISPERSE_R=90,DISPERSE_F=28,RETURN_LERP=0.06,DAMP=0.78;
+  let W,H,cx,cy,RAF,mouse={x:-9999,y:-9999},rotation=0,particles=[];
+  function inHex(px,py,r){const q=(2/3)*px/r,s=(-1/3)*px/r+(Math.sqrt(3)/3)*py/r,t_=-q-s,rq=Math.round(q),rs=Math.round(s),rt=Math.round(t_),dq=Math.abs(rq-q),ds=Math.abs(rs-s),dt=Math.abs(rt-t_);if(dq>ds&&dq>dt)return Math.abs(rq)<=1&&Math.hypot(px,py)<=r*1.02;return Math.hypot(px,py)<=r*1.02;}
+  function buildParticles(){particles=[];const R=H*HEX_SCALE,cols=Math.ceil((R*2.1)/GRID_STEP),rows=Math.ceil((R*2.1)/GRID_STEP);for(let row=-rows;row<=rows;row++){for(let col=-cols;col<=cols;col++){const lx=col*GRID_STEP,ly=row*GRID_STEP;if(!inHex(lx,ly,R))continue;const dist=Math.hypot(lx,ly),rim=Math.max(0,1-dist/R),alpha=0.12+rim*0.55,isPlus=(Math.abs(row)+Math.abs(col))%3!==0;participants_push({lx,ly,x:cx+lx,y:cy+ly,vx:0,vy:0,alpha,isPlus,fontSize:7+rim*4});}}}
+  function buildParticles(){particles=[];const R=H*HEX_SCALE,cols=Math.ceil((R*2.1)/GRID_STEP),rows=Math.ceil((R*2.1)/GRID_STEP);for(let row=-rows;row<=rows;row++){for(let col=-cols;col<=cols;col++){const lx=col*GRID_STEP,ly=row*GRID_STEP;if(!inHex(lx,ly,R))continue;const dist=Math.hypot(lx,ly),rim=Math.max(0,1-dist/R),alpha=0.12+rim*0.55,isPlus=(Math.abs(row)+Math.abs(col))%3!==0;particles.push({lx,ly,x:cx+lx,y:cy+ly,vx:0,vy:0,alpha,isPlus,fontSize:7+rim*4});}}}
+  function resize(){W=canvas.width=hero.offsetWidth;H=canvas.height=hero.offsetHeight;cx=W*0.70;cy=H*0.50;buildParticles();}
+  function drawGlyph(p,alpha){ctx.font=`${p.fontSize}px 'Courier New',monospace`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=`rgba(0,107,255,${alpha.toFixed(3)})`;ctx.fillText(p.isPlus?'+':'-',p.x,p.y);}
+  function draw(){ctx.clearRect(0,0,W,H);rotation+=ROT_SPEED;const cosR=Math.cos(rotation),sinR=Math.sin(rotation);particles.forEach(p=>{const tx=cx+p.lx*cosR-p.ly*sinR,ty=cy+p.lx*sinR+p.ly*cosR,mdx=p.x-mouse.x,mdy=p.y-mouse.y,md=Math.sqrt(mdx*mdx+mdy*mdy)||1;if(md<DISPERSE_R){const s=(1-md/DISPERSE_R)*DISPERSE_F;p.vx+=(mdx/md)*s*0.04;p.vy+=(mdy/md)*s*0.04;}p.vx+=(tx-p.x)*RETURN_LERP;p.vy+=(ty-p.y)*RETURN_LERP;p.vx*=DAMP;p.vy*=DAMP;p.x+=p.vx;p.y+=p.vy;const disp=Math.min(1,Math.hypot(p.x-tx,p.y-ty)/30);drawGlyph(p,p.alpha*(1-disp*0.35));});RAF=requestAnimationFrame(draw);}
+  hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  hero.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+  resize();draw();window.addEventListener('resize',()=>{cancelAnimationFrame(RAF);resize();draw();});
+})();
 
-  const EDIT_KEY = 'datalab_edit_auth', EDIT_PASS = 'interlab2026';
-  const COVERS_KEY = 'datalab_covers', TAGS_KEY = 'datalab_tags', URLS_KEY = 'datalab_urls';
-  let editMode = false, pendingCardId = null;
-
-  function loadState() {
-    const covers = JSON.parse(localStorage.getItem(COVERS_KEY) || '{}');
-    Object.entries(covers).forEach(([id, url]) => setCoverImg(id, url));
-    const urls = JSON.parse(localStorage.getItem(URLS_KEY) || '{}');
-    Object.entries(urls).forEach(([id, url]) => {
-      const inp = document.getElementById('url-' + id); if (inp) inp.value = url;
-      const card = document.getElementById('card-' + id); if (card) card.dataset.url = url;
-    });
-    const tags = JSON.parse(localStorage.getItem(TAGS_KEY) || '{}');
-    Object.entries(tags).forEach(([id, tagList]) => {
-      const container = document.getElementById('tags-' + id); if (!container) return;
-      container.querySelectorAll('.tag').forEach(t => t.remove());
-      const btn = container.querySelector('.tag-add-btn');
-      tagList.forEach(text => {
-        const span = document.createElement('span');
-        span.className = 'tag'; span.dataset.card = id;
-        span.innerHTML = text + '<span class="tag-remove" onclick="removeTag(event,this)">×</span>';
-        container.insertBefore(span, btn);
-      });
-    });
-  }
-
-  function saveTags(id) {
-    const container = document.getElementById('tags-' + id);
-    const tags = [...container.querySelectorAll('.tag')].map(t => t.childNodes[0].textContent.trim());
-    const all = JSON.parse(localStorage.getItem(TAGS_KEY) || '{}');
-    all[id] = tags; localStorage.setItem(TAGS_KEY, JSON.stringify(all));
-    const card = document.getElementById('card-' + id);
-    if (card) card.dataset.taller = tags.join(' ').toLowerCase();
-  }
-
-  function toggleEditMode() {
-    const auth = localStorage.getItem(EDIT_KEY);
-    const expiry = parseInt(localStorage.getItem(EDIT_KEY + '_exp') || '0');
-    if (auth === 'true' && Date.now() < expiry) { activateEdit(); }
-    else { openModal('modal-login'); setTimeout(() => document.getElementById('login-input').focus(), 100); }
-  }
-
-  function activateEdit() {
-    editMode = !editMode;
-    document.body.classList.toggle('edit-mode', editMode);
-    const btn = document.getElementById('edit-toggle-btn');
-    btn.textContent = editMode ? '✓ Salir de edición' : '✏ Editar';
-    btn.classList.toggle('active', editMode);
-  }
-
-  function checkLogin() {
-    const val = document.getElementById('login-input').value;
-    if (val === EDIT_PASS) {
-      localStorage.setItem(EDIT_KEY, 'true');
-      localStorage.setItem(EDIT_KEY + '_exp', Date.now() + 7 * 24 * 60 * 60 * 1000);
-      closeModal('modal-login'); document.getElementById('login-input').value = ''; activateEdit();
-    } else {
-      document.getElementById('login-input').style.borderColor = '#E24B4A';
-      setTimeout(() => document.getElementById('login-input').style.borderColor = '', 800);
-    }
-  }
-
-  function openCoverModal(e, id) { e.preventDefault(); e.stopPropagation(); pendingCardId = id; document.getElementById('cover-url-input').value = ''; document.getElementById('cover-preview').style.display = 'none'; openModal('modal-cover'); setTimeout(() => document.getElementById('cover-url-input').focus(), 100); }
-  function previewCover(url) { const img = document.getElementById('cover-preview'); if (url.startsWith('http')) { img.src = url; img.style.display = 'block'; img.onerror = () => img.style.display = 'none'; } else { img.style.display = 'none'; } }
-  function applyCover() { const url = document.getElementById('cover-url-input').value.trim(); if (!url || !pendingCardId) return; setCoverImg(pendingCardId, url); const covers = JSON.parse(localStorage.getItem(COVERS_KEY) || '{}'); covers[pendingCardId] = url; localStorage.setItem(COVERS_KEY, JSON.stringify(covers)); closeModal('modal-cover'); }
-  function setCoverImg(id, url) { const cover = document.getElementById('cover-' + id); const placeholder = document.getElementById('cover-placeholder-' + id); if (!cover) return; let img = cover.querySelector('img.cover-img'); if (!img) { img = document.createElement('img'); img.className = 'cover-img'; cover.insertBefore(img, cover.firstChild); } img.src = url; img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;'; if (placeholder) placeholder.style.display = 'none'; }
-  function addTag(e, id) { e.preventDefault(); e.stopPropagation(); pendingCardId = id; document.getElementById('tag-input').value = ''; openModal('modal-tag'); setTimeout(() => document.getElementById('tag-input').focus(), 100); }
-  function applyTag() { const text = document.getElementById('tag-input').value.trim(); if (!text || !pendingCardId) return; const container = document.getElementById('tags-' + pendingCardId); const btn = container.querySelector('.tag-add-btn'); const span = document.createElement('span'); span.className = 'tag'; span.dataset.card = pendingCardId; span.innerHTML = text + '<span class="tag-remove" onclick="removeTag(event,this)">×</span>'; container.insertBefore(span, btn); saveTags(pendingCardId); closeModal('modal-tag'); }
-  function removeTag(e, el) { e.preventDefault(); e.stopPropagation(); const tag = el.parentElement; const id = tag.dataset.card; tag.remove(); saveTags(id); }
-  function saveUrl(e, id) { e.preventDefault(); e.stopPropagation(); const url = document.getElementById('url-' + id).value.trim(); const card = document.getElementById('card-' + id); card.dataset.url = url; const urls = JSON.parse(localStorage.getItem(URLS_KEY) || '{}'); urls[id] = url; localStorage.setItem(URLS_KEY, JSON.stringify(urls)); const btn = e.target; btn.textContent = '✓ Guardado'; setTimeout(() => btn.textContent = 'Guardar URL', 1500); }
-  function cardClick(e, defaultUrl) { if (editMode) return; const card = e.currentTarget; const url = card.dataset.url || defaultUrl; if (url) window.open(url, '_blank'); }
-  function openModal(id) { document.getElementById(id).classList.add('open'); }
-  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-  document.querySelectorAll('.modal-overlay').forEach(m => { m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }); });
-
-  const searchInput = document.getElementById('search-input');
-  const searchEmpty = document.getElementById('search-empty');
-  const sections = { activas: document.getElementById('section-activas'), desarrollo: document.getElementById('section-desarrollo'), changelog: document.getElementById('section-changelog') };
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
-    if (!q) { document.querySelectorAll('.tool-card').forEach(c => c.classList.remove('hidden')); Object.values(sections).forEach(s => s.classList.remove('hidden')); searchEmpty.style.display = 'none'; return; }
-    let total = 0;
-    document.querySelectorAll('.tool-card').forEach(card => { const match = (card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q); card.classList.toggle('hidden', !match); if (match) total++; });
-    ['activas','desarrollo'].forEach(id => { const s = sections[id]; s.classList.toggle('hidden', s.querySelectorAll('.tool-card:not(.hidden)').length === 0); });
-    sections.changelog.classList.add('hidden');
-    searchEmpty.style.display = total === 0 ? 'block' : 'none';
-  });
-
-  loadState();
+document.getElementById('today-date').textContent=new Date().toLocaleDateString('es-CL',{year:'numeric',month:'short',day:'numeric'});
+const EDIT_KEY='datalab_edit_auth',EDIT_PASS='interlab2026',COVERS_KEY='datalab_covers',TAGS_KEY='datalab_tags',URLS_KEY='datalab_urls';
+let editMode=false,pendingCardId=null;
+function updateCounts(){const a=document.querySelectorAll('#section-activas .tool-card:not(.hidden)').length,d=document.querySelectorAll('#section-desarrollo .tool-card:not(.hidden)').length,t=document.querySelectorAll('.tool-card:not(.hidden)').length;document.getElementById('count-activas').textContent=a+' herramienta'+(a!==1?'s':'');document.getElementById('count-desarrollo').textContent=d+' herramienta'+(d!==1?'s':'');document.getElementById('toolbar-count').textContent=t+' herramienta'+(t!==1?'s':'');}
+function loadState(){const covers=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}');Object.entries(covers).forEach(([id,url])=>setCoverImg(id,url));const urls=JSON.parse(localStorage.getItem(URLS_KEY)||'{}');Object.entries(urls).forEach(([id,url])=>{const i=document.getElementById('url-'+id);if(i)i.value=url;const c=document.getElementById('card-'+id);if(c)c.dataset.url=url;});const tags=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}');Object.entries(tags).forEach(([id,list])=>{const c=document.getElementById('tags-'+id);if(!c)return;c.querySelectorAll('.tag').forEach(t=>t.remove());const btn=c.querySelector('.tag-add-btn');list.forEach(text=>{const s=document.createElement('span');s.className='tag';s.dataset.card=id;s.innerHTML=text+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>';c.insertBefore(s,btn);});});updateCounts();}
+function saveTags(id){const c=document.getElementById('tags-'+id),t=[...c.querySelectorAll('.tag')].map(t=>t.childNodes[0].textContent.trim()),a=JSON.parse(localStorage.getItem(TAGS_KEY)||'{}');a[id]=t;localStorage.setItem(TAGS_KEY,JSON.stringify(a));const card=document.getElementById('card-'+id);if(card)card.dataset.taller=t.join(' ').toLowerCase();}
+function toggleEditMode(){const auth=localStorage.getItem(EDIT_KEY),exp=parseInt(localStorage.getItem(EDIT_KEY+'_exp')||'0');if(auth==='true'&&Date.now()<exp){activateEdit();}else{openModal('modal-login');setTimeout(()=>document.getElementById('login-input').focus(),100);}}
+function activateEdit(){editMode=!editMode;document.body.classList.toggle('edit-mode',editMode);const btn=document.getElementById('edit-toggle-btn');btn.textContent=editMode?'✓ Salir':'✏ Editar';btn.classList.toggle('active',editMode);}
+function checkLogin(){const v=document.getElementById('login-input').value;if(v===EDIT_PASS){localStorage.setItem(EDIT_KEY,'true');localStorage.setItem(EDIT_KEY+'_exp',Date.now()+7*24*60*60*1000);closeModal('modal-login');document.getElementById('login-input').value='';activateEdit();}else{document.getElementById('login-input').style.borderColor='#E53935';setTimeout(()=>document.getElementById('login-input').style.borderColor='',800);}}
+function openCoverModal(e,id){e.preventDefault();e.stopPropagation();pendingCardId=id;document.getElementById('cover-url-input').value='';document.getElementById('cover-preview').style.display='none';openModal('modal-cover');setTimeout(()=>document.getElementById('cover-url-input').focus(),100);}
+function previewCover(url){const img=document.getElementById('cover-preview');if(url.startsWith('http')){img.src=url;img.style.display='block';img.onerror=()=>img.style.display='none';}else img.style.display='none';}
+function applyCover(){const url=document.getElementById('cover-url-input').value.trim();if(!url||!pendingCardId)return;setCoverImg(pendingCardId,url);const c=JSON.parse(localStorage.getItem(COVERS_KEY)||'{}');c[pendingCardId]=url;localStorage.setItem(COVERS_KEY,JSON.stringify(c));closeModal('modal-cover');}
+function setCoverImg(id,url){const cover=document.getElementById('cover-'+id),ph=document.getElementById('cover-placeholder-'+id);if(!cover)return;let img=cover.querySelector('img.cover-img-el');if(!img){img=document.createElement('img');img.className='cover-img-el';cover.insertBefore(img,cover.firstChild);}img.src=url;if(ph)ph.style.display='none';}
+function addTag(e,id){e.preventDefault();e.stopPropagation();pendingCardId=id;document.getElementById('tag-input').value='';openModal('modal-tag');setTimeout(()=>document.getElementById('tag-input').focus(),100);}
+function applyTag(){const t=document.getElementById('tag-input').value.trim();if(!t||!pendingCardId)return;const c=document.getElementById('tags-'+pendingCardId),btn=c.querySelector('.tag-add-btn'),s=document.createElement('span');s.className='tag';s.dataset.card=pendingCardId;s.innerHTML=t+'<span class="tag-remove" onclick="removeTag(event,this)">×</span>';c.insertBefore(s,btn);saveTags(pendingCardId);closeModal('modal-tag');}
+function removeTag(e,el){e.preventDefault();e.stopPropagation();const t=el.parentElement,id=t.dataset.card;t.remove();saveTags(id);}
+function saveUrl(e,id){e.preventDefault();e.stopPropagation();const url=document.getElementById('url-'+id).value.trim(),card=document.getElementById('card-'+id);card.dataset.url=url;const u=JSON.parse(localStorage.getItem(URLS_KEY)||'{}');u[id]=url;localStorage.setItem(URLS_KEY,JSON.stringify(u));const btn=e.target;btn.textContent='✓';setTimeout(()=>btn.textContent='Guardar',1500);}
+function cardClick(e,def){if(editMode)return;const url=e.currentTarget.dataset.url||def;if(url)window.open(url,'_blank');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id);}));
+const searchInput=document.getElementById('search-input'),searchEmpty=document.getElementById('search-empty'),sections={activas:document.getElementById('section-activas'),desarrollo:document.getElementById('section-desarrollo'),changelog:document.getElementById('section-changelog')};
+searchInput.addEventListener('input',()=>{const q=searchInput.value.trim().toLowerCase();if(!q){document.querySelectorAll('.tool-card').forEach(c=>c.classList.remove('hidden'));Object.values(sections).forEach(s=>s.classList.remove('hidden'));searchEmpty.style.display='none';updateCounts();return;}let total=0;document.querySelectorAll('.tool-card').forEach(card=>{const m=(card.dataset.name||'').toLowerCase().includes(q)||(card.dataset.taller||'').toLowerCase().includes(q);card.classList.toggle('hidden',!m);if(m)total++;});['activas','desarrollo'].forEach(id=>{const s=sections[id];s.classList.toggle('hidden',s.querySelectorAll('.tool-card:not(.hidden)').length===0);});sections.changelog.classList.add('hidden');searchEmpty.style.display=total===0?'block':'none';updateCounts();});
+loadState();
 </script>
 </body>
 </html>
