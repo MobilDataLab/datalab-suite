@@ -6,6 +6,14 @@ Registro de cambios por herramienta. Formato: `[TOOL] vX.X — Descripción`
 
 ## [Unreleased]
 
+### [Mobil Org] v1.0 — Deploy inicial
+- Gestión de personas, proyectos y asignaciones por taller
+- Organigrama interactivo con dedicación por mes
+- URL producción: https://mobil-org.vercel.app
+- Taller: Todos los talleres
+- Autor: Patricio Browne / fecha: 2026-04-12
+
+
 ### Portal Index
 - Creación inicial del portal DATALAB SUITE
 
